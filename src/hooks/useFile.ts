@@ -6,9 +6,11 @@ import {
   writeTextFile,
 } from "@tauri-apps/api/fs";
 import { DOCUMENT_DIRECTORY, FOLDER_NAME } from "../utils/consts";
-import { lyraFolder } from "../utils/helpers";
+import { getFilePath, navigation } from "../utils/helpers";
 
 function useFile() {
+  const { goTo } = navigation();
+
   function rename(oldName: string, newName: string): void {
     renameFile(oldName, newName, DOCUMENT_DIRECTORY);
   }
@@ -18,17 +20,27 @@ function useFile() {
   }
 
   async function create(name: string): Promise<void> {
-    const { folderPath } = await lyraFolder(`${name}.txt`);
-    writeTextFile({ path: folderPath, contents: "..." }, DOCUMENT_DIRECTORY);
+    const { pathFile } = await getFilePath(`${name}.txt`);
+    writeTextFile({ path: pathFile, contents: "..." }, DOCUMENT_DIRECTORY);
   }
 
   async function getFiles(): Promise<string> {
     const dir: FileEntry[] = await readDir(FOLDER_NAME, DOCUMENT_DIRECTORY);
-    const files: any = dir.map(file => file.name?.split(".txt")[0]);
+    const bayConfig: FileEntry[] = dir.filter(f => f.name != "config.json");
+    const files: any = bayConfig.map(f => f.name?.split(".txt")[0]);
     return files;
   }
 
-  return { rename, remove, create, getFiles };
+  async function saveContent(name: string, content: string): Promise<void> {
+    if (!name || !content) {
+      return goTo("/list");
+    } else {
+      const { pathFile } = await getFilePath(`${name}.txt`);
+      writeTextFile({ path: pathFile, contents: content }, DOCUMENT_DIRECTORY);
+    }
+  }
+
+  return { rename, remove, create, getFiles, saveContent };
 }
 
 export default useFile;

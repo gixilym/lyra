@@ -1,10 +1,6 @@
 import { join } from "@tauri-apps/api/path";
 import toast from "react-hot-toast";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import translations from "../translate/dictionary";
-import { confirm } from "@tauri-apps/api/dialog";
-import { useStore } from "./store";
-import { type Dispatch, type SetStateAction } from "react";
 import { FOLDER_NAME } from "./consts";
 
 function navigation(): { goTo: (route: string) => void } {
@@ -20,33 +16,27 @@ function notification(type: "success" | "error", msg: string): void {
   });
 }
 
-async function lyraFolder(fileName: string): Promise<{ folderPath: string }> {
-  const folderPath: string = await join(FOLDER_NAME, fileName);
-  return { folderPath };
+async function getFilePath(fileName: string): Promise<{ pathFile: string }> {
+  const pathFile: string = await join(FOLDER_NAME, fileName);
+  return { pathFile };
 }
 
-async function cleanTrash(
-  setPaperIsOpen: Dispatch<SetStateAction<boolean>>
-): Promise<void> {
-  const dictionary = translations();
-  const { setUserConfig } = useStore();
-  // const { remove } = useFile();
+function nameIsValid(name: string): Boolean {
+  const regex: RegExp = /^[a-zA-Z0-9-_ ]+$/;
+  const nameIsLong: boolean = name.length > 25;
+  const invalidSymbols: boolean = !regex.test(name);
 
-  const confirmClean = await confirm(dictionary.CleanEvery, {
-    title: "lyra",
-    type: "warning",
-  });
-
-  if (confirmClean) {
-    notification("success", dictionary.DeleteFiles);
-    setPaperIsOpen(false);
-    setUserConfig({ paper: [] });
-    // userConfig.paper.map(async function (item: File) {
-    //   console.log(item.lastModified);
-    //   // const { folderPath } = await lyraFolder(`${item.name}.txt`);
-    //   // remove(folderPath);
-    // });
+  if (nameIsLong) {
+    notification("error", "Nombre demasiado extenso");
+    return false;
   }
+
+  if (invalidSymbols) {
+    notification("error", "El nombre contiene caracteres inválidos");
+    return false;
+  }
+
+  return true;
 }
 
-export { notification, navigation, cleanTrash, lyraFolder };
+export { notification, navigation, getFilePath, nameIsValid };

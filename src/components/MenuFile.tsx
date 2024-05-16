@@ -1,38 +1,46 @@
 import useFile from "../hooks/useFile";
+import { Edit2 as EditIcon, Archive as TrashIcon } from "lucide-react";
 import type { Component } from "../utils/types";
-import { Edit2 as EditIcon, Archive as ArchiveIcon } from "lucide-react";
-import { lyraFolder } from "../utils/helpers";
-import { notification } from "../utils/helpers";
+import { nameIsValid, getFilePath, notification } from "../utils/helpers";
 import translations from "../translate/dictionary";
 import { confirm } from "@tauri-apps/api/dialog";
-import { useStore } from "../utils/store";
+import { configStore } from "../utils/configStore";
+import { fileStore } from "../utils/fileStore";
 
 function MenuFile({ fileName }: { fileName: string }): Component {
-  const { rename } = useFile();
   const dictionary = translations();
-  const { setUserConfig, userConfig } = useStore();
+  const { rename } = useFile();
+  const { editedFile } = fileStore();
+  const { addItemToPaper } = configStore();
 
-  async function editFileName() {
-    const newName = prompt("Editar nombre de archivo", fileName);
-    if (!newName || typeof newName == null) {
+  async function editFileName(event: any): Promise<void> {
+    event.stopPropagation();
+    let newName: string | null | void = prompt(
+      "Editar nombre de archivo",
+      fileName
+    );
+
+    if (!newName || typeof newName == null || !nameIsValid(newName)) {
       return notification("error", "Nombre inválido");
     } else {
       const oldName: string = `${fileName}.txt`;
-      const { folderPath: oldPath } = await lyraFolder(oldName);
-      const { folderPath: newPath } = await lyraFolder(`${newName}.txt`);
+      const { pathFile: oldPath } = await getFilePath(oldName);
+      const { pathFile: newPath } = await getFilePath(`${newName}.txt`);
       rename(oldPath, newPath);
+      editedFile();
       notification("success", "Nombre editado");
     }
   }
 
-  async function handleMoveToTrash() {
-    const accept = await confirm(`${dictionary.MoveToTrash} ${fileName}?`, {
-      title: "lyra",
-      type: "warning",
-    });
+  async function moveToTrash(event: any): Promise<void> {
+    event.stopPropagation();
+    const accept: boolean = await confirm(
+      `${dictionary.MoveToTrash} ${fileName}?`,
+      { title: "lyra", type: "warning" }
+    );
 
     if (accept) {
-      setUserConfig({ paper: [...userConfig.paper, fileName] });
+      addItemToPaper(fileName);
       notification("success", dictionary.SentToTrash);
     }
   }
@@ -40,20 +48,14 @@ function MenuFile({ fileName }: { fileName: string }): Component {
   return (
     <div className="flex justify-center items-center gap-x-2">
       <EditIcon
-        onClick={e => {
-          e.stopPropagation();
-          editFileName();
-        }}
+        onClick={editFileName}
         className="hover:text-[rgba(209,213,219,0.6)] text-[rgba(209,213,219,0.2)] duration-75"
         size={19}
       />
-      <ArchiveIcon
-        size={19}
-        onClick={e => {
-          e.stopPropagation();
-          handleMoveToTrash();
-        }}
+      <TrashIcon
+        onClick={moveToTrash}
         className="hover:text-[rgba(209,213,219,0.6)] text-[rgba(209,213,219,0.2)] duration-75"
+        size={19}
       />
     </div>
   );

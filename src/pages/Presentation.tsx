@@ -34,7 +34,13 @@ function Presentation(): Component {
         </div>
         <div className="flex flex-col justify-start gap-x-4 items-start w-full">
           <p className="text-lg text-gray-400">Versión: 1.0.0</p>
-          <p className="text-lg text-gray-400">Desarrollado por Gixi</p>
+          <a
+            href="https://github.com/gixilym"
+            target="_blank"
+            className="text-lg text-gray-400 hover:text-gray-300 duration-75 cursor-default hover:underline"
+          >
+            Desarrollado por Gixi
+          </a>
         </div>
       </motion.section>
       <ZoneToOpenList />

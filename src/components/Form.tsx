@@ -6,7 +6,7 @@ import {
 } from "react";
 import { FilePlus as AddIcon, Folders as FolderIcon } from "lucide-react";
 import { navigation, notification } from "../utils/helpers";
-import { useStore } from "../utils/store";
+import { fileStore } from "../utils/fileStore";
 import { twMerge } from "tailwind-merge";
 import translations from "../translate/dictionary";
 import type { Component, File } from "../utils/types";
@@ -15,12 +15,12 @@ import useFile from "../hooks/useFile";
 function Form(props: Props): Component {
   const dictionary = translations(),
     { goTo } = navigation(),
-    { create } = useFile(),
+    { create } = useFile(), 
     { paperIsOpen, setPaperIsOpen } = props,
     [fileName, setFileName] = useState<string>(""),
     newFile: File = { name: fileName, content: "..." },
     nameIsEmpty: boolean = !fileName,
-    { updateListFiles, setSelectedFile, files } = useStore(),
+    { updateListFiles, setSelectedFile, files } = fileStore(),
     nameIsRepeated: boolean = files.some((name: string) => name == fileName);
 
   function addFile(event: FormEvent): void {
@@ -75,33 +75,3 @@ interface Props {
 }
 
 export default Form;
-
-/*
-!!vaciar papelera
-    showPaperBin: boolean = paperIsOpen && userConfig.paper.length > 0;
-      {showPaperBin && (
-        <button
-          onClick={() => cleanTrash(setPaperIsOpen)}
-          className="bg-red-500 hover:bg-red-400 cursor-pointer text-white outline-0 border-0 w-max px-4 py-1 rounded-xl"
-          type="button"
-        >
-          {dictionary.Clean}
-        </button>
-      )}
-! agregar este buscador
-{openInputToSearch ? (
-  <input
-    placeholder={dictionary.SearchItem}
-    onChange={e => setSearchItem(e.target.value)}
-    onMouseLeave={() => setOpenInputToSearch(false)}
-    className="outline-0 text-lg bg-gray-900 border border-gray-600/30 rounded-lg w-[280px] text-start px-4 placeholder:text-gray-400/70 text-gray-300 py-1 duration-100 h-10"
-    type="text"
-  />
-) : (
-  <SearchIcon
-    onMouseEnter={() => setOpenInputToSearch(true)}
-    size={25}
-    className="bg-gray-900 w-11 h-11 hover:bg-gray-800 cursor-pointer border border-gray-600/30 rounded-lg p-2 duration-100"
-  />
-)}
-*/

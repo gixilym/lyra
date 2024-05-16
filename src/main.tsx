@@ -5,9 +5,11 @@ import Presentation from "./pages/Presentation";
 import ListView from "./pages/ListView";
 import Settings from "./pages/Settings";
 import FileContent from "./pages/FileContent";
+import Header from "./components/Header";
 import "@fontsource/sarabun";
 import "./styles.css";
-import Header from "./components/Header";
+
+document.body.spellcheck = false;
 
 const ROOT: Container =
   document.getElementById("root") ?? document.createElement("root");

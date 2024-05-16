@@ -1,7 +1,7 @@
-import { useStore } from "../utils/store";
+import { configStore } from "../utils/configStore";
 
 function userLanguage(enText: string, esText: string) {
-  const { userConfig } = useStore();
+  const { userConfig } = configStore();
   return userConfig.language == "en" ? enText : esText;
 }
 

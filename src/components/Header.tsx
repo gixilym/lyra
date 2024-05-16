@@ -2,9 +2,12 @@ import type { Component } from "../utils/types";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { EyeOff as HiddenIcon, Eye as ShowIcon } from "lucide-react";
+import { configStore } from "../utils/configStore";
 
 function Header(): Component {
   const [showHeader, setShowHeader] = useState<boolean>(true);
+  const { setSpellCheck } = configStore();
+
   const [menu, setMenu] = useState({
     archivo: false,
     edicion: false,
@@ -59,6 +62,7 @@ function Header(): Component {
             </div>
           )}
         </details>
+
         <details id="edicion" className="relative">
           <summary
             onClick={() => {
@@ -73,12 +77,16 @@ function Header(): Component {
           {menu.edicion && (
             <div className="absolute top-6 left-0 border border-t-gray-900/90 border-[#383838] px-4 flex flex-col justify-center items-start w-44 py-1 gap-y-1">
               <p className="cursor-default hover:text-white w-full">Buscar</p>
-              <p className="cursor-default hover:text-white w-full border-t border-[#383838]">
+              <p
+                onClick={() => setSpellCheck()}
+                className="cursor-default hover:text-white w-full border-t border-[#383838]"
+              >
                 Revisar ortografía
               </p>
             </div>
           )}
         </details>
+
         <details id="ayuda" className="relative">
           <summary
             onClick={() => {

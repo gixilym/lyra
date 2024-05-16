@@ -1,5 +1,6 @@
 import { type Dispatch, type SetStateAction, useEffect } from "react";
-import { useStore } from "../utils/store";
+import { fileStore } from "../utils/fileStore";
+import { configStore } from "../utils/configStore";
 import ItemFile from "./ItemFile";
 import type { Component } from "../utils/types";
 import NoMatches from "./NoMatches";
@@ -8,16 +9,15 @@ import useFile from "../hooks/useFile";
 function ListFiles(props: Props): Component {
   const { paperIsOpen } = props,
     { getFiles } = useFile(),
-    { files, setFiles, userConfig } = useStore(),
-    formatFiles: Array<string> = files.filter(
-      item => !userConfig.paper.includes(item)
+    { userConfig } = configStore(),
+    { files, setFiles, fileIsEdited } = fileStore(),
+    formatFiles: string[] = files.filter(
+      name => !userConfig.paper.includes(name)
     );
 
   useEffect(() => {
-    getFiles()
-      .then(everyFiles => setFiles(everyFiles))
-      .catch(err => console.error(`Error: ${err.message} in 'getFiles'`));
-  }, [files]);
+    getFiles().then(everyFiles => setFiles(everyFiles));
+  }, [fileIsEdited]);
 
   function renderFiles() {
     const arr: string[] = paperIsOpen ? userConfig.paper : formatFiles;
@@ -46,19 +46,3 @@ interface Props {
 }
 
 export default ListFiles;
-
-/*
-!filtrar resultados
-  showSearchResults: boolean = searchItem != "",
-  filterSearches = formatFiles.filter((name: string) =>
-    name.includes(searchItem)
-  );
-  function renderSearchResults() {
-    if (filterSearches.length > 0) {
-      return filterSearches.map((fileName: string) => (
-        <ItemFile fileName={fileName} key={fileName} />
-      ));
-    } else return <NoMatches />;
-  }
-
-*/

@@ -1,36 +1,28 @@
 import { useEffect, useState } from "react";
 import type { Component } from "../utils/types";
 import { motion } from "framer-motion";
-import { useStore } from "../utils/store";
-import { lyraFolder, navigation } from "../utils/helpers";
-import { writeTextFile } from "@tauri-apps/api/fs";
-import "@fontsource/ia-writer-duo";
+import { fileStore } from "../utils/fileStore";
 import ZoneToOpenList from "../components/ZoneToOpenList";
-import {} from "@tauri-apps/api";
-import { DOCUMENT_DIRECTORY } from "../utils/consts";
+import { configStore } from "../utils/configStore";
+import useFile from "../hooks/useFile";
+import "@fontsource/ia-writer-duo";
+import { navigation } from "../utils/helpers";
 
 function FileContent(): Component {
-  const { selectedFile: sF } = useStore();
-  const [fileContent, setFileContent] = useState<string>(sF.content || "");
+  const { selectedFile } = fileStore();
+  const { spellCheck } = configStore();
+  const { saveContent } = useFile();
+  const [content, setContent] = useState<string>(selectedFile.content || "");
+
   const { goTo } = navigation();
 
-  useEffect(() => {
-    if (!sF.content) {
-      goTo("/list");
-      return;
-    }
-  }, []);
+  addEventListener("load", () => {
+    goTo("/list");
+  });
 
   useEffect(() => {
-    async function saveFileData(): Promise<void> {
-      const { folderPath } = await lyraFolder(`${sF.name}.txt`);
-      writeTextFile(
-        { path: folderPath, contents: fileContent },
-        DOCUMENT_DIRECTORY
-      );
-    }
-    saveFileData();
-  }, [fileContent]);
+    saveContent(selectedFile.name, content);
+  }, [content]);
 
   return (
     <>
@@ -41,8 +33,11 @@ function FileContent(): Component {
         className="h-screen flex justify-center w-full min-w-[700px] max-w-[1000px]"
       >
         <textarea
-          value={fileContent}
-          onChange={e => setFileContent(e.target.value)}
+          value={content}
+          onChange={e => setContent(e.target.value)}
+          spellCheck={spellCheck}
+          autoFocus
+          lang="es"
           className="font-duo text-start bg-transparent justify-start items-center flex flex-col w-full h-screen outline-none resize-none py-10 text-gray-200/90 tracking-tight text-lg"
         />
       </motion.main>

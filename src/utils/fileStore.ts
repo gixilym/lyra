@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export const useStore = create((set: any) => ({
+export const fileStore = create((set: any) => ({
   files: [],
 
   updateListFiles: (name: string) =>
@@ -17,17 +17,7 @@ export const useStore = create((set: any) => ({
       files: state.files.filter((n: string) => n != snippet),
     })),
 
-  userConfig: {
-    language: "es",
-    theme: "bg-black/90",
-    fontSize: "text-2xl",
-    fontFamily: "font-duo",
-    textCenter: false,
-    paper: [],
-  },
-
-  setUserConfig: (newConfig: object) =>
-    set((state: any) => ({
-      userConfig: { ...state.userConfig, ...newConfig },
-    })),
+  fileIsEdited: false,
+  editedFile: () =>
+    set((state: any) => ({ fileIsEdited: !state.fileIsEdited })),
 }));

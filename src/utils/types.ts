@@ -7,4 +7,13 @@ interface File {
   content: string;
 }
 
-export type { Component, File };
+interface Config {
+  language: string;
+  theme: string;
+  fontSize: string;
+  fontFamily: string;
+  textCenter: boolean;
+  paper: string[];
+}
+
+export type { Component, File, Config };
