@@ -4,24 +4,29 @@ import type { Component } from "../utils/types";
 import { nameIsValid, getFilePath, notification } from "../utils/helpers";
 import translations from "../translate/dictionary";
 import { confirm } from "@tauri-apps/api/dialog";
-import { configStore } from "../utils/configStore";
-import { fileStore } from "../utils/fileStore";
+import { configStore } from "../store/configStore";
+import { fileStore } from "../store/fileStore";
 
 function MenuFile({ fileName }: { fileName: string }): Component {
   const dictionary = translations();
   const { rename } = useFile();
-  const { editedFile } = fileStore();
+  const { editedFile, files: filesArr } = fileStore();
   const { addItemToPaper } = configStore();
 
   async function editFileName(event: any): Promise<void> {
     event.stopPropagation();
+    const files: string[] = filesArr;
     let newName: string | null | void = prompt(
       "Editar nombre de archivo",
       fileName
     );
+    const condition: boolean =
+      !newName || newName == null || !nameIsValid(newName);
 
-    if (!newName || typeof newName == null || !nameIsValid(newName)) {
+    if (condition) {
       return notification("error", "Nombre inválido");
+    } else if (newName != null && files.includes(newName)) {
+      return notification("error", "El nombre ya existe");
     } else {
       const oldName: string = `${fileName}.txt`;
       const { pathFile: oldPath } = await getFilePath(oldName);

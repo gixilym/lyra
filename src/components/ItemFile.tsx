@@ -1,6 +1,6 @@
 import { readTextFile } from "@tauri-apps/api/fs";
 import { confirm } from "@tauri-apps/api/dialog";
-import { fileStore } from "../utils/fileStore";
+import { fileStore } from "../store/fileStore";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 import translations from "../translate/dictionary";
@@ -10,7 +10,7 @@ import MenuFile from "./MenuFile";
 import { getFilePath, navigation } from "../utils/helpers";
 import { DOCUMENT_DIRECTORY } from "../utils/consts";
 import { useEffect } from "react";
-import { configStore } from "../utils/configStore";
+import { configStore } from "../store/configStore";
 import useConfig from "../hooks/useConfig";
 
 function ItemFile(props: Props): Component {
@@ -25,7 +25,7 @@ function ItemFile(props: Props): Component {
     updateUserConfig(userConfig);
   }, [userConfig]);
 
-  async function onClickItem() {
+  async function onClickItem(): Promise<void> {
     const { pathFile } = await getFilePath(`${fileName}.txt`);
     const fileContent = await readTextFile(pathFile, DOCUMENT_DIRECTORY);
     const newSelectedFile: File = { name: fileName, content: fileContent };
@@ -63,7 +63,7 @@ function ItemFile(props: Props): Component {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.1, duration: 0.5 }}
-      className="w-full max-w-[450px] h-11 rounded text-gray-300 py-2 px-4 hover:cursor-pointer bg-gray-800/60 duration-75 flex justify-between items-center border-l-2 border-b-2 border-gray-600/30  hover:bg-gray-800"
+      className="w-full max-w-[330px] h-11 rounded text-gray-300 py-2 px-4 hover:cursor-pointer bg-gray-800/60 duration-75 flex justify-between items-center border-l-2 border-b-2 border-gray-600/30  hover:bg-gray-800"
     >
       <div className="flex justify-between items-center gap-x-4 w-full">
         <motion.p
@@ -84,9 +84,9 @@ function ItemFile(props: Props): Component {
   );
 }
 
+export default ItemFile;
+
 interface Props {
   fileName: string;
   paperIsOpen?: boolean;
 }
-
-export default ItemFile;

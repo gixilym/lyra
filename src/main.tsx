@@ -5,7 +5,6 @@ import Presentation from "./pages/Presentation";
 import ListView from "./pages/ListView";
 import Settings from "./pages/Settings";
 import FileContent from "./pages/FileContent";
-import Header from "./components/Header";
 import "@fontsource/sarabun";
 import "./styles.css";
 
@@ -35,8 +34,6 @@ const router = createBrowserRouter([
 
 createRoot(ROOT).render(
   <StrictMode>
-    <Header />
-    <div className="mb-8" />
     <RouterProvider router={router} />;
   </StrictMode>
 );

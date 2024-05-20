@@ -4,6 +4,7 @@ import ListContainer from "../components/ListContainer";
 import ListFiles from "../components/ListFiles";
 import type { Component } from "../utils/types";
 import useConfig from "../hooks/useConfig";
+import MainContainer from "../components/MainContainer";
 
 function ListView(): Component {
   const [searchItem, setSearchItem] = useState<string>("");
@@ -15,18 +16,20 @@ function ListView(): Component {
   }, []);
 
   return (
-    <ListContainer>
-      <Form
-        setSearchItem={setSearchItem}
-        paperIsOpen={paperIsOpen}
-        setPaperIsOpen={setPaperIsOpen}
-      />
-      <ListFiles
-        searchItem={searchItem}
-        setSearchItem={setSearchItem}
-        paperIsOpen={paperIsOpen}
-      />
-    </ListContainer>
+    <MainContainer>
+      <ListContainer>
+        <Form
+          setSearchItem={setSearchItem}
+          paperIsOpen={paperIsOpen}
+          setPaperIsOpen={setPaperIsOpen}
+        />
+        <ListFiles
+          searchItem={searchItem}
+          setSearchItem={setSearchItem}
+          paperIsOpen={paperIsOpen}
+        />
+      </ListContainer>
+    </MainContainer>
   );
 }
 

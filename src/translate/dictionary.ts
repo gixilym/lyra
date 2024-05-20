@@ -1,4 +1,4 @@
-import { configStore } from "../utils/configStore";
+import { configStore } from "../store/configStore";
 
 function userLanguage(enText: string, esText: string) {
   const { userConfig } = configStore();

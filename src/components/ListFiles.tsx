@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction, useEffect } from "react";
-import { fileStore } from "../utils/fileStore";
-import { configStore } from "../utils/configStore";
+import { fileStore } from "../store/fileStore";
+import { configStore } from "../store/configStore";
 import ItemFile from "./ItemFile";
 import type { Component } from "../utils/types";
 import NoMatches from "./NoMatches";
@@ -33,7 +33,7 @@ function ListFiles(props: Props): Component {
   }
 
   return (
-    <ol className="w-full h-6/6 select-none flex flex-col gap-y-2  justify-center items-start">
+    <ol className="w-full h-6/6 select-none flex flex-col gap-y-2  justify-center items-center">
       {renderFiles()}
     </ol>
   );

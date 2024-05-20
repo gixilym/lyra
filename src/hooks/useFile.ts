@@ -4,8 +4,9 @@ import {
   readDir,
   FileEntry,
   writeTextFile,
+  exists,
 } from "@tauri-apps/api/fs";
-import { DOCUMENT_DIRECTORY, FOLDER_NAME } from "../utils/consts";
+import { CONFIG_FILE, DOCUMENT_DIRECTORY, FOLDER_NAME } from "../utils/consts";
 import { getFilePath, navigation } from "../utils/helpers";
 
 function useFile() {
@@ -19,20 +20,21 @@ function useFile() {
     removeFile(path, DOCUMENT_DIRECTORY);
   }
 
-  async function create(name: string): Promise<void> {
-    const { pathFile } = await getFilePath(`${name}.txt`);
+  async function createFile(name: string): Promise<void> {
+    name = name.includes(CONFIG_FILE) ? CONFIG_FILE : `${name}.txt`;
+    const { pathFile } = await getFilePath(name);
     writeTextFile({ path: pathFile, contents: "..." }, DOCUMENT_DIRECTORY);
   }
 
   async function getFiles(): Promise<string> {
     const dir: FileEntry[] = await readDir(FOLDER_NAME, DOCUMENT_DIRECTORY);
-    const bayConfig: FileEntry[] = dir.filter(f => f.name != "config.json");
+    const bayConfig: FileEntry[] = dir.filter(f => f.name != CONFIG_FILE);
     const files: any = bayConfig.map(f => f.name?.split(".txt")[0]);
     return files;
   }
 
   async function saveContent(name: string, content: string): Promise<void> {
-    if (!name || !content) {
+    if (!name) {
       return goTo("/list");
     } else {
       const { pathFile } = await getFilePath(`${name}.txt`);
@@ -40,7 +42,21 @@ function useFile() {
     }
   }
 
-  return { rename, remove, create, getFiles, saveContent };
+  async function fileExists(path: string): Promise<boolean> {
+    const file: boolean = await exists(path, DOCUMENT_DIRECTORY);
+    return file;
+  }
+
+  // function readFile() {}
+
+  return {
+    rename,
+    remove,
+    createFile,
+    getFiles,
+    saveContent,
+    fileExists,
+  };
 }
 
 export default useFile;

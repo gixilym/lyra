@@ -1,6 +1,6 @@
 import { join } from "@tauri-apps/api/path";
 import toast from "react-hot-toast";
-import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { type NavigateFunction, useMatch, useNavigate } from "react-router-dom";
 import { FOLDER_NAME } from "./consts";
 
 function navigation(): { goTo: (route: string) => void } {
@@ -39,4 +39,16 @@ function nameIsValid(name: string): Boolean {
   return true;
 }
 
-export { notification, navigation, getFilePath, nameIsValid };
+function checkNewRoute(route: string) {
+  const match = useMatch(route);
+
+  if (!route) throw new Error("route is null or undefined");
+
+  if (match?.pathname == route) {
+    console.log("misma ruta " + match?.pathname + " " + route);
+  } else {
+    console.log("dirigiendo... " + match?.pathname + " " + route);
+  }
+}
+
+export { notification, navigation, getFilePath, nameIsValid, checkNewRoute };

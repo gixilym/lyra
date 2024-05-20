@@ -6,4 +6,6 @@ const DOCUMENT_DIRECTORY: { dir: BaseDirectory } = {
 
 const FOLDER_NAME: string = "lyra";
 
-export { DOCUMENT_DIRECTORY, FOLDER_NAME };
+const CONFIG_FILE: string = "config.json";
+
+export { DOCUMENT_DIRECTORY, FOLDER_NAME, CONFIG_FILE };

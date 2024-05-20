@@ -2,17 +2,13 @@ import type { Component } from "../utils/types";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { EyeOff as HiddenIcon, Eye as ShowIcon } from "lucide-react";
-import { configStore } from "../utils/configStore";
+import { configStore } from "../store/configStore";
+import { checkNewRoute } from "../utils/helpers";
 
 function Header(): Component {
-  const [showHeader, setShowHeader] = useState<boolean>(true);
-  const { setSpellCheck } = configStore();
-
-  const [menu, setMenu] = useState({
-    archivo: false,
-    edicion: false,
-    ayuda: false,
-  });
+  const { setSpellCheck } = configStore(),
+    [showHeader, setShowHeader] = useState<boolean>(true),
+    [menu, setMenu] = useState<Menu>(initMenu);
 
   function closeMenu(id: string): void {
     document.getElementById(id)?.removeAttribute("open");
@@ -31,7 +27,7 @@ function Header(): Component {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
       onMouseLeave={onMouseLeave}
-      className="[&>div>details>summary:hover]:text-white text-sm cursor-default absolute top-0 left-0 border-b border-[#383838] w-full justify-between items-center flex text-white/70 px-4 py-1 bg-black/10"
+      className="[&>div>details>summary:hover]:text-white text-sm cursor-default border-b border-[#383838] w-full justify-between items-center flex text-white/70 px-4 py-1 bg-black/10"
     >
       <div className="flex gap-x-4 justify-start items-center">
         <details id="archivo" className="relative">
@@ -104,7 +100,11 @@ function Header(): Component {
 
           {menu.ayuda && (
             <div className="absolute top-6 left-0 border border-t-gray-900/90 border-[#383838] px-4 flex flex-col justify-center items-start w-44 py-1 gap-y-1">
-              <a href="/" className="hover:text-white cursor-default">
+              <a
+                onClick={() => checkNewRoute("/")}
+                href="/"
+                className="hover:text-white cursor-default"
+              >
                 Acerca de
               </a>
               <p className="cursor-default hover:text-white border-t border-[#383838] w-full">
@@ -126,7 +126,7 @@ function Header(): Component {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className="absolute top-0 left-0 bg-transparent w-full justify-end items-center flex px-4 py-1"
+      className="bg-transparent w-full justify-end items-center flex px-4 py-1 border-b border-transparent"
     >
       <HiddenIcon
         color="#ffffff4c"
@@ -139,3 +139,15 @@ function Header(): Component {
 }
 
 export default Header;
+
+const initMenu: Menu = {
+  archivo: false,
+  edicion: false,
+  ayuda: false,
+};
+
+interface Menu {
+  archivo: boolean;
+  edicion: boolean;
+  ayuda: boolean;
+}

@@ -6,7 +6,7 @@ import {
 } from "react";
 import { FilePlus as AddIcon, Folders as FolderIcon } from "lucide-react";
 import { navigation, notification } from "../utils/helpers";
-import { fileStore } from "../utils/fileStore";
+import { fileStore } from "../store/fileStore";
 import { twMerge } from "tailwind-merge";
 import translations from "../translate/dictionary";
 import type { Component, File } from "../utils/types";
@@ -15,7 +15,7 @@ import useFile from "../hooks/useFile";
 function Form(props: Props): Component {
   const dictionary = translations(),
     { goTo } = navigation(),
-    { create } = useFile(), 
+    { createFile } = useFile(),
     { paperIsOpen, setPaperIsOpen } = props,
     [fileName, setFileName] = useState<string>(""),
     newFile: File = { name: fileName, content: "..." },
@@ -32,7 +32,7 @@ function Form(props: Props): Component {
 
   function fileManagement(): void {
     setFileName("");
-    create(newFile.name);
+    createFile(newFile.name);
     notification("success", dictionary.SavedNote);
     updateListFiles(newFile.name);
     setSelectedFile(newFile);
@@ -40,7 +40,7 @@ function Form(props: Props): Component {
   }
 
   return (
-    <form className="flex justify-start items-center w-full text-slate-400 gap-x-3">
+    <form className="flex justify-center items-center w-full text-slate-400 gap-x-3">
       <div className="flex flex-row justify-center items-center">
         <input
           onChange={e => setFileName(e.target.value)}

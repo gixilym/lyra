@@ -3,7 +3,6 @@ import type { Component } from "../utils/types";
 
 function ZoneToOpenList(): Component {
   const { goTo } = navigation();
-
   return (
     <div
       onMouseEnter={() => goTo("/list")}
