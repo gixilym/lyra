@@ -6,6 +6,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 function MainContainer({ children }: PropsWithChildren): Component {
+  addEventListener("contextmenu", event => event.preventDefault());
+
   return (
     <motion.main
       initial={{ opacity: 0 }}

@@ -10,11 +10,10 @@ function ListFiles(): Component {
   const { getFiles } = useFile(),
     { userConfig, paperIsOpen } = configStore(),
     { files, setFiles, fileIsEdited } = fileStore(),
+    [loading, setLoading] = useState<boolean>(true),
     formatFiles: string[] = files.filter(
       name => !userConfig.paper.includes(name)
     );
-
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getFiles()

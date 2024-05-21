@@ -6,7 +6,7 @@ export const fileStore = create((set: any) => ({
   updateListFiles: (name: string) =>
     set((state: any) => ({ files: [...state.files, name] })),
 
-  setFiles: (names: string) => set({ files: names }),
+  setFiles: (names: string[]) => set({ files: names }),
 
   selectedFile: { name: "", content: "" },
 
