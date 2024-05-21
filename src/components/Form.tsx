@@ -1,9 +1,4 @@
-import {
-  type Dispatch,
-  type FormEvent,
-  type SetStateAction,
-  useState,
-} from "react";
+import { type FormEvent, useState } from "react";
 import { FilePlus as AddIcon, Folders as FolderIcon } from "lucide-react";
 import { navigation, notification } from "../utils/helpers";
 import { fileStore } from "../store/fileStore";
@@ -11,12 +6,13 @@ import { twMerge } from "tailwind-merge";
 import translations from "../translate/dictionary";
 import type { Component, File } from "../utils/types";
 import useFile from "../hooks/useFile";
+import { configStore } from "../store/configStore";
 
-function Form(props: Props): Component {
+function Form(): Component {
   const dictionary = translations(),
     { goTo } = navigation(),
     { createFile } = useFile(),
-    { paperIsOpen, setPaperIsOpen } = props,
+    { paperIsOpen, setPaperIsOpen } = configStore(),
     [fileName, setFileName] = useState<string>(""),
     newFile: File = { name: fileName, content: "..." },
     nameIsEmpty: boolean = !fileName,
@@ -58,7 +54,7 @@ function Form(props: Props): Component {
 
       <FolderIcon
         size={25}
-        onClick={() => setPaperIsOpen(!paperIsOpen)}
+        onClick={setPaperIsOpen}
         className={twMerge(
           paperIsOpen ? "bg-black/50" : "bg-black/20",
           "hover:bg-black/50 cursor-pointer border border-gray-600/30 rounded-lg w-11 h-11 p-2 duration-75"
@@ -66,12 +62,6 @@ function Form(props: Props): Component {
       />
     </form>
   );
-}
-
-interface Props {
-  setSearchItem: Dispatch<SetStateAction<string>>;
-  setPaperIsOpen: Dispatch<SetStateAction<boolean>>;
-  paperIsOpen: boolean;
 }
 
 export default Form;

@@ -15,6 +15,11 @@ export const configStore = create((set: any) => ({
       userConfig: { ...state.userConfig, ...newConfig },
     })),
 
+  paperIsOpen: false,
+
+  setPaperIsOpen: () =>
+    set((state: any) => ({ paperIsOpen: !state.paperIsOpen })),
+
   addItemToPaper: (name: string) =>
     set((state: any) => ({
       userConfig: {

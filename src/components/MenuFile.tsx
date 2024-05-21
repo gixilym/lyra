@@ -1,7 +1,7 @@
 import useFile from "../hooks/useFile";
 import { Edit2 as EditIcon, Archive as TrashIcon } from "lucide-react";
 import type { Component } from "../utils/types";
-import { nameIsValid, getFilePath, notification } from "../utils/helpers";
+import { nameIsValid, notification } from "../utils/helpers";
 import translations from "../translate/dictionary";
 import { confirm } from "@tauri-apps/api/dialog";
 import { configStore } from "../store/configStore";
@@ -9,7 +9,7 @@ import { fileStore } from "../store/fileStore";
 
 function MenuFile({ fileName }: { fileName: string }): Component {
   const dictionary = translations();
-  const { rename } = useFile();
+  const { renameFile } = useFile();
   const { editedFile, files: filesArr } = fileStore();
   const { addItemToPaper } = configStore();
 
@@ -28,10 +28,7 @@ function MenuFile({ fileName }: { fileName: string }): Component {
     } else if (newName != null && files.includes(newName)) {
       return notification("error", "El nombre ya existe");
     } else {
-      const oldName: string = `${fileName}.txt`;
-      const { pathFile: oldPath } = await getFilePath(oldName);
-      const { pathFile: newPath } = await getFilePath(`${newName}.txt`);
-      rename(oldPath, newPath);
+      renameFile(fileName, `${newName}`);
       editedFile();
       notification("success", "Nombre editado");
     }

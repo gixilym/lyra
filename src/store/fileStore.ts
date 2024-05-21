@@ -12,7 +12,7 @@ export const fileStore = create((set: any) => ({
 
   setSelectedFile: (snippet: any) => set({ selectedFile: snippet }),
 
-  removeFile: (snippet: any) =>
+  removeFileFromStore: (snippet: any) =>
     set((state: any) => ({
       files: state.files.filter((n: string) => n != snippet),
     })),

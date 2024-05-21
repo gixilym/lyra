@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fileStore } from "../store/fileStore";
 import { configStore } from "../store/configStore";
 import ItemFile from "./ItemFile";
@@ -6,17 +6,21 @@ import type { Component } from "../utils/types";
 import NoMatches from "./NoMatches";
 import useFile from "../hooks/useFile";
 
-function ListFiles(props: Props): Component {
-  const { paperIsOpen } = props,
-    { getFiles } = useFile(),
-    { userConfig } = configStore(),
+function ListFiles(): Component {
+  const { getFiles } = useFile(),
+    { userConfig, paperIsOpen } = configStore(),
     { files, setFiles, fileIsEdited } = fileStore(),
     formatFiles: string[] = files.filter(
       name => !userConfig.paper.includes(name)
     );
 
+  const [loading, setLoading] = useState<boolean>(true);
+
   useEffect(() => {
-    getFiles().then(everyFiles => setFiles(everyFiles));
+    getFiles()
+      .then(everyFiles => setFiles(everyFiles))
+      .then(() => setLoading(false))
+      .catch(() => console.error("Error al cargar los archivos"));
   }, [fileIsEdited]);
 
   function renderFiles() {
@@ -32,17 +36,13 @@ function ListFiles(props: Props): Component {
     );
   }
 
-  return (
-    <ol className="w-full h-6/6 select-none flex flex-col gap-y-2  justify-center items-center">
+  return loading ? (
+    <p className="text-lg text-gray-300 w-full text-center">Cargando...</p>
+  ) : (
+    <ol className="w-full h-6/6 select-none flex flex-col gap-y-2 justify-center items-center">
       {renderFiles()}
     </ol>
   );
-}
-
-interface Props {
-  searchItem: string;
-  paperIsOpen: boolean;
-  setSearchItem: Dispatch<SetStateAction<string>>;
 }
 
 export default ListFiles;

@@ -1,6 +1,6 @@
 import { configStore } from "../store/configStore";
 
-function userLanguage(enText: string, esText: string) {
+function userLanguage(enText: string, esText: string): string {
   const { userConfig } = configStore();
   return userConfig.language == "en" ? enText : esText;
 }

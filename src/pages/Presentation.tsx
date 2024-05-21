@@ -1,17 +1,11 @@
 import type { Component } from "../utils/types";
 import { Feather as FeatherIcon } from "lucide-react";
-import { motion } from "framer-motion";
 import MainContainer from "../components/MainContainer";
 
 function Presentation(): Component {
   return (
     <MainContainer>
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4 }}
-        className="font-sarabun w-full h-full flex flex-col justify-center items-center gap-y-8 relative"
-      >
+      <section className="font-sarabun w-full h-full flex flex-col justify-center items-center gap-y-8 relative">
         <div className="w-full flex flex-row justify-center gap-x-14 items-center">
           <h1 className="text-7xl text-gray-200">
             <span className="text-indigo-500">l</span>y
@@ -44,7 +38,7 @@ function Presentation(): Component {
             Desarrollado por Gixi
           </a>
         </div>
-      </motion.section>
+      </section>
     </MainContainer>
   );
 }

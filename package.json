@@ -13,8 +13,10 @@
     "@fontsource/ia-writer-duo": "^5.0.11",
     "@fontsource/sarabun": "^5.0.20",
     "@tauri-apps/api": "^1.5.1",
+    "bind-mousetrap-global": "^1.0.1",
     "framer-motion": "^10.16.5",
     "lucide-react": "^0.378.0",
+    "mousetrap": "^1.6.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1",
+    "@types/mousetrap": "^1.6.15",
     "@types/node": "^20.11.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",

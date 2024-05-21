@@ -1,11 +1,9 @@
 import { BaseDirectory } from "@tauri-apps/api/fs";
 
-const DOCUMENT_DIRECTORY: { dir: BaseDirectory } = {
-  dir: BaseDirectory.Document,
-};
+const BASE_DIRECTORY: { dir: BaseDirectory } = { dir: BaseDirectory.Document };
 
 const FOLDER_NAME: string = "lyra";
 
-const CONFIG_FILE: string = "config.json";
+const CONFIG_NAME: string = "config.json";
 
-export { DOCUMENT_DIRECTORY, FOLDER_NAME, CONFIG_FILE };
+export { BASE_DIRECTORY, FOLDER_NAME, CONFIG_NAME };
