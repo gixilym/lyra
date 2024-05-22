@@ -5,21 +5,20 @@ import ItemFile from "./ItemFile";
 import type { Component } from "../utils/types";
 import NoMatches from "./NoMatches";
 import useFile from "../hooks/useFile";
+import { confirm as confirmDialog } from "@tauri-apps/api/dialog";
 
 function ListFiles(): Component {
   const { getFiles } = useFile(),
     { userConfig, paperIsOpen } = configStore(),
     { files, setFiles, fileIsEdited } = fileStore(),
     [loading, setLoading] = useState<boolean>(true),
-    formatFiles: string[] = files.filter(
-      name => !userConfig.paper.includes(name)
-    );
+    formatFiles: string[] = files.filter(f => !userConfig.paper.includes(f));
 
   useEffect(() => {
     getFiles()
       .then(everyFiles => setFiles(everyFiles))
       .then(() => setLoading(false))
-      .catch(() => console.error("Error al cargar los archivos"));
+      .catch(() => confirmDialog("Error al cargar los archivos"));
   }, [fileIsEdited]);
 
   function renderFiles() {

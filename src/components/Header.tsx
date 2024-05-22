@@ -20,7 +20,7 @@ function Header(): Component {
   return showHeader ? (
     <header
       onMouseLeave={onMouseLeave}
-      className="select-none [&>div>details>summary:hover]:text-white text-sm cursor-default border-b border-[#383838] w-full justify-between items-center flex text-white/70 px-4 py-1 bg-black/10"
+      className="select-none [&>div>details>summary:hover]:text-white text-sm cursor-default border-b border-[#252525] w-full justify-between items-center flex text-white/70 px-4 py-1 bg-black/10"
     >
       <div className="flex gap-x-4 justify-start items-center">
         <details id="archivo" className="relative">

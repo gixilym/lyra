@@ -12,11 +12,11 @@ import "@fontsource/ia-writer-duo";
 addGlobalBinds(mousetrap);
 
 function FileContent(): Component {
-  const { selectedFile } = fileStore();
-  const { spellCheck, setSpellCheck } = configStore();
-  const { saveFileContent } = useFile();
-  const [content, setContent] = useState<string>(selectedFile.content || "");
-  const CommandListener: any = mousetrap;
+  const CommandListener: any = mousetrap,
+    { selectedFile } = fileStore(),
+    { spellCheck, setSpellCheck } = configStore(),
+    { saveFileContent } = useFile(),
+    [content, setContent] = useState<string>(selectedFile.content || "");
 
   CommandListener.bindGlobal("ctrl+m", () => activateSpelling());
 
@@ -43,7 +43,7 @@ function FileContent(): Component {
           spellCheck={spellCheck}
           autoFocus
           lang="es"
-          className="font-duo text-center w-full bg-transparent min-h-screen outline-none resize-none text-gray-200/90 tracking-tight text-lg"
+          className="pb-20 font-duo text-center w-full bg-transparent min-h-screen outline-none resize-none text-gray-200/90 tracking-tight text-lg"
         />
       </div>
     </MainContainer>
@@ -51,3 +51,16 @@ function FileContent(): Component {
 }
 
 export default FileContent;
+
+{
+  /* <div className="h-full flex justify-center items-center w-full min-w-[600px] max-w-[800px] bg-transparent">
+        <textarea
+          value={content}
+          onChange={e => setContent(e.target.value)}
+          spellCheck={spellCheck}
+          autoFocus
+          lang="es"
+          className="font-duo text-center w-full bg-transparent min-h-screen outline-none resize-none text-gray-200/90 tracking-tight text-lg"
+        />
+      </div> */
+}
