@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { PathMatch } from "react-router-dom";
 
 type Component = ReactNode;
 
@@ -16,4 +17,15 @@ interface Config {
   paper: string[];
 }
 
-export type { Component, File, Config };
+interface Pages {
+  presentation: string;
+  list: string;
+  backupcopy: string;
+  contact: string;
+  preferences: string;
+  file: string;
+}
+
+type Match = PathMatch<string> | null;
+
+export type { Component, File, Config, Match, Pages };
