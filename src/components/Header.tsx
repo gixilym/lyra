@@ -1,6 +1,7 @@
 import type { Component } from "../utils/types";
 import { useState } from "react";
 import { EyeOff as HiddenIcon, Eye as ShowIcon } from "lucide-react";
+import { PAGES } from "../utils/consts";
 
 function Header(): Component {
   const [showHeader, setShowHeader] = useState<boolean>(true);
@@ -37,19 +38,19 @@ function Header(): Component {
           {menu.archivo && (
             <div className="absolute top-6 left-0 border border-t-gray-900/90 border-[#383838] px-4 flex flex-col justify-center items-start w-44 py-2 gap-y-2 bg-[#1d1d1d]">
               <a
-                href="/list"
+                href={PAGES.list}
                 className="cursor-default hover:text-white w-full"
               >
                 Lista
               </a>
               <a
-                href="/preferences"
+                href={PAGES.preferences}
                 className="cursor-default hover:text-white w-full"
               >
                 Preferencias
               </a>
               <a
-                href="/backupcopy"
+                href={PAGES.backupcopy}
                 className="cursor-default hover:text-white w-full"
               >
                 Copia de seguridad
@@ -70,7 +71,7 @@ function Header(): Component {
           </summary>
 
           {menu.comandos && (
-            <div className="absolute top-6 left-0 border border-t-gray-900/90 border-[#383838] px-4 flex flex-col justify-center items-start w-56 py-2 gap-y-2 bg-[#1d1d1d]">
+            <div className="absolute top-6 left-0 border border-t-gray-900/90 border-[#383838] px-4 flex flex-col justify-center items-start w-72 py-2 gap-y-2 bg-[#1d1d1d]">
               <div className="cursor-default w-full flex justify-between items-center gap-x-4">
                 <p>Buscar</p>
                 <kbd> CTRL + F</kbd>
@@ -78,6 +79,14 @@ function Header(): Component {
               <div className="cursor-default w-full flex justify-between items-center gap-x-4">
                 <p>Revisar ortografía</p>
                 <kbd> CTRL + M</kbd>
+              </div>
+              <div className="cursor-default w-full flex justify-between items-center gap-x-4">
+                <p>Reducir tamaño de texto</p>
+                <kbd> CTRL + B</kbd>
+              </div>
+              <div className="cursor-default w-full flex justify-between items-center gap-x-4">
+                <p>Aumentar tamaño de texto</p>
+                <kbd> CTRL + N</kbd>
               </div>
             </div>
           )}
@@ -96,11 +105,14 @@ function Header(): Component {
 
           {menu.ayuda && (
             <div className="absolute top-6 left-0 border border-t-gray-900/90 border-[#383838] px-4 flex flex-col justify-center items-start w-44 py-2 gap-y-2 bg-[#1d1d1d]">
-              <a href="/" className="hover:text-white cursor-default">
+              <a
+                href={PAGES.presentation}
+                className="hover:text-white cursor-default"
+              >
                 Acerca de
               </a>
               <a
-                href="/contact"
+                href={PAGES.contact}
                 className="cursor-default hover:text-white w-full"
               >
                 Contacto
@@ -141,6 +153,3 @@ interface Menu {
   comandos: boolean;
   ayuda: boolean;
 }
-
-//! tipar
-//! traducciones de texto

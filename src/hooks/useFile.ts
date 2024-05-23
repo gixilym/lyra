@@ -7,10 +7,16 @@ import {
   exists,
   readTextFile,
 } from "@tauri-apps/api/fs";
-import { CONFIG_NAME, BASE_DIRECTORY, FOLDER_NAME } from "../utils/consts";
+import {
+  CONFIG_NAME,
+  BASE_DIRECTORY,
+  MAIN_FOLDER,
+  PAGES,
+} from "../utils/consts";
 import { navigation } from "../utils/helpers";
 import { join } from "@tauri-apps/api/path";
 import { fileStore } from "../store/fileStore";
+import { Config } from "../utils/types";
 
 function useFile(): FilesFunctions {
   const { goTo } = navigation();
@@ -18,7 +24,7 @@ function useFile(): FilesFunctions {
 
   async function getFilePath(fileName: string): Promise<{ pathFile: string }> {
     fileName = fileName.includes(CONFIG_NAME) ? CONFIG_NAME : `${fileName}.txt`;
-    const pathFile: string = await join(FOLDER_NAME, fileName);
+    const pathFile: string = await join(MAIN_FOLDER, fileName);
     return { pathFile };
   }
 
@@ -41,7 +47,7 @@ function useFile(): FilesFunctions {
   }
 
   async function getFiles(): Promise<string[]> {
-    const dir: FileEntry[] = await readDir(FOLDER_NAME, BASE_DIRECTORY);
+    const dir: FileEntry[] = await readDir(MAIN_FOLDER, BASE_DIRECTORY);
     const bayConfig: FileEntry[] = dir.filter(f => f.name != CONFIG_NAME);
     const files: any = bayConfig.map(f => f.name?.split(".txt")[0]);
     const sortedFiles: string[] = files.sort((a: string, b: string) =>
@@ -52,14 +58,19 @@ function useFile(): FilesFunctions {
 
   async function saveFileContent(name: string, content: string): Promise<void> {
     if (!name) {
-      return goTo("/list");
+      return goTo(PAGES.list);
     } else {
       const { pathFile } = await getFilePath(name);
       writeTextFile({ path: pathFile, contents: content }, BASE_DIRECTORY);
     }
   }
 
-  async function fileExists(path: string): Promise<boolean> {
+  async function fileExists(
+    name: string,
+    searchOutDir?: boolean
+  ): Promise<boolean> {
+    const { pathFile } = await getFilePath(name);
+    const path = searchOutDir ? name : pathFile;
     const file: boolean = await exists(path, BASE_DIRECTORY);
     return file;
   }
@@ -68,6 +79,11 @@ function useFile(): FilesFunctions {
     const { pathFile } = await getFilePath(name);
     const content: string = await readTextFile(pathFile, BASE_DIRECTORY);
     return content;
+  }
+
+  async function writeFile(name: string, text: string | Config): Promise<void> {
+    const { pathFile } = await getFilePath(name);
+    writeTextFile(pathFile, JSON.stringify(text), BASE_DIRECTORY);
   }
 
   return {
@@ -79,6 +95,7 @@ function useFile(): FilesFunctions {
     saveFileContent,
     fileExists,
     getFilePath,
+    writeFile,
   };
 }
 
@@ -91,6 +108,7 @@ interface FilesFunctions {
   createFile: (name: string) => void;
   getFiles: () => Promise<string[]>;
   saveFileContent: (name: string, content: string) => void;
-  fileExists: (path: string) => Promise<boolean>;
+  fileExists: (name: string, searchOutDir?: boolean) => Promise<boolean>;
   getFilePath: (fileName: string) => Promise<{ pathFile: string }>;
+  writeFile: (name: string, text: string) => Promise<void>;
 }

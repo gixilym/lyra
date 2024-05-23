@@ -28,6 +28,7 @@
         "readFile": true,
         "removeFile": true,
         "renameFile": true,
+        "createDir": true,
         "scope": [
           "$DOCUMENT/**/**"
         ],

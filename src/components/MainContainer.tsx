@@ -8,10 +8,10 @@ import { invoke } from "@tauri-apps/api";
 
 function MainContainer({ children }: PropsWithChildren): Component {
   const textarea: Textarea = document.querySelector("textarea");
-  textarea?.addEventListener("contextmenu", event => event.stopPropagation());
-  window.addEventListener("contextmenu", event => event.preventDefault());
+  textarea?.addEventListener("contextmenu", e => e.stopPropagation());
+  window.addEventListener("contextmenu", e => e.preventDefault());
 
-  invoke("greet", { name: "sexo tilin" }).then(res => console.log(res));
+  invoke("greet", { name: "sexo tilin" }).then(res => console.info(res));
 
   return (
     <motion.main

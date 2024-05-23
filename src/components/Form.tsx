@@ -7,6 +7,7 @@ import translations from "../translate/dictionary";
 import type { Component, File } from "../utils/types";
 import useFile from "../hooks/useFile";
 import { configStore } from "../store/configStore";
+import { PAGES } from "../utils/consts";
 
 function Form(): Component {
   const dictionary = translations(),
@@ -29,10 +30,9 @@ function Form(): Component {
   function fileManagement(): void {
     setFileName("");
     createFile(newFile.name);
-    notification("success", dictionary.SavedNote);
     updateListFiles(newFile.name);
     setSelectedFile(newFile);
-    goTo("/file");
+    goTo(PAGES.file);
   }
 
   return (

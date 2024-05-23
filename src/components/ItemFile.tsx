@@ -10,15 +10,16 @@ import { configStore } from "../store/configStore";
 import useConfig from "../hooks/useConfig";
 import useFile from "../hooks/useFile";
 import Dialog from "sweetalert2";
+import { PAGES } from "../utils/consts";
 
-function ItemFile(props: Props): Component {
+function ItemFile({ fileName }: { fileName: string }): Component {
   const { goTo } = navigation(),
     dictionary = translations(),
-    { fileName, paperIsOpen } = props,
     { updateUserConfig } = useConfig(),
     { deleteFile, readFile } = useFile(),
     { setSelectedFile, updateListFiles, removeFileFromStore } = fileStore(),
-    { userConfig, setUserConfig, removeItemFromPaper } = configStore();
+    { userConfig, setUserConfig, removeItemFromPaper, paperIsOpen } =
+      configStore();
 
   useEffect(() => {
     updateUserConfig(userConfig);
@@ -28,7 +29,7 @@ function ItemFile(props: Props): Component {
     const fileContent: string = await readFile(fileName);
     const newSelectedFile: File = { name: fileName, content: fileContent };
     setSelectedFile(newSelectedFile);
-    goTo("/file");
+    goTo(PAGES.file);
   }
 
   async function recoveryPaperItem(event: any): Promise<void> {
@@ -106,8 +107,3 @@ function ItemFile(props: Props): Component {
 }
 
 export default ItemFile;
-
-interface Props {
-  fileName: string;
-  paperIsOpen?: boolean;
-}

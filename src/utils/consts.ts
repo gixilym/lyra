@@ -3,7 +3,7 @@ import type { Pages } from "./types";
 
 const BASE_DIRECTORY: { dir: BaseDirectory } = { dir: BaseDirectory.Document };
 
-const FOLDER_NAME: string = "lyra";
+const MAIN_FOLDER: string = "lyra";
 
 const CONFIG_NAME: string = "config.json";
 
@@ -16,4 +16,4 @@ const PAGES: Pages = {
   file: "/file",
 };
 
-export { BASE_DIRECTORY, FOLDER_NAME, CONFIG_NAME, PAGES };
+export { BASE_DIRECTORY, MAIN_FOLDER, CONFIG_NAME, PAGES };

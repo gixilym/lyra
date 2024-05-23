@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { fileStore } from "../store/fileStore";
 import { configStore } from "../store/configStore";
 import ItemFile from "./ItemFile";
@@ -11,26 +11,22 @@ function ListFiles(): Component {
     { userConfig, paperIsOpen } = configStore(),
     { files, setFiles, fileIsEdited } = fileStore(),
     [loading, setLoading] = useState<boolean>(true),
-    formatFiles: string[] = files.filter(f => !userConfig.paper.includes(f));
+    formatFiles: string[] = useMemo(
+      () => files.filter(f => !userConfig.paper.includes(f)),
+      [files, userConfig.paper]
+    );
 
   useEffect(() => {
     getFiles()
       .then(userFiles => setFiles(userFiles))
-      .catch(err => console.error("Error obteniendo archivos: ", err.message))
       .finally(() => setLoading(false));
   }, [fileIsEdited]);
 
   function renderFiles(): Component {
-    const arr: string[] = paperIsOpen ? userConfig.paper : formatFiles;
-    const hasFiles: boolean = arr.length > 0;
-
-    return hasFiles ? (
-      arr.map((name: string) => (
-        <ItemFile paperIsOpen={paperIsOpen} fileName={name} key={name} />
-      ))
-    ) : (
-      <NoFiles />
-    );
+    const arr = paperIsOpen ? userConfig.paper : formatFiles;
+    const hasFiles = arr.length > 0;
+    if (!hasFiles) return <NoFiles />;
+    else return arr.map((n: string) => <ItemFile fileName={n} key={n} />);
   }
 
   return loading ? (

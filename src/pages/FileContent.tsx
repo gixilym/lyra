@@ -8,6 +8,7 @@ import { notification } from "../utils/helpers";
 import mousetrap from "mousetrap";
 import addGlobalBinds from "bind-mousetrap-global";
 import "@fontsource/ia-writer-duo";
+import { twMerge } from "tailwind-merge";
 
 addGlobalBinds(mousetrap);
 
@@ -16,9 +17,21 @@ function FileContent(): Component {
     { selectedFile } = fileStore(),
     { spellCheck, setSpellCheck } = configStore(),
     { saveFileContent } = useFile(),
-    [content, setContent] = useState<string>(selectedFile.content || "");
+    [content, setContent] = useState<string>(selectedFile.content || ""),
+    size: string = localStorage.getItem("font-size") ?? "text-lg",
+    [fontSize, setFontSize] = useState<string>(size);
 
+  CommandListener.bindGlobal("ctrl+j", (e: Event) => e.preventDefault());
+  CommandListener.bindGlobal("ctrl+g", (e: Event) => e.preventDefault());
   CommandListener.bindGlobal("ctrl+m", () => activateSpelling());
+  CommandListener.bindGlobal("ctrl+b", () => {
+    setFontSize("text-lg");
+    localStorage.setItem("font-size", "text-lg");
+  });
+  CommandListener.bindGlobal("ctrl+n", () => {
+    setFontSize("text-xl");
+    localStorage.setItem("font-size", "text-xl");
+  });
 
   useEffect(() => {
     saveFileContent(selectedFile.name, content);
@@ -43,7 +56,10 @@ function FileContent(): Component {
           spellCheck={spellCheck}
           autoFocus
           lang="es"
-          className="pb-20 font-duo text-center w-full bg-transparent min-h-screen outline-none resize-none text-gray-200/90 tracking-tight text-lg"
+          className={twMerge(
+            fontSize,
+            "pb-20 font-duo text-center w-full bg-transparent min-h-screen outline-none resize-none text-gray-200/90 tracking-tight"
+          )}
         />
       </div>
     </MainContainer>

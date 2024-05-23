@@ -10,7 +10,7 @@ edition = "2021"
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [
+tauri = { version = "1", features = [ "fs-create-dir",
     "fs-rename-file",
     "shell-open",
     "fs-exists",

@@ -1,22 +1,23 @@
-import { readTextFile, writeTextFile } from "@tauri-apps/api/fs";
-import { CONFIG_NAME, BASE_DIRECTORY } from "../utils/consts";
+import { CONFIG_NAME } from "../utils/consts";
 import type { Config } from "../utils/types";
 import { configStore } from "../store/configStore";
 import useFile from "./useFile";
 
-function useConfig() {
+function useConfig(): ConfigFunctions {
   const { setUserConfig } = configStore();
-  const { fileExists, createFile, getFilePath } = useFile();
+  const { fileExists, createFile, getFilePath, writeFile, readFile } =
+    useFile();
 
-  async function updateUserConfig(config: Config): Promise<void> {
-    const { pathFile } = await getFilePath(CONFIG_NAME);
-    writeTextFile(pathFile, JSON.stringify(config), BASE_DIRECTORY);
+  function updateUserConfig(config: Config): void {
+    writeFile(CONFIG_NAME, String(config));
   }
+
+  //! crear funciones personalizadas para leer configuraciones
 
   async function recoveryUserConfig(): Promise<void> {
     const { pathFile } = await getFilePath(CONFIG_NAME);
     const fileAlreadyExists: boolean = await fileExists(pathFile);
-    const config: string = await readTextFile(pathFile, BASE_DIRECTORY);
+    const config: string = await readFile(pathFile);
     if (fileAlreadyExists) setUserConfig(JSON.parse(config));
     else createFile(pathFile);
   }
@@ -25,3 +26,8 @@ function useConfig() {
 }
 
 export default useConfig;
+
+interface ConfigFunctions {
+  updateUserConfig: (config: Config) => void;
+  recoveryUserConfig: () => Promise<void>;
+}

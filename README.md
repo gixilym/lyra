@@ -1,1 +1,1 @@
-# lyra
+# lyra: escritura enfocada
