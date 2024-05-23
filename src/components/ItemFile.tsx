@@ -1,7 +1,5 @@
-import { confirm as confirmDialog } from "@tauri-apps/api/dialog";
 import { fileStore } from "../store/fileStore";
 import { motion } from "framer-motion";
-import { toast } from "react-hot-toast";
 import translations from "../translate/dictionary";
 import type { Component, File } from "../utils/types";
 import { ArrowUpLeft as RecoveryIcon, Trash as RemoveIcon } from "lucide-react";
@@ -11,14 +9,15 @@ import { useEffect } from "react";
 import { configStore } from "../store/configStore";
 import useConfig from "../hooks/useConfig";
 import useFile from "../hooks/useFile";
+import Dialog from "sweetalert2";
 
 function ItemFile(props: Props): Component {
   const { goTo } = navigation(),
     dictionary = translations(),
     { fileName, paperIsOpen } = props,
     { updateUserConfig } = useConfig(),
-    { setSelectedFile, updateListFiles, removeFileFromStore } = fileStore(),
     { deleteFile, readFile } = useFile(),
+    { setSelectedFile, updateListFiles, removeFileFromStore } = fileStore(),
     { userConfig, setUserConfig, removeItemFromPaper } = configStore();
 
   useEffect(() => {
@@ -32,26 +31,28 @@ function ItemFile(props: Props): Component {
     goTo("/file");
   }
 
-  async function recoveryPaperItem(): Promise<void> {
-    const recovery = await confirmDialog(
-      `${dictionary.RestoreQuestion} ${fileName}?`,
-      { title: "lyra", type: "warning" }
-    );
-
-    if (recovery) {
-      setUserConfig({
-        paper: userConfig.paper.filter((item: any) => item != fileName),
-      });
-      updateListFiles(fileName);
-      toast(`${dictionary.RestoreSuccess} ${fileName}`, {
-        icon: "❤️",
-        duration: 2000,
-        style: {
-          backgroundColor: "#202020",
-          color: "#69ff44",
-        },
-      });
-    }
+  async function recoveryPaperItem(event: any): Promise<void> {
+    event.stopPropagation();
+    Dialog.fire({
+      title: "¿Estás seguro?",
+      text: "Recuperar archivo",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Recuperar",
+      cancelButtonText: "Cancelar",
+      background: "#202020",
+      color: "#fff",
+    }).then(res => {
+      if (res.isConfirmed) {
+        setUserConfig({
+          paper: userConfig.paper.filter((item: any) => item != fileName),
+        });
+        updateListFiles(fileName);
+        notification("success", dictionary.RestoreSuccess);
+      }
+    });
   }
 
   function removeFileFromEvery(): void {
@@ -60,16 +61,24 @@ function ItemFile(props: Props): Component {
     deleteFile(fileName);
   }
 
-  async function removeItem(): Promise<void> {
-    const confirm = await confirmDialog(`Deseas eliminar ${fileName}?`, {
-      title: "lyra",
-      type: "warning",
+  async function removeItem(event: any): Promise<void> {
+    event.stopPropagation();
+    Dialog.fire({
+      title: "¿Estás seguro?",
+      text: "Eliminar archivo",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "Cancelar",
+      background: "#202020",
+      color: "#fff",
+    }).then(res => {
+      if (res.isConfirmed) {
+        removeFileFromEvery();
+        notification("success", "Archivo eliminado");
+      }
     });
-
-    if (confirm) {
-      removeFileFromEvery();
-      notification("success", "Archivo eliminado");
-    }
   }
 
   return (
@@ -86,20 +95,8 @@ function ItemFile(props: Props): Component {
 
       {paperIsOpen ? (
         <div className="flex justify-center items-start gap-x-2">
-          <RecoveryIcon
-            onClick={event => {
-              event.stopPropagation();
-              recoveryPaperItem();
-            }}
-            size={23}
-          />
-          <RemoveIcon
-            onClick={event => {
-              event.stopPropagation();
-              removeItem();
-            }}
-            size={20}
-          />
+          <RecoveryIcon onClick={recoveryPaperItem} size={23} />
+          <RemoveIcon onClick={removeItem} size={20} />
         </div>
       ) : (
         <MenuFile fileName={fileName} />

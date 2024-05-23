@@ -3,9 +3,8 @@ import { fileStore } from "../store/fileStore";
 import { configStore } from "../store/configStore";
 import ItemFile from "./ItemFile";
 import type { Component } from "../utils/types";
-import NoMatches from "./NoMatches";
 import useFile from "../hooks/useFile";
-import { confirm as confirmDialog } from "@tauri-apps/api/dialog";
+import NoFiles from "./NoFiles";
 
 function ListFiles(): Component {
   const { getFiles } = useFile(),
@@ -16,12 +15,12 @@ function ListFiles(): Component {
 
   useEffect(() => {
     getFiles()
-      .then(everyFiles => setFiles(everyFiles))
-      .then(() => setLoading(false))
-      .catch(() => confirmDialog("Error al cargar los archivos"));
+      .then(userFiles => setFiles(userFiles))
+      .catch(err => console.error("Error obteniendo archivos: ", err.message))
+      .finally(() => setLoading(false));
   }, [fileIsEdited]);
 
-  function renderFiles() {
+  function renderFiles(): Component {
     const arr: string[] = paperIsOpen ? userConfig.paper : formatFiles;
     const hasFiles: boolean = arr.length > 0;
 
@@ -30,7 +29,7 @@ function ListFiles(): Component {
         <ItemFile paperIsOpen={paperIsOpen} fileName={name} key={name} />
       ))
     ) : (
-      <NoMatches />
+      <NoFiles />
     );
   }
 

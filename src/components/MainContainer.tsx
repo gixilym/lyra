@@ -1,12 +1,14 @@
 import { type PropsWithChildren } from "react";
-import type { Component } from "../utils/types";
+import type { Component, Textarea } from "../utils/types";
 import { motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 import Header from "./Header";
 import Footer from "./Footer";
 
 function MainContainer({ children }: PropsWithChildren): Component {
-  addEventListener("contextmenu", event => event.preventDefault());
+  const textarea: Textarea = document.querySelector("textarea");
+  textarea?.addEventListener("contextmenu", event => event.stopPropagation());
+  window.addEventListener("contextmenu", event => event.preventDefault());
 
   return (
     <motion.main

@@ -10,9 +10,11 @@ import {
 import { CONFIG_NAME, BASE_DIRECTORY, FOLDER_NAME } from "../utils/consts";
 import { navigation } from "../utils/helpers";
 import { join } from "@tauri-apps/api/path";
+import { fileStore } from "../store/fileStore";
 
 function useFile(): FilesFunctions {
   const { goTo } = navigation();
+  const { editedFile } = fileStore();
 
   async function getFilePath(fileName: string): Promise<{ pathFile: string }> {
     fileName = fileName.includes(CONFIG_NAME) ? CONFIG_NAME : `${fileName}.txt`;
@@ -24,6 +26,7 @@ function useFile(): FilesFunctions {
     const { pathFile: oldPath } = await getFilePath(oldName);
     const { pathFile: newPath } = await getFilePath(newName);
     rename(oldPath, newPath, BASE_DIRECTORY);
+    editedFile();
   }
 
   async function deleteFile(name: string): Promise<void> {

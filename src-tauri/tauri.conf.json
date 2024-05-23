@@ -19,8 +19,8 @@
       "dialog": {
         "all": false,
         "ask": false,
-        "confirm": true,
-        "message": true,
+        "confirm": false,
+        "message": false,
         "open": false,
         "save": false
       },
