@@ -4,11 +4,14 @@ import { motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 import Header from "./Header";
 import Footer from "./Footer";
+import { invoke } from "@tauri-apps/api";
 
 function MainContainer({ children }: PropsWithChildren): Component {
   const textarea: Textarea = document.querySelector("textarea");
   textarea?.addEventListener("contextmenu", event => event.stopPropagation());
   window.addEventListener("contextmenu", event => event.preventDefault());
+
+  invoke("greet", { name: "sexo tilin" }).then(res => console.log(res));
 
   return (
     <motion.main

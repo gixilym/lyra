@@ -9,7 +9,7 @@ function Presentation(): Component {
 
   return (
     <MainContainer>
-      <section className="font-sarabun w-full max-w-[600px] h-full min-h-[270px] flex flex-col justify-between items-center mt-10">
+      <section className="w-full max-w-[600px] h-full min-h-[270px] flex flex-col justify-between items-center mt-10">
         <div className="w-full flex justify-start items-end">
           <h1 className="text-7xl text-gray-200">
             <span className="text-indigo-500">l</span>y

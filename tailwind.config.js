@@ -4,7 +4,6 @@ export default {
   theme: {
     extend: {},
     fontFamily: {
-      sarabun: ["sarabun", "system-ui"],
       duo: ["iA Writer Duo", "system-ui"],
     },
   },
