@@ -7,28 +7,23 @@ import {
   exists,
   readTextFile,
 } from "@tauri-apps/api/fs";
-import {
-  CONFIG_NAME,
-  BASE_DIRECTORY,
-  MAIN_FOLDER,
-  PAGES,
-} from "../utils/consts";
+import { BASE_DIRECTORY, MAIN_FOLDER, PAGES } from "../utils/consts";
 import { navigation } from "../utils/helpers";
 import { join } from "@tauri-apps/api/path";
 import { fileStore } from "../store/fileStore";
-import { Config } from "../utils/types";
 
 function useFile(): FilesFunctions {
   const { goTo } = navigation();
   const { editedFile } = fileStore();
 
   async function getFilePath(fileName: string): Promise<{ pathFile: string }> {
-    fileName = fileName.includes(CONFIG_NAME) ? CONFIG_NAME : `${fileName}.txt`;
-    const pathFile: string = await join(MAIN_FOLDER, fileName);
+    if (!fileName) Promise.reject();
+    const pathFile: string = await join(MAIN_FOLDER, `${fileName}.txt`);
     return { pathFile };
   }
 
   async function renameFile(oldName: string, newName: string): Promise<void> {
+    if (!oldName || !newName) Promise.reject();
     const { pathFile: oldPath } = await getFilePath(oldName);
     const { pathFile: newPath } = await getFilePath(newName);
     rename(oldPath, newPath, BASE_DIRECTORY);
@@ -36,43 +31,32 @@ function useFile(): FilesFunctions {
   }
 
   async function deleteFile(name: string): Promise<void> {
+    if (!name) Promise.reject();
     const { pathFile } = await getFilePath(name);
     remove(pathFile, BASE_DIRECTORY);
   }
 
-  async function createFile(name: string): Promise<void> {
-    name = name.includes(CONFIG_NAME) ? CONFIG_NAME : name;
-    const { pathFile } = await getFilePath(name);
-    writeTextFile({ path: pathFile, contents: "..." }, BASE_DIRECTORY);
+  function createFile(name: string): void {
+    if (!name) Promise.reject();
+    else writeFile(name, "...");
   }
 
   async function getFiles(): Promise<string[]> {
-    const dir: FileEntry[] = await readDir(MAIN_FOLDER, BASE_DIRECTORY);
-    const bayConfig: FileEntry[] = dir.filter(f => f.name != CONFIG_NAME);
-    const files: any = bayConfig.map(f => f.name?.split(".txt")[0]);
-    const sortedFiles: string[] = files.sort((a: string, b: string) =>
-      a.localeCompare(b)
-    );
-    return sortedFiles;
+    let dir: any = await readDir(MAIN_FOLDER, BASE_DIRECTORY);
+    dir = dir.map((f: FileEntry) => f.name?.split(".txt")[0]);
+    dir = dir.sort((a: string, b: string) => a.localeCompare(b));
+    return dir;
   }
 
-  async function saveFileContent(name: string, content: string): Promise<void> {
-    if (!name) {
-      return goTo(PAGES.list);
-    } else {
-      const { pathFile } = await getFilePath(name);
-      writeTextFile({ path: pathFile, contents: content }, BASE_DIRECTORY);
-    }
-  }
-
-  async function fileExists(
-    name: string,
-    searchOutDir?: boolean
-  ): Promise<boolean> {
+  async function fileExists(name: string): Promise<boolean> {
     const { pathFile } = await getFilePath(name);
-    const path = searchOutDir ? name : pathFile;
-    const file: boolean = await exists(path, BASE_DIRECTORY);
+    const file: boolean = await exists(pathFile, BASE_DIRECTORY);
     return file;
+  }
+
+  function saveFileContent(name: string, content: string): void {
+    if (!name) Promise.resolve(goTo(PAGES.list));
+    else writeFile(name, content);
   }
 
   async function readFile(name: string): Promise<string> {
@@ -81,9 +65,9 @@ function useFile(): FilesFunctions {
     return content;
   }
 
-  async function writeFile(name: string, text: string | Config): Promise<void> {
+  async function writeFile(name: string, text: string): Promise<void> {
     const { pathFile } = await getFilePath(name);
-    writeTextFile(pathFile, JSON.stringify(text), BASE_DIRECTORY);
+    writeTextFile(pathFile, text, BASE_DIRECTORY);
   }
 
   return {
@@ -102,13 +86,13 @@ function useFile(): FilesFunctions {
 export default useFile;
 
 interface FilesFunctions {
-  readFile: (name: string) => Promise<string>;
   renameFile: (oldName: string, newName: string) => Promise<void>;
-  deleteFile: (name: string) => void;
+  deleteFile: (name: string) => Promise<void>;
   createFile: (name: string) => void;
   getFiles: () => Promise<string[]>;
+  fileExists: (name: string) => Promise<boolean>;
   saveFileContent: (name: string, content: string) => void;
-  fileExists: (name: string, searchOutDir?: boolean) => Promise<boolean>;
   getFilePath: (fileName: string) => Promise<{ pathFile: string }>;
+  readFile: (name: string) => Promise<string>;
   writeFile: (name: string, text: string) => Promise<void>;
 }

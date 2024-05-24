@@ -4,11 +4,13 @@ import { navigation } from "../utils/helpers";
 import { motion } from "framer-motion";
 import { useMatch } from "react-router-dom";
 import { PAGES } from "../utils/consts";
+import useStorage from "../hooks/useStorage";
 
 function ZoneToOpenList(): Component {
   const { goTo } = navigation(),
+    { getItem, setItem } = useStorage(),
     [showMessage, setShowMessage] = useState<boolean>(true),
-    messageDisplayed: string | null = localStorage.getItem("list-msg"),
+    messageDisplayed: string | null = getItem("list-msg"),
     match: Match = useMatch(PAGES.file),
     pathIsFile: boolean = PAGES.file == match?.pathname;
 
@@ -35,7 +37,7 @@ function ZoneToOpenList(): Component {
         <button
           onClick={() => {
             setShowMessage(false);
-            localStorage.setItem("list-msg", "true");
+            setItem("list-msg", "true");
           }}
           className="bg-green-400 text-gray-800 border-2 border-green-600 rounded-lg px-5 py-1 font-semibold text-lg duration-75"
         >

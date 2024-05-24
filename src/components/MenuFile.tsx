@@ -2,17 +2,17 @@ import { Edit2 as EditIcon, Archive as TrashIcon } from "lucide-react";
 import type { Component } from "../utils/types";
 import { nameIsValid, notification } from "../utils/helpers";
 import translations from "../translate/dictionary";
-import { configStore } from "../store/configStore";
 import { fileStore } from "../store/fileStore";
 import useFile from "../hooks/useFile";
 import Dialog from "sweetalert2";
+import useStorage from "../hooks/useStorage";
 
 function MenuFile({ fileName }: { fileName: string }): Component {
-  const dictionary = translations();
-  const { addItemToPaper } = configStore();
-  const { files: filesArr } = fileStore();
-  const files: string[] = filesArr;
-  const { renameFile } = useFile();
+  const dictionary = translations(),
+    { files: filesArr, editedFile } = fileStore(),
+    files: string[] = filesArr,
+    { renameFile } = useFile(),
+    { getItem, setItem } = useStorage();
 
   function editFileName(event: any): void {
     event.stopPropagation();
@@ -57,8 +57,11 @@ function MenuFile({ fileName }: { fileName: string }): Component {
       color: "#fff",
     }).then(res => {
       if (res.isConfirmed) {
-        addItemToPaper(fileName);
+        const paper: string = (getItem("paper") as string) ?? [];
+        const updatedPaper: string[] = [fileName, ...JSON.parse(paper)];
+        setItem("paper", JSON.stringify(updatedPaper));
         notification("success", dictionary.SentToTrash);
+        editedFile();
       }
     });
   }

@@ -88,6 +88,10 @@ function Header(): Component {
                 <p>Aumentar tamaño de texto</p>
                 <kbd> CTRL + N</kbd>
               </div>
+              <div className="cursor-default w-full flex justify-between items-center gap-x-4">
+                <p>Centrar texto</p>
+                <kbd> CTRL + H</kbd>
+              </div>
             </div>
           )}
         </details>

@@ -5,15 +5,19 @@ import ItemFile from "./ItemFile";
 import type { Component } from "../utils/types";
 import useFile from "../hooks/useFile";
 import NoFiles from "./NoFiles";
+import useStorage from "../hooks/useStorage";
+import Loading from "./Loading";
 
 function ListFiles(): Component {
   const { getFiles } = useFile(),
-    { userConfig, paperIsOpen } = configStore(),
+    { paperIsOpen } = configStore(),
+    { getItem } = useStorage(),
+    paper = (getItem("paper") as string) ?? [],
     { files, setFiles, fileIsEdited } = fileStore(),
     [loading, setLoading] = useState<boolean>(true),
     formatFiles: string[] = useMemo(
-      () => files.filter(f => !userConfig.paper.includes(f)),
-      [files, userConfig.paper]
+      () => files.filter(f => !paper.includes(f)),
+      [files, paper]
     );
 
   useEffect(() => {
@@ -23,19 +27,19 @@ function ListFiles(): Component {
   }, [fileIsEdited]);
 
   function renderFiles(): Component {
-    const arr = paperIsOpen ? userConfig.paper : formatFiles;
-    const hasFiles = arr.length > 0;
+    const arr: string[] = paperIsOpen ? JSON.parse(paper) : formatFiles;
+    const hasFiles: boolean = arr.length > 0;
     if (!hasFiles) return <NoFiles />;
     else return arr.map((n: string) => <ItemFile fileName={n} key={n} />);
   }
 
-  return loading ? (
-    <p className="text-lg text-gray-300 w-full text-center">Cargando...</p>
-  ) : (
-    <ol className="w-full h-6/6 select-none flex flex-col gap-y-2 justify-center items-center">
-      {renderFiles()}
-    </ol>
-  );
+  if (loading) return <Loading />;
+  else
+    return (
+      <ol className="w-full h-6/6 select-none flex flex-col gap-y-2 justify-center items-center">
+        {renderFiles()}
+      </ol>
+    );
 }
 
 export default ListFiles;
