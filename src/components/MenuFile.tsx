@@ -1,6 +1,11 @@
 import { Edit2 as EditIcon, Archive as TrashIcon } from "lucide-react";
 import type { Component } from "../utils/types";
-import { nameIsValid, notification, themes } from "../utils/helpers";
+import {
+  nameIsValid,
+  notification,
+  paperFiles,
+  themes,
+} from "../utils/helpers";
 import translations from "../translate/dictionary";
 import { fileStore } from "../store/fileStore";
 import useFile from "../hooks/useFile";
@@ -13,8 +18,9 @@ function MenuFile({ fileName }: { fileName: string }): Component {
     { files: filesArr, editedFile } = fileStore(),
     files: string[] = filesArr,
     { renameFile } = useFile(),
-    { getItem, setItem } = useStorage(),
-    { isSunnyDay } = themes();
+    { setItem } = useStorage(),
+    { isSunnyDay } = themes(),
+    paper = paperFiles();
 
   function editFileName(event: any): void {
     event.stopPropagation();
@@ -59,7 +65,6 @@ function MenuFile({ fileName }: { fileName: string }): Component {
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
-        const paper: string[] = JSON.parse(getItem("paper") as string) ?? [];
         const updatedPaper: string[] = [fileName, ...paper];
         setItem("paper", JSON.stringify(updatedPaper));
         notification("success", dictionary.SentToTrash);

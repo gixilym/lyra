@@ -5,14 +5,13 @@ import ItemFile from "./ItemFile";
 import type { Component } from "../utils/types";
 import useFile from "../hooks/useFile";
 import NoFiles from "./NoFiles";
-import useStorage from "../hooks/useStorage";
 import Loading from "./Loading";
+import { paperFiles } from "../utils/helpers";
 
 function ListFiles(): Component {
   const { getFiles } = useFile(),
     { paperIsOpen } = configStore(),
-    { getItem } = useStorage(),
-    paper: string[] = JSON.parse(getItem("paper") as string) ?? [],
+    paper = paperFiles(),
     { files, setFiles, fileIsEdited } = fileStore(),
     [loading, setLoading] = useState<boolean>(true),
     formatFiles: string[] = useMemo(
@@ -27,7 +26,6 @@ function ListFiles(): Component {
   }, [fileIsEdited, paperIsOpen]);
 
   function renderFiles(): Component {
-    const paper: string[] = JSON.parse(getItem("paper") as string) ?? [];
     const arr: string[] = paperIsOpen ? paper : formatFiles;
     const hasFiles: boolean = arr.length > 0;
     if (!hasFiles) return <NoFiles />;

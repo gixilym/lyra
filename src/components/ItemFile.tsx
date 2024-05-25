@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import type { Component, File } from "../utils/types";
 import { ArrowUpLeft as RecoveryIcon, Trash as RemoveIcon } from "lucide-react";
 import MenuFile from "./MenuFile";
-import { navigation, notification, themes } from "../utils/helpers";
+import { navigation, notification, paperFiles, themes } from "../utils/helpers";
 import { configStore } from "../store/configStore";
 import useFile from "../hooks/useFile";
 import Dialog from "sweetalert2";
@@ -14,10 +14,11 @@ import { twMerge } from "tailwind-merge";
 function ItemFile({ fileName }: { fileName: string }): Component {
   const { goTo } = navigation(),
     { readFile, deleteFile } = useFile(),
-    { setSelectedFile, editedFile, setFiles, files } = fileStore(),
+    { setSelectedFile, editedFile, removeFileFromList } = fileStore(),
     { paperIsOpen } = configStore(),
-    { getItem, setItem } = useStorage(),
-    { isSunnyDay } = themes();
+    { setItem } = useStorage(),
+    { isSunnyDay } = themes(),
+    paper = paperFiles();
 
   async function openFile(): Promise<void> {
     const fileContent: string = await readFile(fileName);
@@ -41,8 +42,7 @@ function ItemFile({ fileName }: { fileName: string }): Component {
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
-        const paper: string = (getItem("paper") as string) ?? [];
-        const updatedPaper: string[] = JSON.parse(paper).filter(
+        const updatedPaper: string[] = paper.filter(
           (f: string) => f != fileName
         );
         setItem("paper", JSON.stringify(updatedPaper));
@@ -66,13 +66,11 @@ function ItemFile({ fileName }: { fileName: string }): Component {
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
-        const paper: string[] = JSON.parse(getItem("paper") as string) ?? [];
         const updatedPaper: string[] = paper.filter(
           (f: string) => f != fileName
         );
-        setFiles(files.filter((f: string) => f != fileName));
+        removeFileFromList(fileName);
         setItem("paper", JSON.stringify(updatedPaper));
-
         deleteFile(fileName);
         editedFile();
         notification("success", "Archivo eliminado");

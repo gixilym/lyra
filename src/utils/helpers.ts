@@ -49,7 +49,13 @@ function themes(): Themes {
   return { isSunnyDay, isClearNigth, isDarkNigth };
 }
 
-export { notification, navigation, nameIsValid, cn, themes };
+function paperFiles(): string[] {
+  const { getItem } = useStorage();
+  const paper: string[] = JSON.parse(getItem("paper") as string) ?? [];
+  return paper;
+}
+
+export { notification, navigation, nameIsValid, cn, themes, paperFiles };
 
 interface Themes {
   isSunnyDay: boolean;
