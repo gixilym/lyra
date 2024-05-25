@@ -1,5 +1,4 @@
 import { BaseDirectory } from "@tauri-apps/api/fs";
-import type { Pages } from "./types";
 
 const BASE_DIRECTORY: { dir: BaseDirectory } = { dir: BaseDirectory.Document };
 
@@ -14,4 +13,25 @@ const PAGES: Pages = {
   file: "/file",
 };
 
-export { BASE_DIRECTORY, MAIN_FOLDER, PAGES };
+const THEMES: Themes = {
+  clearNigth: "clear-nigth",
+  darkNigth: "dark-nigth",
+  sunnyDay: "sunny-day",
+};
+
+export { BASE_DIRECTORY, MAIN_FOLDER, PAGES, THEMES };
+
+interface Pages {
+  presentation: string;
+  list: string;
+  backupcopy: string;
+  contact: string;
+  preferences: string;
+  file: string;
+}
+
+interface Themes {
+  clearNigth: string;
+  darkNigth: string;
+  sunnyDay: string;
+}

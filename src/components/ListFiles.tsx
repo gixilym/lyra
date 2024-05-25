@@ -16,7 +16,7 @@ function ListFiles(): Component {
     { files, setFiles, fileIsEdited } = fileStore(),
     [loading, setLoading] = useState<boolean>(true),
     formatFiles: string[] = useMemo(
-      () => files.filter(f => !paper.includes(f)),
+      () => files.filter((f: string) => !paper.includes(f)),
       [files, paper]
     );
 

@@ -72,7 +72,7 @@ function FileContent(): Component {
           value={content}
           onChange={e => setContent(e.target.value)}
           spellCheck={spellCheck}
-          className={`${styles.fontSize} ${styles.textCenter} pb-20 font-duo w-full bg-transparent min-h-screen outline-none resize-none text-gray-200/90 tracking-tight`}
+          className={`${styles.fontSize} ${styles.textCenter} pb-20 font-duo w-full bg-transparent min-h-screen outline-none resize-none tracking-tight`}
           autoFocus
           lang="es"
         />

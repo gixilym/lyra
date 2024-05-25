@@ -1,8 +1,18 @@
+import { twMerge } from "tailwind-merge";
+import { themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
 
 function Loading(): Component {
+  const { isSunnyDay } = themes();
   return (
-    <p className="text-lg text-gray-300 w-full text-center">Cargando...</p>
+    <p
+      className={twMerge(
+        isSunnyDay ? "text-black/70" : "text-gray-300",
+        "text-lg w-full text-center"
+      )}
+    >
+      Cargando...
+    </p>
   );
 }
 

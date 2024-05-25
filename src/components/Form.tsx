@@ -1,6 +1,6 @@
 import { type FormEvent, useState } from "react";
 import { FilePlus as AddIcon, Folders as FolderIcon } from "lucide-react";
-import { navigation, notification } from "../utils/helpers";
+import { navigation, notification, themes } from "../utils/helpers";
 import { fileStore } from "../store/fileStore";
 import { twMerge } from "tailwind-merge";
 import translations from "../translate/dictionary";
@@ -18,7 +18,8 @@ function Form(): Component {
     newFile: File = { name: fileName, content: "..." },
     nameIsEmpty: boolean = !fileName,
     { updateListFiles, setSelectedFile, files } = fileStore(),
-    nameIsRepeated: boolean = files.some((name: string) => name == fileName);
+    nameIsRepeated: boolean = files.some((name: string) => name == fileName),
+    { isSunnyDay } = themes();
 
   function addFile(event: FormEvent): void {
     event.preventDefault();
@@ -42,13 +43,23 @@ function Form(): Component {
           onChange={e => setFileName(e.target.value)}
           value={fileName}
           placeholder={dictionary.AddNewItem}
-          className="bg-black/20 w-[210px] text-lg h-11 outline-none p-4 border border-r-0 rounded-lg rounded-tr-none rounded-br-none border-gray-600/60"
+          className={twMerge(
+            isSunnyDay
+              ? "placeholder:text-gray-700 bg-gray-300 text-black"
+              : "placeholder:text-gray-200 bg-black/20 text-white",
+            "w-[210px] text-lg h-11 outline-none border-gray-600/30 p-4 border-2 border-r-0 rounded-lg rounded-tr-none rounded-br-none"
+          )}
           type="text"
         />
         <AddIcon
           onClick={addFile}
           size={25}
-          className="bg-black/20 hover:bg-black/50 cursor-pointer rounded-tl-none rounded-bl-none border border-l-0 border-gray-600/60 rounded-lg w-11 h-11 p-2 duration-75"
+          className={twMerge(
+            isSunnyDay
+              ? "bg-gray-300 hover:bg-gray-400/30"
+              : "bg-black/20 hover:bg-black/50",
+            "cursor-pointer rounded-lg rounded-bl-none rounded-tl-none border-2 border-l-0 border-gray-600/30 w-11 h-11 p-2 duration-75"
+          )}
         />
       </div>
 
@@ -57,7 +68,10 @@ function Form(): Component {
         onClick={setPaperIsOpen}
         className={twMerge(
           paperIsOpen ? "bg-black/50" : "bg-black/20",
-          "hover:bg-black/50 cursor-pointer border border-gray-600/30 rounded-lg w-11 h-11 p-2 duration-75"
+          isSunnyDay
+            ? "bg-gray-300 hover:bg-gray-400/30"
+            : "bg-black/20 hover:bg-black/50",
+          "cursor-pointer border border-gray-600/30 rounded-lg w-11 h-11 p-2 duration-75"
         )}
       />
     </form>

@@ -1,6 +1,6 @@
-import { create } from "zustand";
+import { create, type StoreApi, type UseBoundStore } from "zustand";
 
-export const fileStore = create((set: any) => ({
+export const fileStore: UseBoundStore<StoreApi<any>> = create((set: any) => ({
   files: [],
   updateListFiles: (name: string) =>
     set((state: any) => ({ files: [...state.files, name] })),

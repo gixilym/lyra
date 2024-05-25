@@ -1,6 +1,6 @@
-import { create } from "zustand";
+import { create, type StoreApi, type UseBoundStore } from "zustand";
 
-export const configStore = create((set: any) => ({
+export const configStore: UseBoundStore<StoreApi<any>> = create((set: any) => ({
   paperIsOpen: false,
   setPaperIsOpen: () =>
     set((state: any) => ({ paperIsOpen: !state.paperIsOpen })),

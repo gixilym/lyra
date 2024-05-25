@@ -1,23 +1,23 @@
 import { fileStore } from "../store/fileStore";
 import { motion } from "framer-motion";
-import translations from "../translate/dictionary";
 import type { Component, File } from "../utils/types";
 import { ArrowUpLeft as RecoveryIcon, Trash as RemoveIcon } from "lucide-react";
 import MenuFile from "./MenuFile";
-import { navigation, notification } from "../utils/helpers";
+import { navigation, notification, themes } from "../utils/helpers";
 import { configStore } from "../store/configStore";
 import useFile from "../hooks/useFile";
 import Dialog from "sweetalert2";
 import { PAGES } from "../utils/consts";
 import useStorage from "../hooks/useStorage";
+import { twMerge } from "tailwind-merge";
 
 function ItemFile({ fileName }: { fileName: string }): Component {
-  const dictionary = translations(),
-    { goTo } = navigation(),
+  const { goTo } = navigation(),
     { deleteFile, readFile } = useFile(),
     { setSelectedFile, editedFile } = fileStore(),
     { paperIsOpen } = configStore(),
-    { getItem, setItem } = useStorage();
+    { getItem, setItem } = useStorage(),
+    { isSunnyDay } = themes();
 
   async function openFile(): Promise<void> {
     const fileContent: string = await readFile(fileName);
@@ -37,8 +37,8 @@ function ItemFile({ fileName }: { fileName: string }): Component {
       cancelButtonColor: "#d33",
       confirmButtonText: "Recuperar",
       cancelButtonText: "Cancelar",
-      background: "#202020",
-      color: "#fff",
+      background: isSunnyDay ? "#dedede" : "#202020",
+      color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
         const paper: string = (getItem("paper") as string) ?? [];
@@ -46,7 +46,7 @@ function ItemFile({ fileName }: { fileName: string }): Component {
           (f: string) => f != fileName
         );
         setItem("paper", JSON.stringify(updatedPaper));
-        notification("success", dictionary.RestoreSuccess);
+        notification("success", "Archivo recuperado");
         editedFile();
       }
     });
@@ -63,8 +63,8 @@ function ItemFile({ fileName }: { fileName: string }): Component {
       confirmButtonColor: "#d33",
       confirmButtonText: "Eliminar",
       cancelButtonText: "Cancelar",
-      background: "#202020",
-      color: "#fff",
+      background: isSunnyDay ? "#dedede" : "#202020",
+      color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
         const paper: string = (getItem("paper") as string) ?? [];
@@ -85,7 +85,12 @@ function ItemFile({ fileName }: { fileName: string }): Component {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.1, duration: 0.5 }}
-      className="w-full max-w-[330px] h-11 rounded text-gray-300 py-2 px-4 hover:cursor-pointer bg-gray-800/60 duration-75 flex justify-between items-center border-l-2 border-b-2 border-gray-600/30  hover:bg-gray-800"
+      className={twMerge(
+        isSunnyDay
+          ? "border-gray-600/30 bg-gray-300 hover:bg-gray-400/30 text-gray-800"
+          : "border-gray-600/30 bg-gray-800/60 hover:bg-gray-800 text-gray-300",
+        "w-full max-w-[330px] h-11 rounded py-2 px-4 hover:cursor-pointer duration-75 flex justify-between items-center border-l-2 border-b-2"
+      )}
     >
       <p className="text-md w-full text-start">{fileName}</p>
       {paperIsOpen ? (
