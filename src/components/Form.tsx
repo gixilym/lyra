@@ -46,7 +46,7 @@ function Form(): Component {
           className={twMerge(
             isSunnyDay
               ? "placeholder:text-gray-700 bg-gray-300 text-black"
-              : "placeholder:text-gray-200 bg-black/20 text-white",
+              : "placeholder:text-gray-300 bg-black/20 text-white",
             "w-[210px] text-lg h-11 outline-none border-gray-600/30 p-4 border-2 border-r-0 rounded-lg rounded-tr-none rounded-br-none"
           )}
           type="text"

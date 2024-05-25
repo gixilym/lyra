@@ -19,9 +19,10 @@ function FileContent(): Component {
     { spellCheck, setSpellCheck } = configStore(),
     { saveFileContent } = useFile(),
     [content, setContent] = useState<string>(() => selectedFile.content || ""),
+    lang = (getItem("language") as string) ?? "EN",
     [styles, setStyles] = useState<Styles>({
-      fontSize: getItem("font-size") ?? "text-lg",
-      textCenter: getItem("text-center") ?? "text-start",
+      fontSize: (getItem("font-size") as string) ?? "text-lg",
+      textCenter: (getItem("text-center") as string) ?? "text-start",
     });
 
   useEffect(() => {
@@ -67,14 +68,15 @@ function FileContent(): Component {
 
   return (
     <MainContainer>
-      <div className="h-full flex justify-center items-center w-full min-w-[600px] max-w-[800px] bg-transparent">
+      <div className="h-[calc(100dvh-6rem)] flex items-center justify-center w-[100vw]">
         <textarea
           value={content}
           onChange={e => setContent(e.target.value)}
           spellCheck={spellCheck}
-          className={`${styles.fontSize} ${styles.textCenter} pb-20 font-duo w-full bg-transparent min-h-screen outline-none resize-none tracking-tight`}
           autoFocus
-          lang="es"
+          lang={lang}
+          className={`${styles.fontSize} ${styles.textCenter} font-duo tracking-tight w-full h-full pb-20 text-lg resize-none border-none focus:ring-0 focus:outline-none min-w-[600px] max-w-[800px] bg-transparent`}
+          placeholder="..."
         />
       </div>
     </MainContainer>

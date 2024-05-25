@@ -39,7 +39,7 @@ function Header(): Component {
         isSunnyDay
           ? "bg-gray-300 text-black/80 border-[#979797] [&>div>details>summary:hover]:text-black"
           : "bg-black/10 text-white/70 border-[#252525] [&>div>details>summary:hover]:text-white",
-        "select-none text-sm cursor-default border-b w-full justify-between items-center flex px-4 py-1"
+        "select-none text-sm cursor-default border-b w-full justify-between items-center flex px-4 py-1 h-7"
       )}
     >
       <div className="flex gap-x-4 justify-start items-center">

@@ -1,6 +1,9 @@
+import useStorage from "../hooks/useStorage";
+
 function userLanguage(enText: string, esText: string): string {
-  //! hardocodeado jajaja
-  return false ? enText : esText;
+  const { getItem } = useStorage();
+  const language: string = getItem("language") ?? "EN";
+  return language == "EN" ? enText : esText;
 }
 
 function translations() {
