@@ -13,8 +13,8 @@ import { twMerge } from "tailwind-merge";
 
 function ItemFile({ fileName }: { fileName: string }): Component {
   const { goTo } = navigation(),
-    { deleteFile, readFile } = useFile(),
-    { setSelectedFile, editedFile } = fileStore(),
+    { readFile, deleteFile } = useFile(),
+    { setSelectedFile, editedFile, setFiles, files } = fileStore(),
     { paperIsOpen } = configStore(),
     { getItem, setItem } = useStorage(),
     { isSunnyDay } = themes();
@@ -54,7 +54,6 @@ function ItemFile({ fileName }: { fileName: string }): Component {
 
   function removeItem(event: any): void {
     event.stopPropagation();
-
     Dialog.fire({
       title: "¿Estás seguro?",
       text: "Eliminar archivo",
@@ -71,7 +70,9 @@ function ItemFile({ fileName }: { fileName: string }): Component {
         const updatedPaper: string[] = paper.filter(
           (f: string) => f != fileName
         );
+        setFiles(files.filter((f: string) => f != fileName));
         setItem("paper", JSON.stringify(updatedPaper));
+
         deleteFile(fileName);
         editedFile();
         notification("success", "Archivo eliminado");

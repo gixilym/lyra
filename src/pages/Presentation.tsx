@@ -55,14 +55,6 @@ function Presentation(): Component {
           <li>guardado local</li>
         </ol>
 
-        <button
-          onClick={() => {
-            localStorage.clear();
-          }}
-        >
-          vaciar
-        </button>
-
         <div className="w-full flex justify-start items-center">
           <button
             onClick={() => goTo(PAGES.list)}

@@ -12,7 +12,7 @@ function ListFiles(): Component {
   const { getFiles } = useFile(),
     { paperIsOpen } = configStore(),
     { getItem } = useStorage(),
-    paper = (getItem("paper") as string) ?? [],
+    paper: string[] = JSON.parse(getItem("paper") as string) ?? [],
     { files, setFiles, fileIsEdited } = fileStore(),
     [loading, setLoading] = useState<boolean>(true),
     formatFiles: string[] = useMemo(
@@ -24,7 +24,7 @@ function ListFiles(): Component {
     getFiles()
       .then(userFiles => setFiles(userFiles))
       .finally(() => setLoading(false));
-  }, [fileIsEdited]);
+  }, [fileIsEdited, paperIsOpen]);
 
   function renderFiles(): Component {
     const paper: string[] = JSON.parse(getItem("paper") as string) ?? [];

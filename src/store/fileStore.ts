@@ -1,10 +1,15 @@
-import { create, type StoreApi, type UseBoundStore } from "zustand";
+import { create } from "zustand";
+import type { ZustandStore } from "../utils/types";
 
-export const fileStore: UseBoundStore<StoreApi<any>> = create((set: any) => ({
+export const fileStore: ZustandStore = create((set: any) => ({
   files: [],
   updateListFiles: (name: string) =>
     set((state: any) => ({ files: [...state.files, name] })),
   setFiles: (names: string[]) => set({ files: names }),
+  removeFileFromList: (name: string) =>
+    set((state: any) => ({
+      files: state.files.filter((f: string) => f != name),
+    })),
   selectedFile: { name: "", content: "" },
   setSelectedFile: (snippet: any) => set({ selectedFile: snippet }),
   fileIsEdited: false,
