@@ -67,8 +67,8 @@ function ItemFile({ fileName }: { fileName: string }): Component {
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
-        const paper: string = (getItem("paper") as string) ?? [];
-        const updatedPaper: string[] = JSON.parse(paper).filter(
+        const paper: string[] = JSON.parse(getItem("paper") as string) ?? [];
+        const updatedPaper: string[] = paper.filter(
           (f: string) => f != fileName
         );
         setItem("paper", JSON.stringify(updatedPaper));

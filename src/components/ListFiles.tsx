@@ -27,7 +27,8 @@ function ListFiles(): Component {
   }, [fileIsEdited]);
 
   function renderFiles(): Component {
-    const arr: string[] = paperIsOpen ? JSON.parse(paper) : formatFiles;
+    const paper: string[] = JSON.parse(getItem("paper") as string) ?? [];
+    const arr: string[] = paperIsOpen ? paper : formatFiles;
     const hasFiles: boolean = arr.length > 0;
     if (!hasFiles) return <NoFiles />;
     else return arr.map((n: string) => <ItemFile fileName={n} key={n} />);

@@ -59,8 +59,8 @@ function MenuFile({ fileName }: { fileName: string }): Component {
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
-        const paper: string = (getItem("paper") as string) ?? [];
-        const updatedPaper: string[] = [fileName, ...JSON.parse(paper)];
+        const paper: string[] = JSON.parse(getItem("paper") as string) ?? [];
+        const updatedPaper: string[] = [fileName, ...paper];
         setItem("paper", JSON.stringify(updatedPaper));
         notification("success", dictionary.SentToTrash);
         editedFile();
@@ -74,7 +74,7 @@ function MenuFile({ fileName }: { fileName: string }): Component {
         onClick={editFileName}
         className={twMerge(
           isSunnyDay
-            ? "hover:text-gray-500 text-[rgba(0,0,0,0.2)] "
+            ? "hover:text-gray-500 text-[rgba(0,0,0,0.2)]"
             : "hover:text-[rgba(209,213,219,0.6)] text-[rgba(209,213,219,0.2)]",
           "duration-75"
         )}
@@ -84,7 +84,7 @@ function MenuFile({ fileName }: { fileName: string }): Component {
         onClick={moveToTrash}
         className={twMerge(
           isSunnyDay
-            ? "hover:text-gray-500 text-[rgba(0,0,0,0.2)] "
+            ? "hover:text-gray-500 text-[rgba(0,0,0,0.2)]"
             : "hover:text-[rgba(209,213,219,0.6)] text-[rgba(209,213,219,0.2)]",
           "duration-75"
         )}
