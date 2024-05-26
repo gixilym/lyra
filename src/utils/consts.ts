@@ -13,13 +13,18 @@ const PAGES: Pages = {
   file: "/file",
 };
 
-const THEMES: Themes = {
+const THEMES: Themes = { 
   clearNigth: "clear-nigth",
   darkNigth: "dark-nigth",
   sunnyDay: "sunny-day",
 };
 
-export { BASE_DIRECTORY, MAIN_FOLDER, PAGES, THEMES };
+const LANGS: Langs = {
+  es: "ES",
+  en: "EN",
+};
+
+export { BASE_DIRECTORY, MAIN_FOLDER, PAGES, THEMES, LANGS };
 
 interface Pages {
   presentation: string;
@@ -34,4 +39,9 @@ interface Themes {
   clearNigth: string;
   darkNigth: string;
   sunnyDay: string;
+}
+
+interface Langs {
+  es: string;
+  en: string;
 }

@@ -4,10 +4,13 @@ import { themes } from "../utils/helpers";
 import { twMerge } from "tailwind-merge";
 import { Languages as LanguageIcon } from "lucide-react";
 import useStorage from "../hooks/useStorage";
+import { LANGS } from "../utils/consts";
+import translations from "../translate/dictionary";
 
 function Preferences(): Component {
   const { isSunnyDay } = themes();
   const { setItem } = useStorage();
+  const d = translations();
 
   function changeLanguage(event: SelectEvent): void {
     const value: string = event.target.value;
@@ -24,7 +27,7 @@ function Preferences(): Component {
             "text-2xl"
           )}
         >
-          Preferencias
+          {d.Preferences}
         </p>
         <div className="flex justify-between w-full">
           <LanguageIcon />
@@ -34,10 +37,10 @@ function Preferences(): Component {
             onChange={changeLanguage}
           >
             <option value="default" disabled>
-              Idioma
+              {d.Language}
             </option>
-            <option value="EN">English</option>
-            <option value="ES">Español</option>
+            <option value={LANGS.en}>English</option>
+            <option value={LANGS.es}>Español</option>
           </select>
         </div>
       </div>

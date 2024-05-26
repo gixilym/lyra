@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply caret-indigo-400 bg-black/90 text-gray-300 grid place-content-center place-items-center overflow-y-hidden;
+  @apply font-duo caret-indigo-400 bg-black/90 text-gray-300 grid place-content-center place-items-center overflow-y-hidden select-none;
 }
 
 ::-webkit-scrollbar {

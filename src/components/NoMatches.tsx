@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { themes } from "../utils/helpers";
 
 function NoMatches(): Component {
-  const dictionary = translations();
+  const d = translations();
   const { isSunnyDay } = themes();
 
   return (
@@ -18,7 +18,7 @@ function NoMatches(): Component {
         "text-lg"
       )}
     >
-      {dictionary.NothingHere}
+      {d.NothingHere}
     </motion.p>
   );
 }

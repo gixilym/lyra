@@ -10,7 +10,7 @@ import { configStore } from "../store/configStore";
 import { PAGES } from "../utils/consts";
 
 function Form(): Component {
-  const dictionary = translations(),
+  const d = translations(),
     { goTo } = navigation(),
     { createFile } = useFile(),
     { paperIsOpen, setPaperIsOpen } = configStore(),
@@ -23,8 +23,8 @@ function Form(): Component {
 
   function addFile(event: FormEvent): void {
     event.preventDefault();
-    if (nameIsEmpty) return notification("error", dictionary.EnterName);
-    if (nameIsRepeated) return notification("error", dictionary.RepeatedItem);
+    if (nameIsEmpty) return notification("error", d.EnterName);
+    if (nameIsRepeated) return notification("error", d.RepeatedItem);
     else return fileManagement();
   }
 
@@ -42,7 +42,7 @@ function Form(): Component {
         <input
           onChange={e => setFileName(e.target.value)}
           value={fileName}
-          placeholder={dictionary.AddNewItem}
+          placeholder={d.AddNewItem}
           className={twMerge(
             isSunnyDay
               ? "placeholder:text-gray-700 bg-gray-300 text-black"

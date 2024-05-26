@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useMatch } from "react-router-dom";
 import { PAGES } from "../utils/consts";
 import useStorage from "../hooks/useStorage";
+import translations from "../translate/dictionary";
 
 function ZoneToOpenList(): Component {
   const { goTo } = navigation(),
@@ -12,7 +13,8 @@ function ZoneToOpenList(): Component {
     [showMessage, setShowMessage] = useState<boolean>(true),
     messageDisplayed: string | null = getItem("list-msg"),
     match: Match = useMatch(PAGES.file),
-    pathIsFile: boolean = PAGES.file == match?.pathname;
+    pathIsFile: boolean = PAGES.file == match?.pathname,
+    d = translations();
 
   if (messageDisplayed) {
     return (
@@ -32,7 +34,7 @@ function ZoneToOpenList(): Component {
         className="absolute bottom-0 left-0 bg-indigo-100 w-28 h-40 text-black rounded-tr-lg pt-1 px-1.5 flex flex-col justify-start items-center gap-y-3"
       >
         <p className="text-center text-black font-semibold text-md">
-          ve a la lista colocando el cursor aquí
+          {d.GoToTheListByPlacingTheCursorHere}
         </p>
         <button
           onClick={() => {

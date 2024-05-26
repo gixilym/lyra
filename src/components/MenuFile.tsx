@@ -14,7 +14,7 @@ import useStorage from "../hooks/useStorage";
 import { twMerge } from "tailwind-merge";
 
 function MenuFile({ fileName }: { fileName: string }): Component {
-  const dictionary = translations(),
+  const d = translations(),
     { files: filesArr, editedFile } = fileStore(),
     files: string[] = filesArr,
     { renameFile } = useFile(),
@@ -25,13 +25,13 @@ function MenuFile({ fileName }: { fileName: string }): Component {
   function editFileName(event: any): void {
     event.stopPropagation();
     Dialog.fire({
-      title: "Ingresa el nuevo nombre",
+      title: d.EnterNewName,
       input: "text",
       inputValue: fileName,
       inputAttributes: { autocapitalize: "off" },
       showCancelButton: true,
-      confirmButtonText: "Cambiar",
-      cancelButtonText: "Cancelar",
+      confirmButtonText: d.Change,
+      cancelButtonText: d.Cancel,
       background: isSunnyDay ? "#dedede" : "#202020",
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
@@ -39,12 +39,12 @@ function MenuFile({ fileName }: { fileName: string }): Component {
         const conditions: boolean =
           !res.value || res.value == null || !nameIsValid(res.value);
         if (conditions) {
-          return notification("error", "Nombre inválido");
+          return notification("error", d.InvalidName);
         } else if (res.value != null && files.includes(res.value)) {
-          return notification("error", "El nombre ya existe");
+          return notification("error", d.NameAlreadyExists);
         } else {
           renameFile(fileName, `${res.value}`);
-          notification("success", "Nombre editado");
+          notification("success", d.EditedName);
         }
       }
     });
@@ -53,21 +53,21 @@ function MenuFile({ fileName }: { fileName: string }): Component {
   function moveToTrash(event: any): void {
     event.stopPropagation();
     Dialog.fire({
-      title: "¿Estás seguro?",
-      text: "Mover archivo a la papelera",
+      title: d.AreYouSure,
+      text: d.MoveToTrash,
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Mover",
-      cancelButtonText: "Cancelar",
+      confirmButtonText: d.Move,
+      cancelButtonText: d.Cancel,
       background: isSunnyDay ? "#dedede" : "#202020",
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
         const updatedPaper: string[] = [fileName, ...paper];
         setItem("paper", JSON.stringify(updatedPaper));
-        notification("success", dictionary.SentToTrash);
+        notification("success", d.SentToTrash);
         editedFile();
       }
     });

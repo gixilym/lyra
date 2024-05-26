@@ -2,9 +2,12 @@ import type { Component } from "../utils/types";
 import MainContainer from "../components/MainContainer";
 import { twMerge } from "tailwind-merge";
 import { themes } from "../utils/helpers";
+import translations from "../translate/dictionary";
 
 function BackupCopy(): Component {
   const { isSunnyDay } = themes();
+  const d = translations();
+
   return (
     <MainContainer>
       <p
@@ -13,7 +16,7 @@ function BackupCopy(): Component {
           "text-lg"
         )}
       >
-        Copia de seguridad
+        {d.Backup}
       </p>
     </MainContainer>
   );

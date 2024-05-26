@@ -10,6 +10,7 @@ import Dialog from "sweetalert2";
 import { PAGES } from "../utils/consts";
 import useStorage from "../hooks/useStorage";
 import { twMerge } from "tailwind-merge";
+import translations from "../translate/dictionary";
 
 function ItemFile({ fileName }: { fileName: string }): Component {
   const { goTo } = navigation(),
@@ -18,7 +19,8 @@ function ItemFile({ fileName }: { fileName: string }): Component {
     { paperIsOpen } = configStore(),
     { setItem } = useStorage(),
     { isSunnyDay } = themes(),
-    paper = paperFiles();
+    paper = paperFiles(),
+    d = translations();
 
   async function openFile(): Promise<void> {
     const fileContent: string = await readFile(fileName);
@@ -30,14 +32,14 @@ function ItemFile({ fileName }: { fileName: string }): Component {
   function recoveryPaperItem(event: any): void {
     event.stopPropagation();
     Dialog.fire({
-      title: "¿Estás seguro?",
-      text: "Recuperar archivo",
+      title: d.AreYouSure,
+      text: d.RestoreQuestion,
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Recuperar",
-      cancelButtonText: "Cancelar",
+      confirmButtonText: d.Recover,
+      cancelButtonText: d.Cancel,
       background: isSunnyDay ? "#dedede" : "#202020",
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
@@ -46,7 +48,7 @@ function ItemFile({ fileName }: { fileName: string }): Component {
           (f: string) => f != fileName
         );
         setItem("paper", JSON.stringify(updatedPaper));
-        notification("success", "Archivo recuperado");
+        notification("success", d.FileRecovered);
         editedFile();
       }
     });
@@ -55,13 +57,13 @@ function ItemFile({ fileName }: { fileName: string }): Component {
   function removeItem(event: any): void {
     event.stopPropagation();
     Dialog.fire({
-      title: "¿Estás seguro?",
-      text: "Eliminar archivo",
+      title: d.AreYouSure,
+      text: d.DeleteQuestion,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
-      confirmButtonText: "Eliminar",
-      cancelButtonText: "Cancelar",
+      confirmButtonText: d.Delete,
+      cancelButtonText: d.Cancel,
       background: isSunnyDay ? "#dedede" : "#202020",
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
@@ -73,7 +75,7 @@ function ItemFile({ fileName }: { fileName: string }): Component {
         setItem("paper", JSON.stringify(updatedPaper));
         deleteFile(fileName);
         editedFile();
-        notification("success", "Archivo eliminado");
+        notification("success", d.DeletedFile);
       }
     });
   }

@@ -14,7 +14,7 @@ function MainContainer({ children }: PropsWithChildren): Component {
   textarea?.addEventListener("contextmenu", e => e.stopPropagation());
   window.addEventListener("contextmenu", e => e.preventDefault());
 
-  invoke("greet", { name: "sexo tilin" }).then(res => console.info(res));
+  invoke("greet", { name: "yiyo" }).then(res => console.info(res));
 
   return (
     <motion.main

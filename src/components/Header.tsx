@@ -5,15 +5,19 @@ import { PAGES, THEMES } from "../utils/consts";
 import useStorage from "../hooks/useStorage";
 import { twJoin, twMerge } from "tailwind-merge";
 import { themes } from "../utils/helpers";
+import translations from "../translate/dictionary";
 
 function Header(): Component {
-  const [showHeader, setShowHeader] = useState<boolean>(true);
-  const [menu, setMenu] = useState<Menu>(initMenu);
-  const { setItem } = useStorage();
-  const { isSunnyDay } = themes();
-  const menuStyles: string = isSunnyDay
-    ? "bg-gray-300 border-t-gray-300/90 border-[#979797]"
-    : "bg-[#1d1d1d] border-t-gray-900/90 border-[#383838]";
+  const d = translations(),
+    [showHeader, setShowHeader] = useState<boolean>(true),
+    [menu, setMenu] = useState<Menu>(initMenu),
+    { setItem } = useStorage(),
+    { isSunnyDay } = themes(),
+    menuStyles: string = isSunnyDay
+      ? "bg-gray-300 border-t-gray-300/90 border-[#979797]"
+      : "bg-[#1d1d1d] border-t-gray-900/90 border-[#383838]";
+
+  //!refactorizar los menus de header
 
   function closeMenu(id: string): void {
     document.getElementById(id)?.removeAttribute("open");
@@ -39,7 +43,7 @@ function Header(): Component {
         isSunnyDay
           ? "bg-gray-300 text-black/80 border-[#979797] [&>div>details>summary:hover]:text-black"
           : "bg-black/10 text-white/70 border-[#252525] [&>div>details>summary:hover]:text-white",
-        "select-none text-sm cursor-default border-b w-full justify-between items-center flex px-4 py-1 h-7"
+        "select-none text-sm cursor-default border-b w-full justify-between items-center flex px-4 h-8"
       )}
     >
       <div className="flex gap-x-4 justify-start items-center">
@@ -57,14 +61,14 @@ function Header(): Component {
               });
             }}
           >
-            Archivo
+            {d.File}
           </summary>
 
           {menu.archivo && (
             <div
               className={twJoin(
                 menuStyles,
-                "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-44 py-2 gap-y-2"
+                "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-48 py-2 gap-y-2"
               )}
             >
               <a
@@ -74,7 +78,7 @@ function Header(): Component {
                   "cursor-default w-full"
                 )}
               >
-                Lista
+                {d.List}
               </a>
               <a
                 href={PAGES.preferences}
@@ -83,7 +87,7 @@ function Header(): Component {
                   "cursor-default w-full"
                 )}
               >
-                Preferencias
+                {d.Preferences}
               </a>
               <a
                 href={PAGES.backupcopy}
@@ -92,7 +96,7 @@ function Header(): Component {
                   "cursor-default w-full"
                 )}
               >
-                Copia de seguridad
+                {d.Backup}
               </a>
             </div>
           )}
@@ -112,34 +116,34 @@ function Header(): Component {
               });
             }}
           >
-            Comandos
+            {d.Commands}
           </summary>
 
           {menu.comandos && (
             <div
               className={twJoin(
                 menuStyles,
-                "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-72 py-2 gap-y-2"
+                "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-[360px] py-2 gap-y-2"
               )}
             >
               <div className="cursor-default w-full flex justify-between items-center gap-x-4">
-                <p>Buscar</p>
+                <p>{d.Search}</p>
                 <kbd> CTRL + F</kbd>
               </div>
               <div className="cursor-default w-full flex justify-between items-center gap-x-4">
-                <p>Revisar ortografía</p>
+                <p>{d.CheckSpelling}</p>
                 <kbd> CTRL + M</kbd>
               </div>
               <div className="cursor-default w-full flex justify-between items-center gap-x-4">
-                <p>Reducir tamaño de texto</p>
+                <p>{d.ReduceTextSize}</p>
                 <kbd> CTRL + B</kbd>
               </div>
               <div className="cursor-default w-full flex justify-between items-center gap-x-4">
-                <p>Aumentar tamaño de texto</p>
+                <p>{d.IncreaseTextSize}</p>
                 <kbd> CTRL + N</kbd>
               </div>
               <div className="cursor-default w-full flex justify-between items-center gap-x-4">
-                <p>Centrar texto</p>
+                <p>{d.CenterText}</p>
                 <kbd> CTRL + H</kbd>
               </div>
             </div>
@@ -160,7 +164,7 @@ function Header(): Component {
               });
             }}
           >
-            Temas
+            {d.Themes}
           </summary>
 
           {menu.temas && (
@@ -177,7 +181,7 @@ function Header(): Component {
                   "cursor-default w-full"
                 )}
               >
-                Noche clara
+                {d.ClearNight}
               </p>
               <p
                 onClick={() => changeTheme(THEMES.darkNigth)}
@@ -186,7 +190,7 @@ function Header(): Component {
                   "cursor-default w-full"
                 )}
               >
-                Noche oscura
+                {d.DarkNight}
               </p>
               <p
                 onClick={() => changeTheme(THEMES.sunnyDay)}
@@ -195,7 +199,7 @@ function Header(): Component {
                   "cursor-default w-full"
                 )}
               >
-                Día soleado
+                {d.SunnyDay}
               </p>
             </div>
           )}
@@ -215,7 +219,7 @@ function Header(): Component {
               });
             }}
           >
-            Ayuda
+            {d.Help}
           </summary>
 
           {menu.ayuda && (
@@ -232,7 +236,7 @@ function Header(): Component {
                   "cursor-default w-full"
                 )}
               >
-                Acerca de
+                {d.About}
               </a>
               <a
                 href={PAGES.contact}
@@ -241,7 +245,7 @@ function Header(): Component {
                   "cursor-default w-full"
                 )}
               >
-                Contacto
+                {d.Contact}
               </a>
             </div>
           )}
@@ -255,7 +259,7 @@ function Header(): Component {
       />
     </header>
   ) : (
-    <header className="bg-transparent w-full justify-end items-center flex px-4 py-1 border-b border-transparent">
+    <header className="bg-transparent w-full justify-end items-center flex px-4 h-8 border-b border-transparent">
       <HiddenIcon
         color={isSunnyDay ? "#1f1f1f9d" : "#ffffff9d"}
         size={20}

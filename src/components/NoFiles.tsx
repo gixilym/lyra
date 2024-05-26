@@ -3,10 +3,12 @@ import { configStore } from "../store/configStore";
 import { themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
 import { motion } from "framer-motion";
+import translations from "../translate/dictionary";
 
 function NoFiles(): Component {
   const { paperIsOpen } = configStore();
   const { isSunnyDay } = themes();
+  const d = translations();
 
   return (
     <motion.p
@@ -18,7 +20,7 @@ function NoFiles(): Component {
         "text-lg"
       )}
     >
-      {paperIsOpen ? "papelera vacía" : "añade tu primer registro"}
+      {paperIsOpen ? d.EmptyTrash : d.AddYourFirstAnnotation}
     </motion.p>
   );
 }

@@ -6,14 +6,16 @@ import { PAGES } from "../utils/consts";
 import TypingAnimation from "../components/TypingAnimation";
 import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
+import translations from "../translate/dictionary";
 
 function Presentation(): Component {
   const { goTo } = navigation();
   const { isSunnyDay } = themes();
+  const d = translations();
 
   return (
     <MainContainer>
-      <section className="font-duo w-full max-w-[700px] h-full min-h-[300px] flex flex-col justify-between items-center mt-10">
+      <section className="w-full max-w-[700px] h-full min-h-[300px] flex flex-col justify-between items-center mt-10">
         <div className="w-full flex justify-start items-end">
           <h1
             className={twMerge(
@@ -27,7 +29,7 @@ function Presentation(): Component {
           </h1>
 
           <TypingAnimation
-            text="&nbsp;escritura&nbsp;enfocada&nbsp;"
+            text={d.FocusedWriting}
             className={
               isSunnyDay ? "text-black/90 text-3xl" : "text-gray-200 text-3xl"
             }
@@ -48,11 +50,11 @@ function Presentation(): Component {
             "text-lg w-full flex justify-start items-center gap-x-3 [&>span]:text-indigo-500 [&>span]:font-semibold [&>span]:text-2xl"
           )}
         >
-          <li>diseño minimalista</li>
+          <li>{d.MinimalDesing}</li>
           <span>-</span>
-          <li>acceso sin conexión</li>
+          <li>{d.OfflineAccess}</li>
           <span>-</span>
-          <li>guardado local</li>
+          <li>{d.LocalSaved}</li>
         </ol>
 
         <div className="w-full flex justify-start items-center">
@@ -60,7 +62,7 @@ function Presentation(): Component {
             onClick={() => goTo(PAGES.list)}
             className="text-xl text-white hover:bg-indigo-500 duration-75 pb-2 pt-1.5 px-6 rounded-lg bg-indigo-600"
           >
-            comenzar
+            {d.Start}
           </button>
         </div>
 
@@ -70,13 +72,13 @@ function Presentation(): Component {
             "flex justify-start gap-x-10 items-center w-full text-lg"
           )}
         >
-          <p>versión: 1.0.0</p>
+          <p>{d.Version}: 1.0.0</p>
           <a
             href="https://github.com/gixilym"
             target="_blank"
             className="cursor-default hover:underline"
           >
-            desarrollado por gixi
+            {d.DevelopedBy}
           </a>
         </div>
       </section>

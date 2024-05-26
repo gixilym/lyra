@@ -9,6 +9,8 @@ import mousetrap from "mousetrap";
 import addGlobalBinds from "bind-mousetrap-global";
 import useStorage from "../hooks/useStorage";
 import "@fontsource/ia-writer-duo";
+import { LANGS } from "../utils/consts";
+import translations from "../translate/dictionary";
 
 addGlobalBinds(mousetrap);
 
@@ -18,8 +20,9 @@ function FileContent(): Component {
     { selectedFile } = fileStore(),
     { spellCheck, setSpellCheck } = configStore(),
     { saveFileContent } = useFile(),
+    d = translations(),
     [content, setContent] = useState<string>(() => selectedFile.content || ""),
-    lang = (getItem("language") as string) ?? "EN",
+    lang = (getItem("language") as string) ?? LANGS.en,
     [styles, setStyles] = useState<Styles>({
       fontSize: (getItem("font-size") as string) ?? "text-lg",
       textCenter: (getItem("text-center") as string) ?? "text-start",
@@ -39,9 +42,6 @@ function FileContent(): Component {
   function ctrlH(): void {
     const textMode: string =
       styles.textCenter == "text-center" ? "text-start" : "text-center";
-    const msg: string =
-      textMode == "text-center" ? "Texto centrado" : "Texto normal";
-    notification("success", msg);
     setItem("text-center", textMode);
     setStyles({ ...styles, textCenter: textMode });
   }
@@ -59,10 +59,10 @@ function FileContent(): Component {
   function ctrlM(): void {
     if (spellCheck) {
       setSpellCheck();
-      return notification("error", "Corrector ortográfico desactivado");
+      return notification("error", d.SpellcheckerOff);
     } else {
       setSpellCheck();
-      return notification("success", "Corrector ortográfico activado");
+      return notification("success", d.SpellcheckerOn);
     }
   }
 
@@ -75,7 +75,7 @@ function FileContent(): Component {
           spellCheck={spellCheck}
           autoFocus
           lang={lang}
-          className={`${styles.fontSize} ${styles.textCenter} font-duo tracking-tight w-full h-full pb-20 text-lg resize-none border-none focus:ring-0 focus:outline-none min-w-[600px] max-w-[800px] bg-transparent`}
+          className={`${styles.fontSize} ${styles.textCenter} tracking-tight w-full h-full pb-20 text-lg resize-none border-none focus:ring-0 focus:outline-none min-w-[600px] max-w-[800px] bg-transparent`}
           placeholder="..."
         />
       </div>

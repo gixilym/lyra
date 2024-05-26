@@ -3,12 +3,14 @@ import MainContainer from "../components/MainContainer";
 import { notification, themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
 import { Copy as CopyIcon } from "lucide-react";
+import translations from "../translate/dictionary";
 
 function Contact(): Component {
   const { isSunnyDay } = themes();
+  const d = translations();
   const copyMail = (): void => {
     navigator.clipboard.writeText("gioliotta.io@gmail.com");
-    notification("success", "Mail copiado");
+    notification("success", d.EmailCopied);
   };
 
   return (
@@ -19,7 +21,7 @@ function Contact(): Component {
           "text-xl"
         )}
       >
-        Contacta a este mail para consultas acerca de <i>lyra</i>
+        {d.ContactThisEmailForQuestions}
       </p>
 
       <div className="flex gap-x-4">
