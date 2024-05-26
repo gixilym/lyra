@@ -8,6 +8,7 @@ import FileContent from "./pages/FileContent";
 import Contact from "./pages/Contact";
 import BackupCopy from "./pages/BackupCopy";
 import "./styles.css";
+import Updates from "./pages/Updates";
 
 document.body.spellcheck = false;
 
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/backupcopy",
     element: <BackupCopy />,
+  },
+  {
+    path: "/updates",
+    element: <Updates />,
   },
 ]);
 

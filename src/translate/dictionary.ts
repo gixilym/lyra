@@ -36,11 +36,11 @@ function translations() {
       "go to the list by placing the cursor here",
       "accede a la lista colocando el cursor aquí"
     ),
-    EmptyTrash: userLanguage("Empty trash", "Vaciar papalera"),
     ContactThisEmailForQuestions: userLanguage(
       "Contact this email for questions about lyra",
       "Contactar este correo para preguntas sobre lyra"
     ),
+    Updates: userLanguage("Updates", "Actualizaciones"),
     EmailCopied: userLanguage("Email copied", "Email copiado"),
     Version: userLanguage("version", "versión"),
     DevelopedBy: userLanguage("developed by gixi", "desarrollado por gixi"),

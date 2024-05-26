@@ -11,9 +11,10 @@ const PAGES: Pages = {
   contact: "/contact",
   preferences: "/preferences",
   file: "/file",
+  updates: "/updates",
 };
 
-const THEMES: Themes = { 
+const THEMES: Themes = {
   clearNigth: "clear-nigth",
   darkNigth: "dark-nigth",
   sunnyDay: "sunny-day",
@@ -33,6 +34,7 @@ interface Pages {
   contact: string;
   preferences: string;
   file: string;
+  updates: string;
 }
 
 interface Themes {

@@ -17,4 +17,17 @@ interface File {
   content: string;
 }
 
-export type { Component, File, Match, Textarea, ZustandStore, SelectEvent };
+interface StylesText {
+  fontSize: string;
+  textCenter: string;
+}
+
+export type {
+  Component,
+  File,
+  Match,
+  Textarea,
+  ZustandStore,
+  SelectEvent,
+  StylesText,
+};

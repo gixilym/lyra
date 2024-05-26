@@ -1,29 +1,32 @@
-import type { Component } from "../utils/types";
+import type { Component, StylesText } from "../utils/types";
 import { useEffect, useState } from "react";
 import { fileStore } from "../store/fileStore";
 import { configStore } from "../store/configStore";
 import useFile from "../hooks/useFile";
 import MainContainer from "../components/MainContainer";
-import { notification } from "../utils/helpers";
 import mousetrap from "mousetrap";
 import addGlobalBinds from "bind-mousetrap-global";
 import useStorage from "../hooks/useStorage";
 import "@fontsource/ia-writer-duo";
 import { LANGS } from "../utils/consts";
-import translations from "../translate/dictionary";
+import {
+  toggleSpellchecker,
+  centerText,
+  reduceText,
+  increaseText,
+} from "../utils/commands";
 
 addGlobalBinds(mousetrap);
 
 function FileContent(): Component {
   const CommandListener: any = mousetrap,
-    { setItem, getItem } = useStorage(),
+    { getItem } = useStorage(),
     { selectedFile } = fileStore(),
-    { spellCheck, setSpellCheck } = configStore(),
+    { spellCheck } = configStore(),
     { saveFileContent } = useFile(),
-    d = translations(),
     [content, setContent] = useState<string>(() => selectedFile.content || ""),
     lang = (getItem("language") as string) ?? LANGS.en,
-    [styles, setStyles] = useState<Styles>({
+    [styles, setStyles] = useState<StylesText>({
       fontSize: (getItem("font-size") as string) ?? "text-lg",
       textCenter: (getItem("text-center") as string) ?? "text-start",
     });
@@ -34,37 +37,10 @@ function FileContent(): Component {
 
   CommandListener.bindGlobal("ctrl+j", (e: Event) => e.preventDefault());
   CommandListener.bindGlobal("ctrl+g", (e: Event) => e.preventDefault());
-  CommandListener.bindGlobal("ctrl+m", () => ctrlM());
-  CommandListener.bindGlobal("ctrl+b", () => ctrlB());
-  CommandListener.bindGlobal("ctrl+n", () => ctrlN());
-  CommandListener.bindGlobal("ctrl+h", () => ctrlH());
-
-  function ctrlH(): void {
-    const textMode: string =
-      styles.textCenter == "text-center" ? "text-start" : "text-center";
-    setItem("text-center", textMode);
-    setStyles({ ...styles, textCenter: textMode });
-  }
-
-  function ctrlN(): void {
-    setItem("font-size", "text-xl");
-    setStyles({ ...styles, fontSize: "text-xl" });
-  }
-
-  function ctrlB(): void {
-    setItem("font-size", "text-lg");
-    setStyles({ ...styles, fontSize: "text-lg" });
-  }
-
-  function ctrlM(): void {
-    if (spellCheck) {
-      setSpellCheck();
-      return notification("error", d.SpellcheckerOff);
-    } else {
-      setSpellCheck();
-      return notification("success", d.SpellcheckerOn);
-    }
-  }
+  CommandListener.bindGlobal("ctrl+m", () => toggleSpellchecker());
+  CommandListener.bindGlobal("ctrl+b", () => reduceText(styles, setStyles));
+  CommandListener.bindGlobal("ctrl+n", () => increaseText(styles, setStyles));
+  CommandListener.bindGlobal("ctrl+h", () => centerText(styles, setStyles));
 
   return (
     <MainContainer>
@@ -84,8 +60,3 @@ function FileContent(): Component {
 }
 
 export default FileContent;
-
-interface Styles {
-  fontSize: string;
-  textCenter: string;
-}

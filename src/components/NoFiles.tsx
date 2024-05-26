@@ -20,7 +20,7 @@ function NoFiles(): Component {
         "text-lg"
       )}
     >
-      {paperIsOpen ? d.EmptyTrash : d.AddYourFirstAnnotation}
+      {paperIsOpen ? d.NothingHere : d.AddYourFirstAnnotation}
     </motion.p>
   );
 }

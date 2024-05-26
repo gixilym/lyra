@@ -17,8 +17,6 @@ function Header(): Component {
       ? "bg-gray-300 border-t-gray-300/90 border-[#979797]"
       : "bg-[#1d1d1d] border-t-gray-900/90 border-[#383838]";
 
-  //!refactorizar los menus de header
-
   function closeMenu(id: string): void {
     document.getElementById(id)?.removeAttribute("open");
   }
@@ -36,6 +34,48 @@ function Header(): Component {
     location.reload();
   }
 
+  function toggleMenu(menuId: string): void {
+    switch (menuId) {
+      case "comandos":
+        closeMenu("archivo");
+        closeMenu("ayuda");
+        closeMenu("temas");
+        setMenu({ archivo: false, comandos: true, ayuda: false, temas: false });
+        break;
+
+      case "ayuda":
+        closeMenu("archivo");
+        closeMenu("comandos");
+        closeMenu("temas");
+        setMenu({
+          archivo: false,
+          comandos: false,
+          ayuda: true,
+          temas: false,
+        });
+        break;
+
+      case "temas":
+        closeMenu("archivo");
+        closeMenu("comandos");
+        closeMenu("ayuda");
+        setMenu({
+          archivo: false,
+          comandos: false,
+          ayuda: false,
+          temas: true,
+        });
+        break;
+
+      case "archivo":
+        closeMenu("comandos");
+        closeMenu("ayuda");
+        closeMenu("temas");
+        setMenu({ archivo: true, comandos: false, ayuda: false, temas: false });
+        break;
+    }
+  }
+
   return showHeader ? (
     <header
       onMouseLeave={closeAllMenus}
@@ -48,21 +88,7 @@ function Header(): Component {
     >
       <div className="flex gap-x-4 justify-start items-center">
         <details id="archivo" className="relative">
-          <summary
-            onClick={() => {
-              closeMenu("comandos");
-              closeMenu("ayuda");
-              closeMenu("temas");
-              setMenu({
-                archivo: true,
-                comandos: false,
-                ayuda: false,
-                temas: false,
-              });
-            }}
-          >
-            {d.File}
-          </summary>
+          <summary onClick={() => toggleMenu("archivo")}>{d.File}</summary>
 
           {menu.archivo && (
             <div
@@ -103,21 +129,7 @@ function Header(): Component {
         </details>
 
         <details id="comandos" className="relative">
-          <summary
-            onClick={() => {
-              closeMenu("archivo");
-              closeMenu("ayuda");
-              closeMenu("temas");
-              setMenu({
-                archivo: false,
-                comandos: true,
-                ayuda: false,
-                temas: false,
-              });
-            }}
-          >
-            {d.Commands}
-          </summary>
+          <summary onClick={() => toggleMenu("comandos")}>{d.Commands}</summary>
 
           {menu.comandos && (
             <div
@@ -151,21 +163,7 @@ function Header(): Component {
         </details>
 
         <details id="temas" className="relative">
-          <summary
-            onClick={() => {
-              closeMenu("archivo");
-              closeMenu("comandos");
-              closeMenu("ayuda");
-              setMenu({
-                archivo: false,
-                comandos: false,
-                ayuda: false,
-                temas: true,
-              });
-            }}
-          >
-            {d.Themes}
-          </summary>
+          <summary onClick={() => toggleMenu("temas")}>{d.Themes}</summary>
 
           {menu.temas && (
             <div
@@ -206,21 +204,7 @@ function Header(): Component {
         </details>
 
         <details id="ayuda" className="relative">
-          <summary
-            onClick={() => {
-              closeMenu("archivo");
-              closeMenu("comandos");
-              closeMenu("temas");
-              setMenu({
-                archivo: false,
-                comandos: false,
-                ayuda: true,
-                temas: false,
-              });
-            }}
-          >
-            {d.Help}
-          </summary>
+          <summary onClick={() => toggleMenu("ayuda")}>{d.Help}</summary>
 
           {menu.ayuda && (
             <div
@@ -237,6 +221,16 @@ function Header(): Component {
                 )}
               >
                 {d.About}
+              </a>
+
+              <a
+                href={PAGES.updates}
+                className={twMerge(
+                  isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
+                  "cursor-default w-full"
+                )}
+              >
+                {d.Updates}
               </a>
               <a
                 href={PAGES.contact}
@@ -261,7 +255,7 @@ function Header(): Component {
   ) : (
     <header className="bg-transparent w-full justify-end items-center flex px-4 h-8 border-b border-transparent">
       <HiddenIcon
-        color={isSunnyDay ? "#1f1f1f9d" : "#ffffff9d"}
+        color={isSunnyDay ? "#1f1f1f9d" : "#ffffff29"}
         size={20}
         onClick={() => setShowHeader(true)}
         className="cursor-pointer"
