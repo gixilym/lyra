@@ -13,7 +13,12 @@ function navigation(): { goTo: (route: string) => void } {
 function notification(type: "success" | "error", msg: string): void {
   toast[type](msg, {
     duration: 2000,
-    style: { backgroundColor: "#202020", color: "#fff" },
+    style: {
+      backgroundColor: "#202020",
+      color: "#fff",
+      width: "300px",
+      padding: "6px 20px",
+    },
   });
 }
 

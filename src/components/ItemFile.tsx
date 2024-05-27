@@ -90,10 +90,12 @@ function ItemFile({ fileName }: { fileName: string }): Component {
         isSunnyDay
           ? "border-gray-600/30 bg-gray-300 hover:bg-gray-400/30 text-gray-800"
           : "border-gray-600/30 bg-gray-800/60 hover:bg-gray-800 text-gray-300",
-        "w-full max-w-[330px] h-11 rounded py-2 px-4 hover:cursor-pointer duration-75 flex justify-between items-center border-l-2 border-b-2"
+        "w-full max-w-[335px] h-11 rounded py-2 px-6 hover:cursor-pointer duration-75 flex justify-between items-center border-l-2 border-b-2"
       )}
     >
-      <p className="text-md w-full text-start">{fileName}</p>
+      <p className="text-md w-full text-start overflow-ellipsis overflow-hidden whitespace-nowrap">
+        {fileName}
+      </p>
       {paperIsOpen ? (
         <div className="flex justify-center items-start gap-x-2">
           <RecoveryIcon onClick={recoveryPaperItem} size={23} />

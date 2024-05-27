@@ -36,11 +36,11 @@ function MenuFile({ fileName }: { fileName: string }): Component {
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
-        const conditions: boolean =
-          !res.value || res.value == null || !nameIsValid(res.value);
+        const conditions: boolean = !res.value || res.value == null;
         if (conditions) {
           return notification("error", d.InvalidName);
-        } else if (res.value != null && files.includes(res.value)) {
+        } else if (!nameIsValid(res.value)) return;
+        else if (res.value != null && files.includes(res.value)) {
           return notification("error", d.NameAlreadyExists);
         } else {
           renameFile(fileName, `${res.value}`);

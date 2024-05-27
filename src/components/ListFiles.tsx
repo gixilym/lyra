@@ -21,7 +21,7 @@ function ListFiles(): Component {
 
   useEffect(() => {
     getFiles()
-      .then(userFiles => setFiles(userFiles))
+      .then(files => setFiles(files))
       .finally(() => setLoading(false));
   }, [fileIsEdited, paperIsOpen]);
 
@@ -29,18 +29,20 @@ function ListFiles(): Component {
     const arr: string[] = paperIsOpen ? paper : formatFiles;
     const hasFiles: boolean = arr.length > 0;
     if (!hasFiles) return <NoFiles />;
-    else return arr.map((n: string) => <ItemFile fileName={n} key={n} />);
+    return arr.map((n: string) => <ItemFile fileName={n} key={n} />);
   }
 
-  //!problema de scroll en lista
+  //! que no deje añadir notas si esta la papelera abierta
+  //! actulizar la v1.0.0
 
   if (loading) return <Loading />;
-  else
-    return (
-      <ol className="w-full h-6/6 mt-10 flex flex-col gap-y-2 justify-center items-center">
+  return (
+    <section className="w-full overflow-y-auto max-h-[400px] mt-8">
+      <ol className="grid grid-cols-1 gap-y-2 place-items-center w-full overflow-hidden">
         {renderFiles()}
       </ol>
-    );
+    </section>
+  );
 }
 
 export default ListFiles;

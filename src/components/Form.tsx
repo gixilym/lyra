@@ -1,6 +1,11 @@
 import { type FormEvent, useState } from "react";
 import { FilePlus as AddIcon, Folders as FolderIcon } from "lucide-react";
-import { navigation, notification, themes } from "../utils/helpers";
+import {
+  nameIsValid,
+  navigation,
+  notification,
+  themes,
+} from "../utils/helpers";
 import { fileStore } from "../store/fileStore";
 import { twMerge } from "tailwind-merge";
 import translations from "../translate/dictionary";
@@ -23,9 +28,10 @@ function Form(): Component {
 
   function addFile(event: FormEvent): void {
     event.preventDefault();
+    if (!nameIsValid(fileName)) return;
     if (nameIsEmpty) return notification("error", d.EnterName);
     if (nameIsRepeated) return notification("error", d.RepeatedItem);
-    else return fileManagement();
+    return fileManagement();
   }
 
   function fileManagement(): void {
@@ -49,7 +55,7 @@ function Form(): Component {
           className={twMerge(
             isSunnyDay
               ? "placeholder:text-gray-700 bg-gray-300 text-black"
-              : "placeholder:text-gray-300 bg-black/20 text-white",
+              : "placeholder:text-gray-400/60 bg-black/20 text-white",
             "w-[210px] text-lg h-11 outline-none border-gray-600/30 p-4 border-2 border-r-0 rounded-lg rounded-tr-none rounded-br-none"
           )}
           type="text"
