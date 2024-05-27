@@ -9,6 +9,7 @@ function userLanguage(enText: string, esText: string): string {
 
 function translations() {
   const dictionary = {
+    Archived: userLanguage("Archived", "Archivados"),
     Font: userLanguage("Font", "Fuente"),
     Configuration: userLanguage("Configuration", "Configuración"),
     About: userLanguage("About", "Acerca de"),
@@ -39,7 +40,7 @@ function translations() {
     ),
     ContactThisEmailForQuestions: userLanguage(
       "Contact this email for questions about lyra",
-      "Contactar este correo para preguntas sobre lyra"
+      "Contacta este correo para preguntas sobre lyra"
     ),
     FullScreen: userLanguage("Full screen", "Pantalla completa"),
     Updates: userLanguage("Updates", "Actualizaciones"),
@@ -78,7 +79,7 @@ function translations() {
     DarkNight: userLanguage("Dark night", "Noche oscura"),
     SunnyDay: userLanguage("Sunny day", "Día soleado"),
     AddNewItem: userLanguage("Add annotation", "Nueva anotación"),
-    EnterName: userLanguage("Enter name", "Debes ingresar un nombre"),
+    EnterName: userLanguage("Enter name", "Ingresa un nombre"),
     RepeatedItem: userLanguage("Repeated name", "Nombre repetido"),
     DeletedFile: userLanguage("Deleted file", "Archivo eliminado"),
     WantDelete: userLanguage("You want to delete", "Quieres eliminar"),

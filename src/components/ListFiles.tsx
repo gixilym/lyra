@@ -32,9 +32,6 @@ function ListFiles(): Component {
     return arr.map((n: string) => <ItemFile fileName={n} key={n} />);
   }
 
-  //! que no deje añadir notas si esta la papelera abierta
-  //! actulizar la v1.0.0
-
   if (loading) return <Loading />;
   return (
     <section className="w-full overflow-y-auto max-h-[400px] mt-8">

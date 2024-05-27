@@ -16,7 +16,6 @@ function notification(type: "success" | "error", msg: string): void {
     style: {
       backgroundColor: "#202020",
       color: "#fff",
-      width: "300px",
       padding: "6px 20px",
     },
   });

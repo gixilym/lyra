@@ -115,7 +115,7 @@ function Header(): Component {
               >
                 {d.Preferences}
               </a>
-              <a
+              {/* <a
                 href={PAGES.backupcopy}
                 className={twMerge(
                   isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
@@ -123,7 +123,7 @@ function Header(): Component {
                 )}
               >
                 {d.Backup}
-              </a>
+              </a> */}
             </div>
           )}
         </details>
@@ -227,7 +227,7 @@ function Header(): Component {
                 {d.About}
               </a>
 
-              <a
+              {/* <a
                 href={PAGES.updates}
                 className={twMerge(
                   isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
@@ -235,7 +235,7 @@ function Header(): Component {
                 )}
               >
                 {d.Updates}
-              </a>
+              </a> */}
               <a
                 href={PAGES.contact}
                 className={twMerge(
