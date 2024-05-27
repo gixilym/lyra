@@ -4,24 +4,22 @@ import { motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 import Header from "./Header";
 import Footer from "./Footer";
-import { invoke } from "@tauri-apps/api";
 import { twMerge } from "tailwind-merge";
 import { themes } from "../utils/helpers";
-import mousetrap from "mousetrap";
-import addGlobalBinds from "bind-mousetrap-global";
+import commands from "mousetrap";
+import listenCommands from "bind-mousetrap-global";
 import { toggleFullScreen } from "../utils/commands";
 
-addGlobalBinds(mousetrap);
+listenCommands(commands);
 
 function MainContainer({ children }: PropsWithChildren): Component {
-  const CommandListener: any = mousetrap;
+  const { bindGlobal: listen }: any = commands;
   const { isSunnyDay, isDarkNigth } = themes();
   const textarea: Textarea = document.querySelector("textarea");
   textarea?.addEventListener("contextmenu", e => e.stopPropagation());
   window.addEventListener("contextmenu", e => e.preventDefault());
 
-  CommandListener.bindGlobal("f11", () => toggleFullScreen());
-  invoke("greet", { name: "sexo" }).then(res => console.info(res));
+  listen("f11", () => toggleFullScreen());
 
   return (
     <motion.main

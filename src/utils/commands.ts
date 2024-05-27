@@ -1,6 +1,5 @@
 import { appWindow } from "@tauri-apps/api/window";
 import { notification } from "./helpers";
-import { configStore } from "../store/configStore";
 import translations from "../translate/dictionary";
 import useStorage from "../hooks/useStorage";
 import type { Dispatch, SetStateAction } from "react";
@@ -32,10 +31,8 @@ function reduceText(styles: StylesText, setStyles: SetStyles): void {
   setStyles({ ...styles, fontSize: "text-lg" });
 }
 
-function toggleSpellchecker(): void {
-  const { setSpellCheck, spellCheck } = configStore();
+function toggleSpellchecker(spellCheck: boolean, setSpellCheck: any): void {
   const d = translations();
-
   if (spellCheck) {
     setSpellCheck();
     return notification("error", d.SpellcheckerOff);

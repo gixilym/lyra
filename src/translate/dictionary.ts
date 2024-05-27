@@ -40,6 +40,7 @@ function translations() {
       "Contact this email for questions about lyra",
       "Contactar este correo para preguntas sobre lyra"
     ),
+    FullScreen: userLanguage("Full screen", "Pantalla completa"),
     Updates: userLanguage("Updates", "Actualizaciones"),
     EmailCopied: userLanguage("Email copied", "Email copiado"),
     Version: userLanguage("version", "versión"),

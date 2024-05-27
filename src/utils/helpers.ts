@@ -1,9 +1,8 @@
-import clsx, { ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
 import toast from "react-hot-toast";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import useStorage from "../hooks/useStorage";
-import { THEMES } from "./consts";
+import { BASE_DIRECTORY, MAIN_FOLDER, THEMES } from "./consts";
+import { createDir, exists } from "@tauri-apps/api/fs";
 
 function navigation(): { goTo: (route: string) => void } {
   const navigate: NavigateFunction = useNavigate();
@@ -36,16 +35,12 @@ function nameIsValid(name: string): boolean {
   return true;
 }
 
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
 function themes(): Themes {
-  const { getItem } = useStorage();
-  const theme: string = getItem("theme") ?? THEMES.clearNigth;
-  const isSunnyDay: boolean = theme == THEMES.sunnyDay;
-  const isClearNigth: boolean = theme == THEMES.clearNigth;
-  const isDarkNigth: boolean = theme == THEMES.darkNigth;
+  const { getItem } = useStorage(),
+    theme: string = getItem("theme") ?? THEMES.clearNigth,
+    isSunnyDay: boolean = theme == THEMES.sunnyDay,
+    isClearNigth: boolean = theme == THEMES.clearNigth,
+    isDarkNigth: boolean = theme == THEMES.darkNigth;
   return { isSunnyDay, isClearNigth, isDarkNigth };
 }
 
@@ -55,7 +50,24 @@ function paperFiles(): string[] {
   return paper;
 }
 
-export { notification, navigation, nameIsValid, cn, themes, paperFiles };
+async function verifyMainFolder(): Promise<void> {
+  while (true) {
+    const folderExists: boolean = await exists(MAIN_FOLDER, BASE_DIRECTORY);
+    if (!folderExists) {
+      createDir(MAIN_FOLDER, BASE_DIRECTORY);
+      break;
+    } else break;
+  }
+}
+
+export {
+  notification,
+  navigation,
+  nameIsValid,
+  themes,
+  paperFiles,
+  verifyMainFolder,
+};
 
 interface Themes {
   isSunnyDay: boolean;

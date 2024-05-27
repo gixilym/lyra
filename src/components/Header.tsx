@@ -22,11 +22,11 @@ function Header(): Component {
   }
 
   function closeAllMenus(): void {
-    closeMenu("archivo");
-    closeMenu("comandos");
-    closeMenu("ayuda");
-    closeMenu("temas");
-    setMenu({ archivo: false, comandos: false, ayuda: false, temas: false });
+    closeMenu("file");
+    closeMenu("commands");
+    closeMenu("help");
+    closeMenu("themes");
+    setMenu({ file: false, commands: false, help: false, themes: false });
   }
 
   function changeTheme(theme: string): void {
@@ -36,42 +36,42 @@ function Header(): Component {
 
   function toggleMenu(menuId: string): void {
     switch (menuId) {
-      case "comandos":
-        closeMenu("archivo");
-        closeMenu("ayuda");
-        closeMenu("temas");
-        setMenu({ archivo: false, comandos: true, ayuda: false, temas: false });
+      case "commands":
+        closeMenu("file");
+        closeMenu("help");
+        closeMenu("themes");
+        setMenu({ file: false, commands: true, help: false, themes: false });
         break;
 
-      case "ayuda":
-        closeMenu("archivo");
-        closeMenu("comandos");
-        closeMenu("temas");
+      case "help":
+        closeMenu("file");
+        closeMenu("commands");
+        closeMenu("themes");
         setMenu({
-          archivo: false,
-          comandos: false,
-          ayuda: true,
-          temas: false,
+          file: false,
+          commands: false,
+          help: true,
+          themes: false,
         });
         break;
 
-      case "temas":
-        closeMenu("archivo");
-        closeMenu("comandos");
-        closeMenu("ayuda");
+      case "themes":
+        closeMenu("file");
+        closeMenu("commands");
+        closeMenu("help");
         setMenu({
-          archivo: false,
-          comandos: false,
-          ayuda: false,
-          temas: true,
+          file: false,
+          commands: false,
+          help: false,
+          themes: true,
         });
         break;
 
-      case "archivo":
-        closeMenu("comandos");
-        closeMenu("ayuda");
-        closeMenu("temas");
-        setMenu({ archivo: true, comandos: false, ayuda: false, temas: false });
+      case "file":
+        closeMenu("commands");
+        closeMenu("help");
+        closeMenu("themes");
+        setMenu({ file: true, commands: false, help: false, themes: false });
         break;
     }
   }
@@ -87,10 +87,10 @@ function Header(): Component {
       )}
     >
       <div className="flex gap-x-4 justify-start items-center">
-        <details id="archivo" className="relative">
-          <summary onClick={() => toggleMenu("archivo")}>{d.File}</summary>
+        <details id="file" className="relative">
+          <summary onClick={() => toggleMenu("file")}>{d.File}</summary>
 
-          {menu.archivo && (
+          {menu.file && (
             <div
               className={twJoin(
                 menuStyles,
@@ -128,16 +128,20 @@ function Header(): Component {
           )}
         </details>
 
-        <details id="comandos" className="relative">
-          <summary onClick={() => toggleMenu("comandos")}>{d.Commands}</summary>
+        <details id="commands" className="relative">
+          <summary onClick={() => toggleMenu("commands")}>{d.Commands}</summary>
 
-          {menu.comandos && (
+          {menu.commands && (
             <div
               className={twJoin(
                 menuStyles,
                 "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-[360px] py-2 gap-y-2"
               )}
             >
+              <div className="cursor-default w-full flex justify-between items-center gap-x-4">
+                <p>{d.FullScreen}</p>
+                <kbd> F11</kbd>
+              </div>
               <div className="cursor-default w-full flex justify-between items-center gap-x-4">
                 <p>{d.Search}</p>
                 <kbd> CTRL + F</kbd>
@@ -162,10 +166,10 @@ function Header(): Component {
           )}
         </details>
 
-        <details id="temas" className="relative">
-          <summary onClick={() => toggleMenu("temas")}>{d.Themes}</summary>
+        <details id="themes" className="relative">
+          <summary onClick={() => toggleMenu("themes")}>{d.Themes}</summary>
 
-          {menu.temas && (
+          {menu.themes && (
             <div
               className={twJoin(
                 menuStyles,
@@ -203,10 +207,10 @@ function Header(): Component {
           )}
         </details>
 
-        <details id="ayuda" className="relative">
-          <summary onClick={() => toggleMenu("ayuda")}>{d.Help}</summary>
+        <details id="help" className="relative">
+          <summary onClick={() => toggleMenu("help")}>{d.Help}</summary>
 
-          {menu.ayuda && (
+          {menu.help && (
             <div
               className={twJoin(
                 menuStyles,
@@ -267,15 +271,15 @@ function Header(): Component {
 export default Header;
 
 const initMenu: Menu = {
-  archivo: false,
-  comandos: false,
-  ayuda: false,
-  temas: false,
+  file: false,
+  commands: false,
+  help: false,
+  themes: false,
 };
 
 interface Menu {
-  archivo: boolean;
-  comandos: boolean;
-  ayuda: boolean;
-  temas: boolean;
+  file: boolean;
+  commands: boolean;
+  help: boolean;
+  themes: boolean;
 }

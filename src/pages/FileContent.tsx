@@ -1,28 +1,28 @@
-import type { Component, StylesText } from "../utils/types";
-import { useEffect, useState } from "react";
-import { fileStore } from "../store/fileStore";
-import { configStore } from "../store/configStore";
-import useFile from "../hooks/useFile";
-import MainContainer from "../components/MainContainer";
-import mousetrap from "mousetrap";
-import addGlobalBinds from "bind-mousetrap-global";
-import useStorage from "../hooks/useStorage";
-import "@fontsource/ia-writer-duo";
-import { LANGS } from "../utils/consts";
 import {
   toggleSpellchecker,
   centerText,
   reduceText,
   increaseText,
 } from "../utils/commands";
+import type { Component, StylesText } from "../utils/types";
+import { useEffect, useState } from "react";
+import { fileStore } from "../store/fileStore";
+import { configStore } from "../store/configStore";
+import useFile from "../hooks/useFile";
+import MainContainer from "../components/MainContainer";
+import commands from "mousetrap";
+import listenCommands from "bind-mousetrap-global";
+import useStorage from "../hooks/useStorage";
+import { LANGS } from "../utils/consts";
+import "@fontsource/ia-writer-duo";
 
-addGlobalBinds(mousetrap);
+listenCommands(commands);
 
 function FileContent(): Component {
-  const CommandListener: any = mousetrap,
+  const { bindGlobal: listen }: any = commands,
     { getItem } = useStorage(),
     { selectedFile } = fileStore(),
-    { spellCheck } = configStore(),
+    { spellCheck, setSpellCheck } = configStore(),
     { saveFileContent } = useFile(),
     [content, setContent] = useState<string>(() => selectedFile.content || ""),
     lang = (getItem("language") as string) ?? LANGS.en,
@@ -35,12 +35,12 @@ function FileContent(): Component {
     saveFileContent(selectedFile.name, content);
   }, [content]);
 
-  CommandListener.bindGlobal("ctrl+j", (e: Event) => e.preventDefault());
-  CommandListener.bindGlobal("ctrl+g", (e: Event) => e.preventDefault());
-  CommandListener.bindGlobal("ctrl+m", () => toggleSpellchecker());
-  CommandListener.bindGlobal("ctrl+b", () => reduceText(styles, setStyles));
-  CommandListener.bindGlobal("ctrl+n", () => increaseText(styles, setStyles));
-  CommandListener.bindGlobal("ctrl+h", () => centerText(styles, setStyles));
+  listen("ctrl+j", (e: Event) => e.preventDefault());
+  listen("ctrl+g", (e: Event) => e.preventDefault());
+  listen("ctrl+m", () => toggleSpellchecker(spellCheck, setSpellCheck));
+  listen("ctrl+b", () => reduceText(styles, setStyles));
+  listen("ctrl+n", () => increaseText(styles, setStyles));
+  listen("ctrl+h", () => centerText(styles, setStyles));
 
   return (
     <MainContainer>

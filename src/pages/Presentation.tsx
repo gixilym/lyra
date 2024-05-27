@@ -1,17 +1,22 @@
 import type { Component } from "../utils/types";
 import { Feather as FeatherIcon } from "lucide-react";
 import MainContainer from "../components/MainContainer";
-import { navigation, themes } from "../utils/helpers";
+import { navigation, themes, verifyMainFolder } from "../utils/helpers";
 import { PAGES } from "../utils/consts";
 import TypingAnimation from "../components/TypingAnimation";
 import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import translations from "../translate/dictionary";
+import { useEffect } from "react";
 
 function Presentation(): Component {
   const { goTo } = navigation();
   const { isSunnyDay } = themes();
   const d = translations();
+
+  useEffect(() => {
+    verifyMainFolder();
+  }, []);
 
   return (
     <MainContainer>
