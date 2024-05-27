@@ -14,7 +14,6 @@ import commands from "mousetrap";
 import listenCommands from "bind-mousetrap-global";
 import useStorage from "../hooks/useStorage";
 import { LANGS } from "../utils/consts";
-import "@fontsource/ia-writer-duo";
 
 listenCommands(commands);
 

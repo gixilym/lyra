@@ -32,10 +32,12 @@ function ListFiles(): Component {
     else return arr.map((n: string) => <ItemFile fileName={n} key={n} />);
   }
 
+  //!problema de scroll en lista
+
   if (loading) return <Loading />;
   else
     return (
-      <ol className="w-full h-6/6 select-none flex flex-col gap-y-2 justify-center items-center">
+      <ol className="w-full h-6/6 mt-10 flex flex-col gap-y-2 justify-center items-center">
         {renderFiles()}
       </ol>
     );

@@ -9,6 +9,7 @@ function userLanguage(enText: string, esText: string): string {
 
 function translations() {
   const dictionary = {
+    Font: userLanguage("Font", "Fuente"),
     Configuration: userLanguage("Configuration", "Configuración"),
     About: userLanguage("About", "Acerca de"),
     Preferences: userLanguage("Preferences", "Preferencias"),

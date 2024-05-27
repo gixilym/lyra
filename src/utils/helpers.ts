@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import useStorage from "../hooks/useStorage";
-import { BASE_DIRECTORY, MAIN_FOLDER, THEMES } from "./consts";
+import { BASE_DIRECTORY, FONTS, LANGS, MAIN_FOLDER, THEMES } from "./consts";
 import { createDir, exists } from "@tauri-apps/api/fs";
 
 function navigation(): { goTo: (route: string) => void } {
@@ -60,7 +60,21 @@ async function verifyMainFolder(): Promise<void> {
   }
 }
 
+function myLang(): string {
+  const { getItem } = useStorage();
+  const lang: string = getItem("language") ?? LANGS.en;
+  return lang == LANGS.en ? "English" : "Español";
+}
+
+function myFont(): string {
+  const { getItem } = useStorage();
+  const font: string = getItem("font") ?? FONTS[0].value;
+  return font == FONTS[0].value ? FONTS[0].label : FONTS[1].label;
+}
+
 export {
+  myLang,
+  myFont,
   notification,
   navigation,
   nameIsValid,

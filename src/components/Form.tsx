@@ -37,7 +37,10 @@ function Form(): Component {
   }
 
   return (
-    <form className="flex justify-center items-center w-full text-slate-400 gap-x-3">
+    <form
+      onSubmit={event => event.preventDefault()}
+      className="flex justify-center items-center w-full text-slate-400 gap-x-3"
+    >
       <div className="flex flex-row justify-center items-center">
         <input
           onChange={e => setFileName(e.target.value)}

@@ -4,18 +4,24 @@ import { motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 import Header from "./Header";
 import Footer from "./Footer";
-import { twMerge } from "tailwind-merge";
+import { twJoin, twMerge } from "tailwind-merge";
 import { themes } from "../utils/helpers";
 import commands from "mousetrap";
 import listenCommands from "bind-mousetrap-global";
 import { toggleFullScreen } from "../utils/commands";
+import useStorage from "../hooks/useStorage";
+import "@fontsource/ia-writer-duo";
+import "@fontsource/sarabun";
 
 listenCommands(commands);
 
 function MainContainer({ children }: PropsWithChildren): Component {
-  const { bindGlobal: listen }: any = commands;
-  const { isSunnyDay, isDarkNigth } = themes();
-  const textarea: Textarea = document.querySelector("textarea");
+  const { getItem } = useStorage(),
+    { bindGlobal: listen }: any = commands,
+    { isSunnyDay, isDarkNigth } = themes(),
+    fontFamily = getItem("font") ?? "font-duo",
+    textarea: Textarea = document.querySelector("textarea");
+
   textarea?.addEventListener("contextmenu", e => e.stopPropagation());
   window.addEventListener("contextmenu", e => e.preventDefault());
 
@@ -32,7 +38,10 @@ function MainContainer({ children }: PropsWithChildren): Component {
           : isDarkNigth
           ? "bg-black text-gray-200/90"
           : "bg-[#1a1a1a] text-gray-200/90",
-        " w-[100vw] min-h-screen flex flex-col items-center justify-start gap-y-10"
+        twJoin(
+          fontFamily,
+          "w-[100vw] min-h-screen flex flex-col items-center justify-start gap-y-10"
+        )
       )}
     >
       <Header />

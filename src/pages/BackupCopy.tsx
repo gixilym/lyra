@@ -8,10 +8,6 @@ function BackupCopy(): Component {
   const { isSunnyDay } = themes();
   const d = translations();
 
-  //!funcion: si dejo el cursor quieto unos segundos este debe deseparecer
-  //!funcion: crear carpeta lyra automaticamente
-  //!funcion: opcion para buscar en gogle palabras desconocidoas
-
   return (
     <MainContainer>
       <p
