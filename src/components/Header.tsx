@@ -1,11 +1,11 @@
-import type { Component } from "../utils/types";
-import { useState } from "react";
 import { EyeOff as HiddenIcon, Eye as ShowIcon } from "lucide-react";
-import { PAGES, THEMES } from "../utils/consts";
-import useStorage from "../hooks/useStorage";
+import { useState } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
+import useStorage from "../hooks/useStorage";
+import translations from "../utils/dictionary";
+import { PAGES, THEMES } from "../utils/consts";
 import { themes } from "../utils/helpers";
-import translations from "../translate/dictionary";
+import type { Component } from "../utils/types";
 
 function Header(): Component {
   const d = translations(),
@@ -94,7 +94,7 @@ function Header(): Component {
             <div
               className={twJoin(
                 menuStyles,
-                "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-48 py-2 gap-y-2"
+                "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-48 py-2 gap-y-2 z-10"
               )}
             >
               <a
@@ -135,7 +135,7 @@ function Header(): Component {
             <div
               className={twJoin(
                 menuStyles,
-                "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-[360px] py-2 gap-y-2"
+                "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-[360px] py-2 gap-y-2 z-10"
               )}
             >
               <div className="cursor-default w-full flex justify-between items-center gap-x-4">
@@ -173,7 +173,7 @@ function Header(): Component {
             <div
               className={twJoin(
                 menuStyles,
-                "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-44 py-2 gap-y-2"
+                "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-44 py-2 gap-y-2 z-10"
               )}
             >
               <p
@@ -214,7 +214,7 @@ function Header(): Component {
             <div
               className={twJoin(
                 menuStyles,
-                "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-44 py-2 gap-y-2"
+                "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-44 py-2 gap-y-2 z-10"
               )}
             >
               <a
@@ -237,13 +237,13 @@ function Header(): Component {
                 {d.Updates}
               </a> */}
               <a
-                href={PAGES.contact}
+                href={PAGES.support}
                 className={twMerge(
                   isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
                   "cursor-default w-full"
                 )}
               >
-                {d.Contact}
+                {d.Support}
               </a>
             </div>
           )}

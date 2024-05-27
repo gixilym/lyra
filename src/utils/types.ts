@@ -26,8 +26,8 @@ export type {
   Component,
   File,
   Match,
-  Textarea,
-  ZustandStore,
   SelectEvent,
   StylesText,
+  Textarea,
+  ZustandStore,
 };

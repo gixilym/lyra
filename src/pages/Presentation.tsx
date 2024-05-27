@@ -1,13 +1,13 @@
-import type { Component } from "../utils/types";
-import { Feather as FeatherIcon } from "lucide-react";
-import MainContainer from "../components/MainContainer";
-import { navigation, themes, verifyMainFolder } from "../utils/helpers";
-import { PAGES } from "../utils/consts";
-import TypingAnimation from "../components/TypingAnimation";
 import { motion } from "framer-motion";
-import { twMerge } from "tailwind-merge";
-import translations from "../translate/dictionary";
+import { Feather as FeatherIcon } from "lucide-react";
 import { useEffect } from "react";
+import { twMerge } from "tailwind-merge";
+import MainContainer from "../components/MainContainer";
+import TypingAnimation from "../components/TypingAnimation";
+import translations from "../utils/dictionary";
+import { PAGES } from "../utils/consts";
+import { navigation, themes, verifyMainFolder } from "../utils/helpers";
+import type { Component } from "../utils/types";
 
 function Presentation(): Component {
   const { goTo } = navigation();
@@ -20,24 +20,25 @@ function Presentation(): Component {
 
   return (
     <MainContainer>
-      <section className="w-full max-w-[700px] h-full min-h-[300px] flex flex-col justify-between items-center mt-10">
+      <section className="px-6 sm:px-0 w-full max-w-[700px] h-full min-h-[300px] flex flex-col justify-between items-center sm:mt-10 mt-0">
         <div className="w-full flex justify-start items-end">
           <h1
             className={twMerge(
               isSunnyDay ? "text-black/90" : "text-gray-200 ",
-              "text-7xl tracking-tight"
+              "sm:text-7xl text-5xl tracking-tight"
             )}
           >
             <span className="text-indigo-500">l</span>y
             <span className="text-indigo-500">r</span>a
-            <span className="text-4xl">:</span>
+            <span className="sm:text-4xl text-2xl">:</span>
           </h1>
 
           <TypingAnimation
             text={d.FocusedWriting}
-            className={
-              isSunnyDay ? "text-black/90 text-3xl" : "text-gray-200 text-3xl"
-            }
+            className={twMerge(
+              isSunnyDay ? "text-black/90" : "text-gray-200",
+              "sm:text-3xl text-2xl"
+            )}
           />
 
           <motion.div
@@ -52,7 +53,7 @@ function Presentation(): Component {
         <ol
           className={twMerge(
             isSunnyDay ? "text-black/90" : "text-gray-200",
-            "text-lg w-full flex justify-start items-center gap-x-3 [&>span]:text-indigo-500 [&>span]:font-semibold [&>span]:text-2xl"
+            "sm:text-lg text-md w-full flex justify-start items-center sm:gap-x-3 gap-x-1 [&>span]:text-indigo-500 [&>span]:font-semibold [&>span]:text-2xl"
           )}
         >
           <li>{d.MinimalDesing}</li>
@@ -74,7 +75,7 @@ function Presentation(): Component {
         <div
           className={twMerge(
             isSunnyDay ? "text-black/90" : "text-gray-400",
-            "flex justify-start gap-x-10 items-center w-full text-lg"
+            "flex justify-start gap-x-10 items-center w-full sm:text-lg text-md"
           )}
         >
           <p>{d.Version}: 1.0.0</p>

@@ -1,3 +1,5 @@
+import { createDir, exists, writeTextFile } from "@tauri-apps/api/fs";
+import { join } from "@tauri-apps/api/path";
 import toast from "react-hot-toast";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import useStorage from "../hooks/useStorage";
@@ -9,8 +11,6 @@ import {
   MAIN_FOLDER,
   THEMES,
 } from "./consts";
-import { createDir, exists, writeTextFile } from "@tauri-apps/api/fs";
-import { join } from "@tauri-apps/api/path";
 
 function navigation(): { goTo: (route: string) => void } {
   const navigate: NavigateFunction = useNavigate();
@@ -88,13 +88,13 @@ function myFont(): string {
 }
 
 export {
-  myLang,
   myFont,
-  notification,
-  navigation,
+  myLang,
   nameIsValid,
-  themes,
+  navigation,
+  notification,
   paperFiles,
+  themes,
   verifyMainFolder,
 };
 

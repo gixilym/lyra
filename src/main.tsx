@@ -1,14 +1,14 @@
 import { StrictMode } from "react";
 import { type Container, createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Presentation from "./pages/Presentation";
+import BackupCopy from "./pages/BackupCopy";
+import FileContent from "./pages/FileContent";
 import ListView from "./pages/ListView";
 import Preferences from "./pages/Preferences";
-import FileContent from "./pages/FileContent";
-import Contact from "./pages/Contact";
-import BackupCopy from "./pages/BackupCopy";
-import "./styles.css";
+import Presentation from "./pages/Presentation";
+import Support from "./pages/Support";
 import Updates from "./pages/Updates";
+import "./styles.css";
 
 document.body.spellcheck = false;
 
@@ -33,8 +33,8 @@ const router = createBrowserRouter([
     element: <Preferences />,
   },
   {
-    path: "/contact",
-    element: <Contact />,
+    path: "/support",
+    element: <Support />,
   },
   {
     path: "/backupcopy",

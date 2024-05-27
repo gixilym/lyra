@@ -1,12 +1,12 @@
-import { useEffect, useState, useMemo } from "react";
-import { fileStore } from "../store/fileStore";
-import { configStore } from "../store/configStore";
-import ItemFile from "./ItemFile";
-import type { Component } from "../utils/types";
+import { useEffect, useMemo, useState } from "react";
 import useFile from "../hooks/useFile";
-import NoFiles from "./NoFiles";
-import Loading from "./Loading";
+import { configStore } from "../store/configStore";
+import { fileStore } from "../store/fileStore";
 import { paperFiles } from "../utils/helpers";
+import type { Component } from "../utils/types";
+import ItemFile from "./ItemFile";
+import Loading from "./Loading";
+import NoFiles from "./NoFiles";
 
 function ListFiles(): Component {
   const { getFiles } = useFile(),

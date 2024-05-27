@@ -1,8 +1,8 @@
-import type { Component } from "../utils/types";
-import MainContainer from "../components/MainContainer";
 import { twMerge } from "tailwind-merge";
+import MainContainer from "../components/MainContainer";
+import translations from "../utils/dictionary";
 import { themes } from "../utils/helpers";
-import translations from "../translate/dictionary";
+import type { Component } from "../utils/types";
 
 function BackupCopy(): Component {
   const { isSunnyDay } = themes();

@@ -1,5 +1,5 @@
 import MainContainer from "../components/MainContainer";
-import translations from "../translate/dictionary";
+import translations from "../utils/dictionary";
 import type { Component } from "../utils/types";
 
 function Updates(): Component {

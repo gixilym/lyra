@@ -1,15 +1,15 @@
-import type { Component } from "../utils/types";
-import MainContainer from "../components/MainContainer";
-import { myFont, myLang, themes } from "../utils/helpers";
-import { twMerge } from "tailwind-merge";
 import {
-  Languages as LanguageIcon,
   CaseSensitive as FontIcon,
+  Languages as LanguageIcon,
 } from "lucide-react";
-import useStorage from "../hooks/useStorage";
-import { LANGS, SELECT_STYLES } from "../utils/consts";
-import translations from "../translate/dictionary";
 import Select from "react-select";
+import { twMerge } from "tailwind-merge";
+import MainContainer from "../components/MainContainer";
+import useStorage from "../hooks/useStorage";
+import translations from "../utils/dictionary";
+import { LANGS, SELECT_STYLES } from "../utils/consts";
+import { myFont, myLang, themes } from "../utils/helpers";
+import type { Component } from "../utils/types";
 
 function Preferences(): Component {
   const { isSunnyDay } = themes(),
@@ -42,7 +42,7 @@ function Preferences(): Component {
         <p
           className={twMerge(
             isSunnyDay ? "text-black/70" : "text-white",
-            "text-2xl"
+            "sm:text-2xl text-xl"
           )}
         >
           {d.Preferences}
@@ -51,6 +51,7 @@ function Preferences(): Component {
           <LanguageIcon size={30} className="ml-1.5" />
 
           <Select
+            className="sm:text-lg text-sm"
             isSearchable={false}
             options={langsOptions}
             placeholder={lang}
@@ -61,6 +62,7 @@ function Preferences(): Component {
         <div className="flex justify-between w-full">
           <FontIcon size={38} />
           <Select
+            className="sm:text-lg text-sm"
             isSearchable={false}
             options={fontsOptions}
             placeholder={font}

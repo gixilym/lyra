@@ -1,16 +1,16 @@
-import { fileStore } from "../store/fileStore";
 import { motion } from "framer-motion";
-import type { Component, File } from "../utils/types";
 import { ArrowUpLeft as RecoveryIcon, Trash as RemoveIcon } from "lucide-react";
-import MenuFile from "./MenuFile";
-import { navigation, notification, paperFiles, themes } from "../utils/helpers";
-import { configStore } from "../store/configStore";
-import useFile from "../hooks/useFile";
 import Dialog from "sweetalert2";
-import { PAGES } from "../utils/consts";
-import useStorage from "../hooks/useStorage";
 import { twMerge } from "tailwind-merge";
-import translations from "../translate/dictionary";
+import useFile from "../hooks/useFile";
+import useStorage from "../hooks/useStorage";
+import { configStore } from "../store/configStore";
+import { fileStore } from "../store/fileStore";
+import translations from "../utils/dictionary";
+import { PAGES } from "../utils/consts";
+import { navigation, notification, paperFiles, themes } from "../utils/helpers";
+import type { Component, File } from "../utils/types";
+import MenuFile from "./MenuFile";
 
 function ItemFile({ fileName }: { fileName: string }): Component {
   const { goTo } = navigation(),

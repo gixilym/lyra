@@ -1,16 +1,23 @@
 [package]
 name = "lyra"
 version = "1.0.0"
-description = "lyra app"
+description = "lyra: focused writing"
 authors = ["gixi"]
 edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/gixilym/lyra"
 
 
 [build-dependencies]
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [ "window-set-fullscreen", "window-unmaximize", "window-set-maximizable", "window-maximize", "fs-create-dir",
+tauri = { version = "1", features = [
+    "window-set-fullscreen",
+    "window-unmaximize",
+    "window-set-maximizable",
+    "window-maximize",
+    "fs-create-dir",
     "fs-rename-file",
     "shell-open",
     "fs-exists",

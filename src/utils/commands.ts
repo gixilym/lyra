@@ -1,8 +1,8 @@
 import { appWindow } from "@tauri-apps/api/window";
-import { notification } from "./helpers";
-import translations from "../translate/dictionary";
-import useStorage from "../hooks/useStorage";
 import type { Dispatch, SetStateAction } from "react";
+import useStorage from "../hooks/useStorage";
+import translations from "./dictionary";
+import { notification } from "./helpers";
 import type { StylesText } from "./types";
 
 async function toggleFullScreen(): Promise<void> {
@@ -43,11 +43,11 @@ function toggleSpellchecker(spellCheck: boolean, setSpellCheck: any): void {
 }
 
 export {
+  centerText,
+  increaseText,
+  reduceText,
   toggleFullScreen,
   toggleSpellchecker,
-  centerText,
-  reduceText,
-  increaseText,
 };
 
 type SetStyles = Dispatch<SetStateAction<StylesText>>;

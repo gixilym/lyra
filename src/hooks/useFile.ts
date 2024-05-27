@@ -1,16 +1,16 @@
 import {
-  renameFile as rename,
-  removeFile as remove,
-  readDir,
-  FileEntry,
-  writeTextFile,
   exists,
+  FileEntry,
+  readDir,
   readTextFile,
+  removeFile as remove,
+  renameFile as rename,
+  writeTextFile,
 } from "@tauri-apps/api/fs";
-import { BASE_DIRECTORY, MAIN_FOLDER, PAGES } from "../utils/consts";
-import { navigation } from "../utils/helpers";
 import { join } from "@tauri-apps/api/path";
 import { fileStore } from "../store/fileStore";
+import { BASE_DIRECTORY, MAIN_FOLDER, PAGES } from "../utils/consts";
+import { navigation } from "../utils/helpers";
 
 function useFile(): FilesFunctions {
   const { goTo } = navigation();

@@ -1,5 +1,5 @@
 import useStorage from "../hooks/useStorage";
-import { LANGS } from "../utils/consts";
+import { LANGS } from "./consts";
 
 function userLanguage(enText: string, esText: string): string {
   const { getItem } = useStorage();
@@ -75,7 +75,7 @@ function translations() {
     Backup: userLanguage("Backup", "Copia de seguridad"),
     Language: userLanguage("Language", "Idioma"),
     Themes: userLanguage("Themes", "Temas"),
-    Contact: userLanguage("Contact", "Contacto"),
+    Support: userLanguage("Support", "Soporte"),
     ClearNight: userLanguage("Clear night", "Noche clara"),
     DarkNight: userLanguage("Dark night", "Noche oscura"),
     SunnyDay: userLanguage("Sunny day", "Día soleado"),

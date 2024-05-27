@@ -1,18 +1,18 @@
-import { type FormEvent, useState } from "react";
 import { FilePlus as AddIcon, Folders as PaperIcon } from "lucide-react";
+import { type FormEvent, useState } from "react";
+import { twMerge } from "tailwind-merge";
+import useFile from "../hooks/useFile";
+import { configStore } from "../store/configStore";
+import { fileStore } from "../store/fileStore";
+import translations from "../utils/dictionary";
+import { PAGES } from "../utils/consts";
 import {
   nameIsValid,
   navigation,
   notification,
   themes,
 } from "../utils/helpers";
-import { fileStore } from "../store/fileStore";
-import { twMerge } from "tailwind-merge";
-import translations from "../translate/dictionary";
 import type { Component, File } from "../utils/types";
-import useFile from "../hooks/useFile";
-import { configStore } from "../store/configStore";
-import { PAGES } from "../utils/consts";
 
 function Form(): Component {
   const d = translations(),

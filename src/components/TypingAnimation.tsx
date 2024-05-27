@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import type { Component } from "../utils/types";
 
 function TypingAnimation(props: Props): Component {

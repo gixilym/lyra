@@ -1,8 +1,8 @@
-import type { Component } from "../utils/types";
 import { motion } from "framer-motion";
-import translations from "../translate/dictionary";
 import { twMerge } from "tailwind-merge";
+import translations from "../utils/dictionary";
 import { themes } from "../utils/helpers";
+import type { Component } from "../utils/types";
 
 function NoMatches(): Component {
   const d = translations();

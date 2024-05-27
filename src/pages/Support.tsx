@@ -1,11 +1,11 @@
+import { Copy as CopyIcon } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import MainContainer from "../components/MainContainer";
+import translations from "../utils/dictionary";
 import { notification, themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
-import { Copy as CopyIcon } from "lucide-react";
-import translations from "../translate/dictionary";
 
-function Contact(): Component {
+function Support(): Component {
   const { isSunnyDay } = themes();
   const d = translations();
   const copyMail = (): void => {
@@ -18,7 +18,7 @@ function Contact(): Component {
       <p
         className={twMerge(
           isSunnyDay ? "text-black/90" : "text-gray-200",
-          "text-xl"
+          "sm:text-xl text-md"
         )}
       >
         {d.ContactThisEmailForQuestions}
@@ -28,7 +28,7 @@ function Contact(): Component {
         <address
           className={twMerge(
             isSunnyDay ? "text-blue-800" : "text-blue-300",
-            "text-xl underline"
+            "sm:text-xl text-lg underline"
           )}
         >
           gioliotta.io@gmail.com
@@ -44,4 +44,4 @@ function Contact(): Component {
   );
 }
 
-export default Contact;
+export default Support;

@@ -8,7 +8,7 @@ const PAGES: Pages = {
   presentation: "/",
   list: "/list",
   backupcopy: "/backupcopy",
-  contact: "/contact",
+  support: "/support",
   preferences: "/preferences",
   file: "/file",
   updates: "/updates",
@@ -60,20 +60,20 @@ const INTRODUCTION: string = `lyra es tu espacio para dejar volar tu creatividad
 
 export {
   BASE_DIRECTORY,
+  FONTS,
+  INTRODUCTION,
+  LANGS,
   MAIN_FOLDER,
   PAGES,
-  THEMES,
-  LANGS,
-  FONTS,
   SELECT_STYLES,
-  INTRODUCTION,
+  THEMES,
 };
 
 interface Pages {
   presentation: string;
   list: string;
   backupcopy: string;
-  contact: string;
+  support: string;
   preferences: string;
   file: string;
   updates: string;

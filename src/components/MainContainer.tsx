@@ -1,17 +1,17 @@
-import { type PropsWithChildren } from "react";
-import type { Component, Textarea } from "../utils/types";
-import { motion } from "framer-motion";
-import { Toaster } from "react-hot-toast";
-import Header from "./Header";
-import Footer from "./Footer";
-import { twJoin, twMerge } from "tailwind-merge";
-import { themes } from "../utils/helpers";
-import commands from "mousetrap";
-import listenCommands from "bind-mousetrap-global";
-import { toggleFullScreen } from "../utils/commands";
-import useStorage from "../hooks/useStorage";
 import "@fontsource/ia-writer-duo";
 import "@fontsource/sarabun";
+import listenCommands from "bind-mousetrap-global";
+import { motion } from "framer-motion";
+import commands from "mousetrap";
+import { type PropsWithChildren } from "react";
+import { Toaster } from "react-hot-toast";
+import { twJoin, twMerge } from "tailwind-merge";
+import useStorage from "../hooks/useStorage";
+import { toggleFullScreen } from "../utils/commands";
+import { themes } from "../utils/helpers";
+import type { Component, Textarea } from "../utils/types";
+import Footer from "./Footer";
+import Header from "./Header";
 
 listenCommands(commands);
 

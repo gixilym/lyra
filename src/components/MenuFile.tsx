@@ -1,17 +1,17 @@
 import { Edit2 as EditIcon, Archive as TrashIcon } from "lucide-react";
-import type { Component } from "../utils/types";
+import Dialog from "sweetalert2";
+import { twMerge } from "tailwind-merge";
+import useFile from "../hooks/useFile";
+import useStorage from "../hooks/useStorage";
+import { fileStore } from "../store/fileStore";
+import translations from "../utils/dictionary";
 import {
   nameIsValid,
   notification,
   paperFiles,
   themes,
 } from "../utils/helpers";
-import translations from "../translate/dictionary";
-import { fileStore } from "../store/fileStore";
-import useFile from "../hooks/useFile";
-import Dialog from "sweetalert2";
-import useStorage from "../hooks/useStorage";
-import { twMerge } from "tailwind-merge";
+import type { Component } from "../utils/types";
 
 function MenuFile({ fileName }: { fileName: string }): Component {
   const d = translations(),

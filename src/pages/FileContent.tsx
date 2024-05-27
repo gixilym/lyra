@@ -1,19 +1,19 @@
-import {
-  toggleSpellchecker,
-  centerText,
-  reduceText,
-  increaseText,
-} from "../utils/commands";
-import type { Component, StylesText } from "../utils/types";
-import { useEffect, useState } from "react";
-import { fileStore } from "../store/fileStore";
-import { configStore } from "../store/configStore";
-import useFile from "../hooks/useFile";
-import MainContainer from "../components/MainContainer";
-import commands from "mousetrap";
 import listenCommands from "bind-mousetrap-global";
+import commands from "mousetrap";
+import { useEffect, useState } from "react";
+import MainContainer from "../components/MainContainer";
+import useFile from "../hooks/useFile";
 import useStorage from "../hooks/useStorage";
+import { configStore } from "../store/configStore";
+import { fileStore } from "../store/fileStore";
+import {
+  centerText,
+  increaseText,
+  reduceText,
+  toggleSpellchecker,
+} from "../utils/commands";
 import { LANGS } from "../utils/consts";
+import type { Component, StylesText } from "../utils/types";
 
 listenCommands(commands);
 
@@ -50,7 +50,7 @@ function FileContent(): Component {
           spellCheck={spellCheck}
           autoFocus
           lang={lang}
-          className={`${styles.fontSize} ${styles.textCenter} tracking-tight w-full h-full pb-20 text-lg resize-none border-none focus:ring-0 focus:outline-none min-w-[600px] max-w-[800px] bg-transparent`}
+          className={`${styles.fontSize} ${styles.textCenter} tracking-tight w-full h-full sm:pb-20 lg:px-0 px-4 text-lg resize-none border-none focus:ring-0 focus:outline-none sm:min-w-[600px] max-w-[800px] bg-transparent`}
           placeholder="..."
         />
       </div>

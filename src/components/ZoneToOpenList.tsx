@@ -1,11 +1,11 @@
-import type { Component, Match } from "../utils/types";
-import { useState } from "react";
-import { navigation } from "../utils/helpers";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { useMatch } from "react-router-dom";
-import { PAGES } from "../utils/consts";
 import useStorage from "../hooks/useStorage";
-import translations from "../translate/dictionary";
+import translations from "../utils/dictionary";
+import { PAGES } from "../utils/consts";
+import { navigation } from "../utils/helpers";
+import type { Component, Match } from "../utils/types";
 
 function ZoneToOpenList(): Component {
   const { goTo } = navigation(),
