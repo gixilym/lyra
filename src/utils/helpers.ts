@@ -1,8 +1,16 @@
 import toast from "react-hot-toast";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import useStorage from "../hooks/useStorage";
-import { BASE_DIRECTORY, FONTS, LANGS, MAIN_FOLDER, THEMES } from "./consts";
-import { createDir, exists } from "@tauri-apps/api/fs";
+import {
+  BASE_DIRECTORY,
+  FONTS,
+  INTRODUCTION,
+  LANGS,
+  MAIN_FOLDER,
+  THEMES,
+} from "./consts";
+import { createDir, exists, writeTextFile } from "@tauri-apps/api/fs";
+import { join } from "@tauri-apps/api/path";
 
 function navigation(): { goTo: (route: string) => void } {
   const navigate: NavigateFunction = useNavigate();
@@ -56,9 +64,12 @@ function paperFiles(): string[] {
 
 async function verifyMainFolder(): Promise<void> {
   while (true) {
-    const folderExists: boolean = await exists(MAIN_FOLDER, BASE_DIRECTORY);
-    if (!folderExists) {
-      createDir(MAIN_FOLDER, BASE_DIRECTORY);
+    const mainFolderExits: boolean = await exists(MAIN_FOLDER, BASE_DIRECTORY);
+    const path: string = await join(MAIN_FOLDER, "¡Bienvenido a lyra!.txt");
+    if (!mainFolderExits) {
+      createDir(MAIN_FOLDER, BASE_DIRECTORY)
+        .then(() => writeTextFile(path, INTRODUCTION, BASE_DIRECTORY))
+        .catch(e => console.error(`Error creando carpeta lyra: ${e.message}`));
       break;
     } else break;
   }
