@@ -18,6 +18,8 @@ import type { Component, StylesText } from "../utils/types";
 
 listenCommands(commands);
 
+//! decirle a danni que se puedeir 
+
 function FileContent(): Component {
   const { bindGlobal: listen }: any = commands,
     { getItem } = useStorage(),

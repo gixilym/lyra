@@ -11,6 +11,7 @@ import {
   MAIN_FOLDER,
   THEMES,
 } from "./consts";
+import translations from "./dictionary";
 
 function navigation(): { goTo: (route: string) => void } {
   const navigate: NavigateFunction = useNavigate();
@@ -33,14 +34,15 @@ function nameIsValid(name: string): boolean {
   const regex: RegExp = /^[a-zA-Z0-9-_ ]+$/;
   const nameIsLong: boolean = name.length > 25;
   const invalidSymbols: boolean = !regex.test(name);
+  const d = translations();
 
   if (nameIsLong) {
-    notification("error", "Nombre demasiado extenso");
+    notification("error", d.VeryLongName);
     return false;
   }
 
   if (invalidSymbols) {
-    notification("error", "El nombre contiene caracteres inválidos");
+    notification("error", d.NoSpecialCharacters);
     return false;
   }
 
@@ -65,7 +67,7 @@ function paperFiles(): string[] {
 async function verifyMainFolder(): Promise<void> {
   while (true) {
     const mainFolderExits: boolean = await exists(MAIN_FOLDER, BASE_DIRECTORY);
-    const path: string = await join(MAIN_FOLDER, "¡Bienvenido a lyra!.txt");
+    const path: string = await join(MAIN_FOLDER, "Bienvenido a lyra.txt");
     if (!mainFolderExits) {
       createDir(MAIN_FOLDER, BASE_DIRECTORY)
         .then(() => writeTextFile(path, INTRODUCTION, BASE_DIRECTORY))

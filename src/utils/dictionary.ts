@@ -64,7 +64,14 @@ function translations() {
     ),
     Move: userLanguage("Move", "Mover"),
     AreYouSure: userLanguage("Are you sure?", "¿Estás seguro?"),
-
+    NoSpecialCharacters: userLanguage(
+      "No special characters allowed",
+      "No se permiten caracteres especiales"
+    ),
+    VeryLongName: userLanguage(
+      "Very long name",
+      "El nombre es demasiado extenso"
+    ),
     EditedName: userLanguage("Edited name", "Nombre editado"),
     Cancel: userLanguage("Cancel", "Cancelar"),
     Change: userLanguage("Change", "Cambiar"),

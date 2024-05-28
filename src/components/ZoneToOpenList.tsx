@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useMatch } from "react-router-dom";
 import useStorage from "../hooks/useStorage";
-import translations from "../utils/dictionary";
 import { PAGES } from "../utils/consts";
+import translations from "../utils/dictionary";
 import { navigation } from "../utils/helpers";
 import type { Component, Match } from "../utils/types";
 
@@ -31,9 +31,9 @@ function ZoneToOpenList(): Component {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 3 }}
-        className="absolute bottom-0 left-0 bg-indigo-100 w-28 h-40 text-black rounded-tr-lg pt-1 px-1.5 flex flex-col justify-start items-center gap-y-3"
+        className="absolute bottom-0 left-0 bg-indigo-100 w-28 h-48 text-black rounded-tr-lg pt-1 px-1.5 flex flex-col justify-start items-center gap-y-3 border-2"
       >
-        <p className="text-center text-black font-semibold text-md">
+        <p className="text-center text-black/70 font-semibold text-md">
           {d.GoToTheListByPlacingTheCursorHere}
         </p>
         <button
@@ -41,7 +41,7 @@ function ZoneToOpenList(): Component {
             setShowMessage(false);
             setItem("list-msg", "true");
           }}
-          className="bg-green-400 text-gray-800 border-2 border-green-600 rounded-lg px-5 py-1 font-semibold text-lg duration-75"
+          className="bg-green-400 text-black/70 border-2 border-green-600 rounded-lg px-5 py-1 font-semibold text-lg duration-75"
         >
           OK
         </button>
