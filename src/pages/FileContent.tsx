@@ -18,8 +18,6 @@ import type { Component, StylesText } from "../utils/types";
 
 listenCommands(commands);
 
-//! decirle a danni que se puedeir 
-
 function FileContent(): Component {
   const { bindGlobal: listen }: any = commands,
     { getItem } = useStorage(),
@@ -58,7 +56,7 @@ function FileContent(): Component {
             twJoin(
               styles.fontSize,
               styles.textCenter,
-              "$w-full h-full sm:pb-20 lg:px-0 px-4 text-lg resize-none border-none focus:ring-0 focus:outline-none sm:min-w-[600px] max-w-[800px] bg-transparent"
+              "w-full h-full sm:pb-20 lg:px-0 px-4 text-lg resize-none border-none focus:ring-0 focus:outline-none sm:min-w-[600px] max-w-[800px] bg-transparent"
             )
           )}
         />
