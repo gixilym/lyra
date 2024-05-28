@@ -9,9 +9,8 @@ function userLanguage(enText: string, esText: string): string {
 
 function translations() {
   const dictionary = {
-    Archived: userLanguage("Archived", "Archivados"),
+    Archived: userLanguage("Paper Bin", "Papelera"),
     Font: userLanguage("Font", "Fuente"),
-    Configuration: userLanguage("Configuration", "Configuración"),
     About: userLanguage("About", "Acerca de"),
     Preferences: userLanguage("Preferences", "Preferencias"),
     File: userLanguage("File", "Archivo"),
@@ -55,8 +54,8 @@ function translations() {
     FocusedWriting: userLanguage("focused writing", "escritura enfocada"),
     CenterText: userLanguage("Center text", "Centrar texto"),
     AddYourFirstAnnotation: userLanguage(
-      "Add your first annotation",
-      "Agrega tu primer anotación"
+      "Add your first record",
+      "Agrega tu primer registro"
     ),
     InvalidName: userLanguage("Invalid name", "Nombre inválido"),
     NameAlreadyExists: userLanguage(
@@ -64,7 +63,7 @@ function translations() {
       "El nombre ya existe"
     ),
     Move: userLanguage("Move", "Mover"),
-    AreYouSure: userLanguage("Are you sure?", "¿Estas seguro?"),
+    AreYouSure: userLanguage("Are you sure?", "¿Estás seguro?"),
 
     EditedName: userLanguage("Edited name", "Nombre editado"),
     Cancel: userLanguage("Cancel", "Cancelar"),
@@ -79,30 +78,29 @@ function translations() {
     ClearNight: userLanguage("Clear night", "Noche clara"),
     DarkNight: userLanguage("Dark night", "Noche oscura"),
     SunnyDay: userLanguage("Sunny day", "Día soleado"),
-    AddNewItem: userLanguage("Add annotation", "Nueva anotación"),
+    AddNewItem: userLanguage("Add a record", "Nuevo registro"),
     EnterName: userLanguage("Enter name", "Ingresa un nombre"),
     RepeatedItem: userLanguage("Repeated name", "Nombre repetido"),
-    DeletedFile: userLanguage("Deleted file", "Archivo eliminado"),
-    WantDelete: userLanguage("You want to delete", "Quieres eliminar"),
+    DeletedFile: userLanguage("Deleted record", "Registro eliminado"),
     MoveToTrash: userLanguage(
-      "Do you want move this file to the trash?",
-      "¿Quieres mover este archivo a la papelera?"
+      "Do you want to move this record to the paper bin?",
+      "¿Quieres mover este registro a la papelera?"
     ),
-    SentToTrash: userLanguage("Sent to trash", "Movido a la papelera"),
+    SentToTrash: userLanguage("Sent to the paper bin", "Enviado a la papelera"),
     NothingHere: userLanguage("Nothing here...", "Nada por aquí..."),
 
     Loading: userLanguage("Loading...", "Cargando..."),
     RestoreQuestion: userLanguage(
-      "Do you want restore this file?",
-      "¿Deseas restaurar este archivo?"
+      "Do you want to restore this record?",
+      "¿Deseas restaurar este registro?"
     ),
     DeleteQuestion: userLanguage(
-      "Do you want remove this file?",
-      "¿Deseas eliminar este archivo?"
+      "Do you want to remove this record?",
+      "¿Deseas eliminar este registro?"
     ),
     Delete: userLanguage("Delete", "Eliminar"),
     Recover: userLanguage("Recover", "Recuperar"),
-    FileRecovered: userLanguage("File recovered", "Archivo recuperado"),
+    FileRecovered: userLanguage("Record recovered", "Registro recuperado"),
   };
 
   return dictionary;

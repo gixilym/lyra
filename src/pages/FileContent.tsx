@@ -1,6 +1,7 @@
 import listenCommands from "bind-mousetrap-global";
 import commands from "mousetrap";
 import { useEffect, useState } from "react";
+import { twJoin, twMerge } from "tailwind-merge";
 import MainContainer from "../components/MainContainer";
 import useFile from "../hooks/useFile";
 import useStorage from "../hooks/useStorage";
@@ -12,7 +13,7 @@ import {
   reduceText,
   toggleSpellchecker,
 } from "../utils/commands";
-import { LANGS } from "../utils/consts";
+import { FONTS } from "../utils/consts";
 import type { Component, StylesText } from "../utils/types";
 
 listenCommands(commands);
@@ -24,7 +25,7 @@ function FileContent(): Component {
     { spellCheck, setSpellCheck } = configStore(),
     { saveFileContent } = useFile(),
     [content, setContent] = useState<string>(() => selectedFile.content || ""),
-    lang = (getItem("language") as string) ?? LANGS.en,
+    fontFamily = getItem("font") ?? FONTS[0].value,
     [styles, setStyles] = useState<StylesText>({
       fontSize: (getItem("font-size") as string) ?? "text-lg",
       textCenter: (getItem("text-center") as string) ?? "text-start",
@@ -49,9 +50,15 @@ function FileContent(): Component {
           onChange={e => setContent(e.target.value)}
           spellCheck={spellCheck}
           autoFocus
-          lang={lang}
-          className={`${styles.fontSize} ${styles.textCenter} tracking-tight w-full h-full sm:pb-20 lg:px-0 px-4 text-lg resize-none border-none focus:ring-0 focus:outline-none sm:min-w-[600px] max-w-[800px] bg-transparent`}
           placeholder="..."
+          className={twMerge(
+            fontFamily == "font-duo" ? " tracking-normal" : "tracking-wide",
+            twJoin(
+              styles.fontSize,
+              styles.textCenter,
+              "$w-full h-full sm:pb-20 lg:px-0 px-4 text-lg resize-none border-none focus:ring-0 focus:outline-none sm:min-w-[600px] max-w-[800px] bg-transparent"
+            )
+          )}
         />
       </div>
     </MainContainer>
