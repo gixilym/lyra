@@ -12,7 +12,7 @@ repository = "https://github.com/gixilym/lyra"
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [
+tauri = { version = "1", features = [ "fs-copy-file",
     "window-set-fullscreen",
     "window-unmaximize",
     "window-set-maximizable",

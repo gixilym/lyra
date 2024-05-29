@@ -4,10 +4,12 @@ const BASE_DIRECTORY: { dir: BaseDirectory } = { dir: BaseDirectory.Document };
 
 const MAIN_FOLDER: string = "lyra";
 
+const BACKUP_FOLDER: string = "lyra-backup";
+
 const PAGES: Pages = {
   presentation: "/",
   list: "/list",
-  backupcopy: "/backupcopy",
+  backup: "/backup",
   support: "/support",
   preferences: "/preferences",
   file: "/file",
@@ -67,12 +69,13 @@ export {
   PAGES,
   SELECT_STYLES,
   THEMES,
+  BACKUP_FOLDER,
 };
 
 interface Pages {
   presentation: string;
   list: string;
-  backupcopy: string;
+  backup: string;
   support: string;
   preferences: string;
   file: string;

@@ -72,6 +72,11 @@ function translations() {
       "Very long name",
       "El nombre es demasiado extenso"
     ),
+    WordCount: userLanguage("Word count", "Contar palabras"),
+    Enabled: userLanguage("Enabled", "Activado"),
+    Disabled: userLanguage("Disabled", "Desactivado"),
+    Word: userLanguage("word", "palabra"),
+    Words: userLanguage("words", "palabras"),
     EditedName: userLanguage("Edited name", "Nombre editado"),
     Cancel: userLanguage("Cancel", "Cancelar"),
     Change: userLanguage("Change", "Cambiar"),

@@ -2,8 +2,8 @@ import { EyeOff as HiddenIcon, Eye as ShowIcon } from "lucide-react";
 import { useState } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 import useStorage from "../hooks/useStorage";
-import translations from "../utils/dictionary";
 import { PAGES, THEMES } from "../utils/consts";
+import translations from "../utils/dictionary";
 import { themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
 
@@ -115,15 +115,15 @@ function Header(): Component {
               >
                 {d.Preferences}
               </a>
-              {/* <a
-                href={PAGES.backupcopy}
+              <a
+                href={PAGES.backup}
                 className={twMerge(
                   isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
                   "cursor-default w-full"
                 )}
               >
                 {d.Backup}
-              </a> */}
+              </a>
             </div>
           )}
         </details>
@@ -203,6 +203,7 @@ function Header(): Component {
               >
                 {d.SunnyDay}
               </p>
+        
             </div>
           )}
         </details>

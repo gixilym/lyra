@@ -7,12 +7,14 @@ import type { Component } from "../utils/types";
 import ItemFile from "./ItemFile";
 import Loading from "./Loading";
 import NoFiles from "./NoFiles";
+import useStorage from "../hooks/useStorage";
 
 function ListFiles(): Component {
   const { getFiles } = useFile(),
     { paperIsOpen } = configStore(),
     paper = paperFiles(),
     { files, setFiles, fileIsEdited } = fileStore(),
+    { setItem } = useStorage(),
     [loading, setLoading] = useState<boolean>(true),
     formatFiles: string[] = useMemo(
       () => files.filter((f: string) => !paper.includes(f)),
@@ -21,7 +23,10 @@ function ListFiles(): Component {
 
   useEffect(() => {
     getFiles()
-      .then(files => setFiles(files))
+      .then(files => {
+        setFiles(files);
+        setItem("files", JSON.stringify(files));
+      })
       .finally(() => setLoading(false));
   }, [fileIsEdited, paperIsOpen]);
 

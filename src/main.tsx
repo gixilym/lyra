@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { type Container, createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import BackupCopy from "./pages/BackupCopy";
+import Backup from "./pages/Backup";
 import FileContent from "./pages/FileContent";
 import ListView from "./pages/ListView";
 import Preferences from "./pages/Preferences";
@@ -37,8 +37,8 @@ const router = createBrowserRouter([
     element: <Support />,
   },
   {
-    path: "/backupcopy",
-    element: <BackupCopy />,
+    path: "/backup",
+    element: <Backup />,
   },
   {
     path: "/updates",

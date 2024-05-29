@@ -1,6 +1,7 @@
 import {
   CaseSensitive as FontIcon,
   Languages as LanguageIcon,
+  Quote as CountIcon,
 } from "lucide-react";
 import Select from "react-select";
 import { twMerge } from "tailwind-merge";
@@ -8,7 +9,7 @@ import MainContainer from "../components/MainContainer";
 import useStorage from "../hooks/useStorage";
 import translations from "../utils/dictionary";
 import { LANGS, SELECT_STYLES } from "../utils/consts";
-import { myFont, myLang, themes } from "../utils/helpers";
+import { myFont, myLang, myWordCount, themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
 
 function Preferences(): Component {
@@ -17,6 +18,7 @@ function Preferences(): Component {
     d = translations(),
     font = myFont(),
     lang = myLang(),
+    wordCount = myWordCount(),
     fontsOptions = [
       { value: "font-duo", label: "Monospace" },
       { value: "font-sara", label: "Sarabun" },
@@ -36,9 +38,14 @@ function Preferences(): Component {
     location.reload();
   }
 
+  function changeWordCount(): void {
+    setItem("word-count", String(!wordCount));
+    location.reload();
+  }
+
   return (
     <MainContainer>
-      <div className="w-full max-w-[300px] flex flex-col justify-center items-center gap-y-10">
+      <div className="w-full max-w-[400px] flex flex-col justify-center items-center gap-y-14">
         <p
           className={twMerge(
             isSunnyDay ? "text-black/70" : "text-white",
@@ -47,11 +54,14 @@ function Preferences(): Component {
         >
           {d.Preferences}
         </p>
-        <div className="flex justify-between w-full">
-          <LanguageIcon size={30} className="ml-1.5" />
+        <div className="flex justify-between items-center w-full">
+          <div className="flex justify-center items-center gap-x-4">
+            <LanguageIcon size={30} />
+            <p className="text-lg">{d.Language}</p>
+          </div>
 
           <Select
-            className="sm:text-lg text-sm"
+            className="sm:text-lg text-sm "
             isSearchable={false}
             options={langsOptions}
             placeholder={lang}
@@ -59,8 +69,11 @@ function Preferences(): Component {
             styles={SELECT_STYLES}
           />
         </div>
-        <div className="flex justify-between w-full">
-          <FontIcon size={38} />
+        <div className="flex justify-between items-center w-full">
+          <div className="flex justify-center items-center gap-x-4">
+            <FontIcon size={38} />
+            <p className="text-lg">{d.Font}</p>
+          </div>
           <Select
             className="sm:text-lg text-sm"
             isSearchable={false}
@@ -69,6 +82,21 @@ function Preferences(): Component {
             onChange={(e: any) => changeFont(e.value)}
             styles={SELECT_STYLES}
           />
+        </div>
+        <div className="flex justify-between items-center w-full">
+          <div className="flex justify-center items-center gap-x-5">
+            <CountIcon size={25} />
+            <p className="text-md">{d.WordCount}</p>
+          </div>
+          <button
+            onClick={changeWordCount}
+            className={twMerge(
+              wordCount ? "bg-[#2b2b2b]" : "bg-[#2b2b2b]",
+              "cursor-pointer w-[160px] justify-center items-center flex rounded-md text-[#d8d8d8] sm:text-lg text-sm h-10"
+            )}
+          >
+            {wordCount ? d.Enabled : d.Disabled}
+          </button>
         </div>
       </div>
     </MainContainer>

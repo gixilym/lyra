@@ -32,6 +32,7 @@
         "all": false,
         "exists": true,
         "readDir": true,
+        "copyFile": true,
         "readFile": true,
         "removeFile": true,
         "renameFile": true,

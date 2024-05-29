@@ -89,7 +89,14 @@ function myFont(): string {
   return font == FONTS[0].value ? FONTS[0].label : FONTS[1].label;
 }
 
+function myWordCount(): boolean {
+  const { getItem } = useStorage();
+  const count: boolean = JSON.parse(getItem("word-count") as string) ?? true;
+  return count;
+}
+
 export {
+  myWordCount,
   myFont,
   myLang,
   nameIsValid,
