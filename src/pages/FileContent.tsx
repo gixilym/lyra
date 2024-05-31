@@ -82,7 +82,7 @@ function FileContent(): Component {
         <div
           className={twMerge(
             wordCounts == 0 ? "opacity-0" : "opacity-60",
-            "sm:min-w-[600px] w-full max-w-[800px] flex justify-start items-center gap-x-2 text-sm"
+            "sm:min-w-[600px] w-full max-w-[800px] flex justify-start items-center gap-x-2 sm:text-sm text-xs lg:px-0 px-4 lowercase"
           )}
         >
           {wordCountIsActive && <p>{wordCounts + " " + d.Words}</p>}
