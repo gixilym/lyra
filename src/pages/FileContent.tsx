@@ -13,30 +13,33 @@ import {
   reduceText,
   toggleSpellchecker,
 } from "../utils/commands";
-import { FONTS } from "../utils/consts";
 import translations from "../utils/dictionary";
-import { myWordCount } from "../utils/helpers";
+import { copyText, myFont, myWordCount } from "../utils/helpers";
 import type { Component, StylesText } from "../utils/types";
+import { FONTS } from "../utils/consts";
 
 listenCommands(commands);
 
 function FileContent(): Component {
-  const { bindGlobal: listen }: any = commands,
+  const d = translations(),
     { getItem } = useStorage(),
     { selectedFile } = fileStore(),
-    { spellCheck, setSpellCheck } = configStore(),
     { saveFileContent } = useFile(),
-    [content, setContent] = useState<string>(() => selectedFile.content || ""),
-    fontFamily = getItem("font") ?? FONTS[0].value,
+    { bindGlobal: listen }: any = commands,
+    { spellCheck, setSpellCheck, showHeader } = configStore(),
+    [content, setContent] = useState<string>(
+      () => selectedFile.content ?? "..."
+    ),
+    fontFamily = myFont(true),
     wordCount = myWordCount(),
-    d = translations(),
     [styles, setStyles] = useState<StylesText>({
       fontSize: (getItem("font-size") as string) ?? "text-lg",
       textCenter: (getItem("text-center") as string) ?? "text-start",
+      opacity: (getItem("opacity") as string) ?? 1,
     });
 
   useEffect(() => {
-    saveFileContent(selectedFile.name, content);
+    saveFileContent(selectedFile.name, content ?? "");
   }, [content]);
 
   listen("ctrl+j", (e: Event) => e.preventDefault());
@@ -45,19 +48,20 @@ function FileContent(): Component {
   listen("ctrl+b", () => reduceText(styles, setStyles));
   listen("ctrl+n", () => increaseText(styles, setStyles));
   listen("ctrl+h", () => centerText(styles, setStyles));
+  listen("ctrl+a", () => copyText(content));
 
   function calculateWordCount(): string {
-    const count: number = content
+    const count: number = selectedFile.content
       .trim()
       .split(/\s+/)
-      .filter(w => w.length > 0).length;
+      .filter((w: string) => w.length > 0).length;
     return `${count} ${count == 1 ? d.Word : d.Words}`;
   }
 
   return (
     <MainContainer>
       <div className="h-[calc(100dvh-6rem)] flex items-center justify-center w-[100vw]">
-        {wordCount && (
+        {showHeader && wordCount && (
           <p className="text-sm absolute top-1.5 sm:right-[40%] right-20 opacity-70">
             {calculateWordCount()}
           </p>
@@ -68,8 +72,9 @@ function FileContent(): Component {
           spellCheck={spellCheck}
           autoFocus
           placeholder="..."
+          style={{ opacity: Number(styles.opacity) / 10 }}
           className={twMerge(
-            fontFamily == "font-duo" ? "tracking-normal" : "tracking-wide",
+            fontFamily == FONTS[0].value ? "tracking-normal" : "tracking-wide",
             twJoin(
               styles.fontSize,
               styles.textCenter,

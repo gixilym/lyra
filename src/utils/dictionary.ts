@@ -41,10 +41,10 @@ function translations() {
       "Contact this email for questions about lyra",
       "Contacta este correo para preguntas sobre lyra"
     ),
-
+    TextOpacity: userLanguage("Text opacity", "Opacidad del texto"),
+    TestText: userLanguage("Test text", "Texto de prueba"),
     FullScreen: userLanguage("Full screen", "Pantalla completa"),
     Updates: userLanguage("Updates", "Actualizaciones"),
-    EmailCopied: userLanguage("Email copied", "Email copiado"),
     Version: userLanguage("version", "versión"),
     DevelopedBy: userLanguage("developed by gixi", "desarrollado por gixi"),
     Start: userLanguage("Start", "Iniciar"),
@@ -53,6 +53,11 @@ function translations() {
     MinimalDesing: userLanguage("minimal design", "diseño minimalista"),
     FocusedWriting: userLanguage("focused writing", "escritura enfocada"),
     CenterText: userLanguage("Center text", "Centrar texto"),
+    CopiedToClipboard: userLanguage(
+      "Copied to clipboard",
+      "Copiado al portapapeles"
+    ),
+    CopyText: userLanguage("Copy text", "Copiar texto"),
     AddYourFirstAnnotation: userLanguage(
       "Add your first record",
       "Agrega tu primer registro"

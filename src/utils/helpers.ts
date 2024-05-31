@@ -83,10 +83,11 @@ function myLang(): string {
   return lang == LANGS.en ? "English" : "Español";
 }
 
-function myFont(): string {
+function myFont(value: boolean): string {
   const { getItem } = useStorage();
   const font: string = getItem("font") ?? FONTS[0].value;
-  return font == FONTS[0].value ? FONTS[0].label : FONTS[1].label;
+  const val = value ? "value" : "label";
+  return font == FONTS[0].value ? FONTS[0][val] : FONTS[1][val];
 }
 
 function myWordCount(): boolean {
@@ -95,7 +96,14 @@ function myWordCount(): boolean {
   return count;
 }
 
+function copyText(text: string): void {
+  const d = translations();
+  navigator.clipboard.writeText(text);
+  notification("success", d.CopiedToClipboard);
+}
+
 export {
+  copyText,
   myWordCount,
   myFont,
   myLang,

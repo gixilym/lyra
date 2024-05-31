@@ -6,24 +6,22 @@ import commands from "mousetrap";
 import { type PropsWithChildren } from "react";
 import { Toaster } from "react-hot-toast";
 import { twJoin, twMerge } from "tailwind-merge";
-import useStorage from "../hooks/useStorage";
 import { toggleFullScreen } from "../utils/commands";
-import { themes } from "../utils/helpers";
-import type { Component, Textarea } from "../utils/types";
+import { myFont, themes } from "../utils/helpers";
+import type { Component } from "../utils/types";
 import Footer from "./Footer";
 import Header from "./Header";
 
 listenCommands(commands);
 
 function MainContainer({ children }: PropsWithChildren): Component {
-  const { getItem } = useStorage(),
+  const fontFamily = myFont(true),
     { bindGlobal: listen }: any = commands,
     { isSunnyDay, isDarkNigth } = themes(),
-    fontFamily = getItem("font") ?? "font-duo",
-    textarea: Textarea = document.querySelector("textarea");
+    content = document.getElementById("content");
 
-  textarea?.addEventListener("contextmenu", e => e.stopPropagation());
   window.addEventListener("contextmenu", e => e.preventDefault());
+  content?.addEventListener("contextmenu", e => e.stopPropagation());
 
   listen("f11", () => toggleFullScreen());
 
@@ -53,3 +51,5 @@ function MainContainer({ children }: PropsWithChildren): Component {
 }
 
 export default MainContainer;
+
+

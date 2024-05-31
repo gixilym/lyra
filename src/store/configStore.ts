@@ -9,4 +9,6 @@ export const configStore: ZustandStore = create((set: any) => ({
     set((state: any) => ({ paperIsOpen: !state.paperIsOpen })),
   spellCheck: false,
   setSpellCheck: () => set((state: any) => ({ spellCheck: !state.spellCheck })),
+  showHeader: true,
+  setShowHeader: () => set((state: any) => ({ showHeader: !state.showHeader })),
 }));

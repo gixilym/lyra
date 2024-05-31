@@ -6,8 +6,6 @@ type Component = ReactNode;
 
 type Match = PathMatch<string> | null;
 
-type Textarea = HTMLTextAreaElement | null;
-
 type ZustandStore = UseBoundStore<StoreApi<any>>;
 
 type SelectEvent = ChangeEvent<HTMLSelectElement>;
@@ -20,14 +18,7 @@ interface File {
 interface StylesText {
   fontSize: string;
   textCenter: string;
+  opacity: string;
 }
 
-export type {
-  Component,
-  File,
-  Match,
-  SelectEvent,
-  StylesText,
-  Textarea,
-  ZustandStore,
-};
+export type { Component, File, Match, SelectEvent, StylesText, ZustandStore };

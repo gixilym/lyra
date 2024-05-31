@@ -6,9 +6,11 @@ import { PAGES, THEMES } from "../utils/consts";
 import translations from "../utils/dictionary";
 import { themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
+import { configStore } from "../store/configStore";
 
 function Header(): Component {
   const d = translations(),
+    { setShowHeader: setConfigShowHeader } = configStore(),
     [showHeader, setShowHeader] = useState<boolean>(true),
     [menu, setMenu] = useState<Menu>(initMenu),
     { setItem } = useStorage(),
@@ -162,6 +164,10 @@ function Header(): Component {
                 <p>{d.CenterText}</p>
                 <kbd> CTRL + H</kbd>
               </div>
+              <div className="cursor-default w-full flex justify-between items-center gap-x-4">
+                <p>{d.CopyText}</p>
+                <kbd> CTRL + A</kbd>
+              </div>
             </div>
           )}
         </details>
@@ -203,7 +209,6 @@ function Header(): Component {
               >
                 {d.SunnyDay}
               </p>
-        
             </div>
           )}
         </details>
@@ -252,7 +257,10 @@ function Header(): Component {
       </div>
       <ShowIcon
         size={20}
-        onClick={() => setShowHeader(false)}
+        onClick={() => {
+          setShowHeader(false);
+          setConfigShowHeader();
+        }}
         color={isSunnyDay ? "#1f1f1f9d" : "#ffffff9d"}
         className="cursor-pointer"
       />
@@ -262,7 +270,10 @@ function Header(): Component {
       <HiddenIcon
         color={isSunnyDay ? "#1f1f1f9d" : "#ffffff29"}
         size={20}
-        onClick={() => setShowHeader(true)}
+        onClick={() => {
+          setShowHeader(true);
+          setConfigShowHeader();
+        }}
         className="cursor-pointer"
       />
     </header>
