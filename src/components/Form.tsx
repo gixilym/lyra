@@ -20,7 +20,7 @@ function Form(): Component {
     { createFile } = useFile(),
     { paperIsOpen, setPaperIsOpen } = configStore(),
     [fileName, setFileName] = useState<string>(""),
-    newFile: File = { name: fileName, content: "..." },
+    newFile: File = { name: fileName, content: "" },
     nameIsEmpty: boolean = !fileName,
     { updateListFiles, setSelectedFile, files } = fileStore(),
     nameIsRepeated: boolean = files.some((name: string) => name == fileName),

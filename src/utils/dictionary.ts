@@ -9,6 +9,7 @@ function userLanguage(enText: string, esText: string): string {
 
 function translations() {
   const dictionary = {
+    LastModified: userLanguage("Last modified", "Última modificación"),
     Archived: userLanguage("Paper Bin", "Papelera"),
     Font: userLanguage("Font", "Fuente"),
     About: userLanguage("About", "Acerca de"),
@@ -53,6 +54,8 @@ function translations() {
     MinimalDesing: userLanguage("minimal design", "diseño minimalista"),
     FocusedWriting: userLanguage("focused writing", "escritura enfocada"),
     CenterText: userLanguage("Center text", "Centrar texto"),
+    On: userLanguage("on", "del"),
+    Modified: userLanguage("Modified", "Modificado"),
     CopiedToClipboard: userLanguage(
       "Copied to clipboard",
       "Copiado al portapapeles"

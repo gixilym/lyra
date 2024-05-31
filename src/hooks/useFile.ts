@@ -38,7 +38,7 @@ function useFile(): FilesFunctions {
 
   function createFile(name: string): void {
     if (!name) Promise.reject();
-    else writeFile(name, "...");
+    else writeFile(name, "");
   }
 
   async function getFiles(): Promise<string[]> {

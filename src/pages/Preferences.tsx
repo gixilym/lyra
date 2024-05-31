@@ -3,6 +3,7 @@ import {
   Languages as LanguageIcon,
   Quote as CountIcon,
   Lightbulb as OpacityIcon,
+  Calendar as CalendarIcon,
 } from "lucide-react";
 import Select from "react-select";
 import { twMerge } from "tailwind-merge";
@@ -10,17 +11,27 @@ import MainContainer from "../components/MainContainer";
 import useStorage from "../hooks/useStorage";
 import translations from "../utils/dictionary";
 import { FONTS, LANGS, SELECT_STYLES } from "../utils/consts";
-import { myFont, myLang, myWordCount, themes } from "../utils/helpers";
+import {
+  myFont,
+  myLang,
+  myLastModified,
+  myWordCount,
+  themes,
+} from "../utils/helpers";
 import type { Component } from "../utils/types";
 import { useState } from "react";
 
 function Preferences(): Component {
   const { isSunnyDay } = themes(),
-    { setItem } = useStorage(),
     d = translations(),
     fontFamily = myFont(false),
     lang = myLang(),
     wordCount = myWordCount(),
+    { getItem, setItem } = useStorage(),
+    lastModifiedIsActive = myLastModified(),
+    [textOpacity, setTextOpacity] = useState<number>(
+      () => Number(getItem("opacity")) ?? 10
+    ),
     fontsOptions = [
       { value: FONTS[0].value, label: FONTS[0].label },
       { value: FONTS[1].value, label: FONTS[1].label },
@@ -45,19 +56,19 @@ function Preferences(): Component {
     location.reload();
   }
 
-  const { getItem } = useStorage();
-  const [textOpacity, setTextOpacity] = useState<number>(
-    () => Number(getItem("opacity")) ?? 10
-  );
-
   function changeOpacity(val: number): void {
     setTextOpacity(val);
     setItem("opacity", String(val));
   }
 
+  function changeLastModified(): void {
+    setItem("last-modified", JSON.stringify(!lastModifiedIsActive));
+    location.reload();
+  }
+
   return (
     <MainContainer>
-      <div className="w-full max-w-[400px] flex flex-col justify-center items-center gap-y-14 mt-6">
+      <div className="w-full max-w-[440px] flex flex-col justify-center items-center gap-y-14 mt-6">
         <div className="flex justify-between items-center w-full">
           <div className="flex justify-center items-center gap-x-4">
             <LanguageIcon size={30} />
@@ -100,6 +111,21 @@ function Preferences(): Component {
             )}
           >
             {wordCount ? d.Enabled : d.Disabled}
+          </button>
+        </div>
+        <div className="flex justify-between items-center w-full">
+          <div className="flex justify-center items-center gap-x-5">
+            <CalendarIcon size={25} />
+            <p className="text-md">{d.LastModified}</p>
+          </div>
+          <button
+            onClick={changeLastModified}
+            className={twMerge(
+              lastModifiedIsActive ? "bg-[#2b2b2b]" : "bg-[#2b2b2b]",
+              "cursor-pointer w-[160px] justify-center items-center flex rounded-md text-[#d8d8d8] sm:text-lg text-sm h-10"
+            )}
+          >
+            {lastModifiedIsActive ? d.Enabled : d.Disabled}
           </button>
         </div>
         <div className="flex justify-between items-center w-full">

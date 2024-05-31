@@ -7,7 +7,7 @@ import useFile from "../hooks/useFile";
 import useLoading from "../hooks/useLoading";
 import useStorage from "../hooks/useStorage";
 import { BACKUP_FOLDER, BASE_DIRECTORY } from "../utils/consts";
-import { themes } from "../utils/helpers";
+import { themes, getDate } from "../utils/helpers";
 import type { Component } from "../utils/types";
 import Dialog from "sweetalert2";
 import {
@@ -37,6 +37,12 @@ function Backup(): Component {
     } else copyFiles();
   }
 
+  function saveDate(): void {
+    const date: string = getDate();
+    setItem("backup-date", date);
+    setBackupDate(date);
+  }
+
   async function copyFiles(): Promise<() => void> {
     for await (const file of files) {
       const { pathFile: originalFilePath } = await getFilePath(file);
@@ -45,25 +51,13 @@ function Backup(): Component {
         console.error(`Error copiando ${file}: ${err.message}`)
       );
     }
-    getDate();
+    saveDate();
     const timerOne = setTimeout(() => finishLoading(), 2000);
     const timerTwo = setTimeout(() => setBackupCreated(true), 2000);
     return () => {
       clearTimeout(timerOne);
       clearTimeout(timerTwo);
     };
-  }
-
-  function getDate(): void {
-    const date = new Date(),
-      day = date.getDate().toString().padStart(2, "0"),
-      month = (date.getMonth() + 1).toString().padStart(2, "0"),
-      year = date.getFullYear().toString().slice(-2),
-      hour = date.getHours().toString().padStart(2, "0"),
-      minutes = date.getMinutes().toString().padStart(2, "0"),
-      formattedDate = `${hour}:${minutes} h el ${day}/${month}/${year}`;
-    setItem("backup-date", formattedDate);
-    setBackupDate(formattedDate);
   }
 
   function infoAboutBackup(): void {
@@ -107,7 +101,6 @@ function Backup(): Component {
       confirmButtonText: "OK",
       background: isSunnyDay ? "#dedede" : "#202020",
       color: isSunnyDay ? "#000" : "#fff",
-    
     });
   }
 

@@ -92,8 +92,15 @@ function myFont(value: boolean): string {
 
 function myWordCount(): boolean {
   const { getItem } = useStorage();
-  const count: boolean = JSON.parse(getItem("word-count") as string) ?? true;
-  return count;
+  const isActive: boolean = JSON.parse(getItem("word-count") as string) ?? true;
+  return isActive;
+}
+
+function myLastModified(): boolean {
+  const { getItem } = useStorage();
+  const isActive: boolean =
+    JSON.parse(getItem("last-modified") as string) ?? true;
+  return isActive;
 }
 
 function copyText(text: string): void {
@@ -102,7 +109,20 @@ function copyText(text: string): void {
   notification("success", d.CopiedToClipboard);
 }
 
+function getDate(): string {
+  const d = translations(),
+    date = new Date(),
+    day = date.getDate().toString().padStart(2, "0"),
+    month = (date.getMonth() + 1).toString().padStart(2, "0"),
+    year = date.getFullYear().toString().slice(-2),
+    hour = date.getHours().toString().padStart(2, "0"),
+    minutes = date.getMinutes().toString().padStart(2, "0"),
+    formattedDate = `${hour}:${minutes} h ${d.On} ${day}/${month}/${year}`;
+  return formattedDate;
+}
+
 export {
+  myLastModified,
   copyText,
   myWordCount,
   myFont,
@@ -113,6 +133,7 @@ export {
   paperFiles,
   themes,
   verifyMainFolder,
+  getDate,
 };
 
 interface Themes {
