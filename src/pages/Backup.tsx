@@ -1,31 +1,45 @@
 import { copyFile, createDir, exists } from "@tauri-apps/api/fs";
 import { join } from "@tauri-apps/api/path";
-import { useState } from "react";
+import {
+  DatabaseBackup as BackupIcon,
+  FileUp as FileIcon,
+  FolderUp as ImportIcon,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import Dialog from "sweetalert2";
 import { twMerge } from "tailwind-merge";
 import MainContainer from "../components/MainContainer";
 import useFile from "../hooks/useFile";
 import useLoading from "../hooks/useLoading";
 import useStorage from "../hooks/useStorage";
 import { BACKUP_FOLDER, BASE_DIRECTORY } from "../utils/consts";
-import { themes, getDate } from "../utils/helpers";
-import type { Component } from "../utils/types";
-import Dialog from "sweetalert2";
 import {
-  DatabaseBackup as BackupIcon,
-  FolderUp as ImportIcon,
-  FileUp as FileIcon,
-} from "lucide-react";
+  backupExists as backupExistsFn,
+  getDate,
+  themes,
+} from "../utils/helpers";
+import type { Component } from "../utils/types";
+import translations from "../utils/dictionary";
 
 function Backup(): Component {
-  const { isSunnyDay } = themes(),
+  const d = translations(),
+    { isSunnyDay } = themes(),
     { getFilePath } = useFile(),
     { getItem, setItem } = useStorage(),
     { startLoading, isLoading, finishLoading } = useLoading(),
     files: string[] = JSON.parse(getItem("files") as string) ?? [],
+    [backupExists, setBackupExists] = useState<boolean>(false),
     [backupCreated, setBackupCreated] = useState<boolean>(false),
     [backupDate, setBackupDate] = useState<string>(
       () => getItem("backup-date") ?? "nunca"
     );
+
+  useEffect(() => {
+    (async function () {
+      const res = await backupExistsFn();
+      setBackupExists(res);
+    })();
+  }, []);
 
   async function createBackup(): Promise<void> {
     startLoading();
@@ -33,6 +47,7 @@ function Backup(): Component {
     if (!backupExists) {
       createDir(BACKUP_FOLDER, BASE_DIRECTORY)
         .then(() => copyFiles())
+        .then(() => setBackupExists(true))
         .catch(err => console.error(`Error creando backup: ${err.message}`));
     } else copyFiles();
   }
@@ -53,7 +68,10 @@ function Backup(): Component {
     }
     saveDate();
     const timerOne = setTimeout(() => finishLoading(), 2000);
-    const timerTwo = setTimeout(() => setBackupCreated(true), 2000);
+    const timerTwo = setTimeout(() => {
+      setBackupCreated(true);
+      setBackupExists(true);
+    }, 2000);
     return () => {
       clearTimeout(timerOne);
       clearTimeout(timerTwo);
@@ -62,13 +80,12 @@ function Backup(): Component {
 
   function infoAboutBackup(): void {
     Dialog.fire({
-      title: "Importante",
-      text: "Solo se respaldarán los archivos que NO estén en la papelera, en caso que desees respaldar la papelera deberás realizarlo manualmente.",
+      title: d.Important,
+      text: d.InfoAboutBackup,
       icon: "info",
       showCancelButton: false,
       confirmButtonColor: "#ffffff0",
       confirmButtonText: "OK",
-
       background: isSunnyDay ? "#dedede" : "#202020",
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
@@ -80,8 +97,8 @@ function Backup(): Component {
 
   function infoAboutImportArchives(): void {
     Dialog.fire({
-      title: "Importante",
-      text: "Si deseas importar archivos '.txt', debes dirigirte a 'C:\\Users\\tu-usuario\\Documents\\lyra' y colocarlos dentro 'lyra'.",
+      title: d.Important,
+      text: d.IfYouWantToImportFiles,
       icon: "info",
       showCancelButton: false,
       confirmButtonColor: "#ffffff0",
@@ -93,8 +110,8 @@ function Backup(): Component {
 
   function infoAboutImportBackup(): void {
     Dialog.fire({
-      title: "Importante",
-      text: "Si deseas importar una copia de seguridad, debes dirigirte a 'C:\\Users\\tu-usuario\\Documents' buscar la carpeta 'lyra-backup' y modificar el nombre por 'lyra'.",
+      title: d.Important,
+      text: d.IfYouWantToImportBackup,
       icon: "info",
       showCancelButton: false,
       confirmButtonColor: "#ffffff0",
@@ -108,13 +125,13 @@ function Backup(): Component {
     <MainContainer>
       <section className="w-full max-w-[650px] justify-center items-center flex flex-col h-full gap-y-10 ">
         <div className="flex flex-col gap-y-4 justify-start items-center w-full mt-6 border rounded-md border-gray-500 p-4">
-          <p className="w-full text-start text-lg">Importar archivos</p>
+          <p className="w-full text-start text-lg">{d.ImportRecords}</p>
           <div className="w-full justify-start items-center flex">
             <div
               className="flex justify-center gap-x-8 items-center duration-75 bg-gray-700 w-64 rounded-md font-semibold text-white h-20"
               onClick={infoAboutImportArchives}
             >
-              <p className="text-lg">importar</p>
+              <p className="text-md">{d.Import}</p>
               <FileIcon size={32} />
             </div>
           </div>
@@ -127,52 +144,50 @@ function Backup(): Component {
               "w-full text-start text-md"
             )}
           >
-            Última copia de seguridad creada a las {backupDate}
+            {d.LastBackupCreatedAt} {backupDate}
           </p>
 
           <div className="w-full justify-between items-center flex">
             {isLoading ? (
               <div className="flex justify-center gap-x-8 items-center duration-75 bg-indigo-600 w-64 rounded-md font-semibold text-white h-20">
-                <p className="text-lg">creando...</p>
+                <p className="text-lg">{d.Creating}</p>
                 <BackupIcon size={32} />
               </div>
             ) : backupCreated ? (
               <div className="flex h-20 justify-center items-center duration-75 bg-green-600 opacity-80 w-64 py-2 rounded-md gap-x-8 font-semibold text-white">
-                <p className="text-lg">copia creada</p>
+                <p className="text-lg">{d.CopyCreated}</p>
                 <BackupIcon size={32} />
               </div>
             ) : (
               <button
                 onClick={infoAboutBackup}
-                className="flex justify-center items-center duration-75 bg-indigo-600 hover:bg-indigo-500 cursor-pointer w-64 rounded-md gap-x-8 font-semibold text-white h-20"
+                className="flex justify-center items-center duration-75 bg-indigo-600 hover:bg-indigo-500 cursor-pointer w-64 rounded-md gap-x-8 font-semibold text-white h-20 px-2"
               >
-                <p className="text-lg">
-                  crear copia <br /> de seguridad
-                </p>
+                <p className="text-md">{d.CreateBackup}</p>
                 <BackupIcon size={32} />
               </button>
             )}
             <button
               onClick={infoAboutImportBackup}
-              className="flex justify-center items-center duration-75 bg-gray-700 hover:bg-gray-5bg-gray-700 cursor-pointer w-64 rounded-md gap-x-8 font-semibold text-white h-20"
+              className="flex justify-center items-center duration-75 bg-gray-700 hover:bg-gray-gray-700 cursor-pointer w-64 rounded-md gap-x-8 font-semibold text-white h-20 px-2"
             >
-              <p className="text-lg">
-                importar copia <br /> de seguridad
-              </p>
+              <p className="text-md">{d.ImportBackup}</p>
               <ImportIcon size={32} />
             </button>
           </div>
-          <div
-            className={twMerge(
-              backupDate == "nunca" ? "opacity-0" : "opacity-100",
-              "w-full text-start text-md flex flex-col"
-            )}
-          >
-            <p>El respaldo se haya en:</p>
-            <address className="select-text">
-              C:\Users\tu-usuario\Documents\lyra-backup
-            </address>
-          </div>
+          {backupExists && (
+            <div
+              className={twMerge(
+                backupDate == "nunca" ? "opacity-0" : "opacity-100",
+                "w-full text-start text-md flex flex-col"
+              )}
+            >
+              <p>{d.TheBackupIsIn}:</p>
+              <address className="select-text">
+                C:\Users\{d.YourUser}\Documents\{BACKUP_FOLDER}
+              </address>
+            </div>
+          )}
         </div>
       </section>
     </MainContainer>

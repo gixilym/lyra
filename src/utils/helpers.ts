@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import useStorage from "../hooks/useStorage";
 import {
+  BACKUP_FOLDER,
   BASE_DIRECTORY,
   FONTS,
   INTRODUCTION,
@@ -121,7 +122,13 @@ function getDate(): string {
   return formattedDate;
 }
 
+async function backupExists(): Promise<boolean> {
+  const res: boolean = await exists(BACKUP_FOLDER, BASE_DIRECTORY);
+  return res;
+}
+
 export {
+  backupExists,
   myLastModified,
   copyText,
   myWordCount,
