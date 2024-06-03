@@ -11,7 +11,7 @@ export const fileStore: ZustandStore = create((set: any) => ({
       files: state.files.filter((f: string) => f != name),
     })),
   selectedFile: { name: "", content: "" },
-  setSelectedFile: (snippet: any) => set({ selectedFile: snippet }),
+  setSelectedFile: (file: any) => set({ selectedFile: file }),
   fileIsEdited: false,
   editedFile: () =>
     set((state: any) => ({ fileIsEdited: !state.fileIsEdited })),

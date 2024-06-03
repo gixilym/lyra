@@ -11,6 +11,7 @@ import { join } from "@tauri-apps/api/path";
 import { fileStore } from "../store/fileStore";
 import { BASE_DIRECTORY, MAIN_FOLDER, PAGES } from "../utils/consts";
 import { navigation } from "../utils/helpers";
+import useStorage from "./useStorage";
 
 function useFile(): FilesFunctions {
   const { goTo } = navigation();
@@ -32,7 +33,9 @@ function useFile(): FilesFunctions {
 
   async function deleteFile(name: string): Promise<void> {
     if (!name) Promise.reject();
+    const { removeItem } = useStorage();
     const { pathFile } = await getFilePath(name);
+    removeItem(name);
     remove(pathFile, BASE_DIRECTORY);
   }
 

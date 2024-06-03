@@ -20,6 +20,7 @@ import type { Component, File } from "../utils/types";
 function Form(): Component {
   const d = translations(),
     { goTo } = navigation(),
+    { isSunnyDay } = themes(),
     { createFile, deleteFile } = useFile(),
     { paperIsOpen, setPaperIsOpen } = configStore(),
     [fileName, setFileName] = useState<string>(""),
@@ -29,8 +30,7 @@ function Form(): Component {
     nameIsEmpty: boolean = !fileName,
     { updateListFiles, setSelectedFile, files, editedFile, setFiles } =
       fileStore(),
-    nameIsRepeated: boolean = files.some((name: string) => name == fileName),
-    { isSunnyDay } = themes();
+    nameIsRepeated: boolean = files.some((name: string) => name == fileName);
 
   function addFile(event: FormEvent): void {
     event.preventDefault();

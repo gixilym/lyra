@@ -9,7 +9,12 @@ function useStorage(): StorageFunctions {
     return item;
   }
 
-  return { getItem, setItem };
+  function removeItem(key: string): void {
+    const item: void = window.localStorage.removeItem(key);
+    return item;
+  }
+
+  return { getItem, setItem, removeItem };
 }
 
 export default useStorage;
@@ -17,4 +22,5 @@ export default useStorage;
 interface StorageFunctions {
   getItem: (key: string) => string | null;
   setItem: (key: string, value: string) => void;
+  removeItem: (key: string) => void;
 }

@@ -13,13 +13,13 @@ import useFile from "../hooks/useFile";
 import useLoading from "../hooks/useLoading";
 import useStorage from "../hooks/useStorage";
 import { BACKUP_FOLDER, BASE_DIRECTORY } from "../utils/consts";
+import translations from "../utils/dictionary";
 import {
   backupExists as backupExistsFn,
   getDate,
   themes,
 } from "../utils/helpers";
 import type { Component } from "../utils/types";
-import translations from "../utils/dictionary";
 
 function Backup(): Component {
   const d = translations(),
