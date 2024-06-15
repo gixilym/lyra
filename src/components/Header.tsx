@@ -10,8 +10,7 @@ import { configStore } from "../store/configStore";
 
 function Header(): Component {
   const d = translations(),
-    { setShowHeader: setConfigShowHeader } = configStore(),
-    [showHeader, setShowHeader] = useState<boolean>(true),
+    { showHeader, setShowHeader } = configStore(),
     [menu, setMenu] = useState<Menu>(initMenu),
     { setItem } = useStorage(),
     { isSunnyDay } = themes(),
@@ -232,16 +231,6 @@ function Header(): Component {
               >
                 {d.About}
               </a>
-
-              {/* <a
-                href={PAGES.updates}
-                className={twMerge(
-                  isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
-                  "cursor-default w-full"
-                )}
-              >
-                {d.Updates}
-              </a> */}
               <a
                 href={PAGES.support}
                 className={twMerge(
@@ -257,10 +246,7 @@ function Header(): Component {
       </div>
       <ShowIcon
         size={20}
-        onClick={() => {
-          setShowHeader(false);
-          setConfigShowHeader();
-        }}
+        onClick={() => setShowHeader()}
         color={isSunnyDay ? "#1f1f1f9d" : "#ffffff9d"}
         className="cursor-pointer"
       />
@@ -270,10 +256,7 @@ function Header(): Component {
       <HiddenIcon
         color={isSunnyDay ? "#1f1f1f9d" : "#ffffff29"}
         size={20}
-        onClick={() => {
-          setShowHeader(true);
-          setConfigShowHeader();
-        }}
+        onClick={() => setShowHeader()}
         className="cursor-pointer"
       />
     </header>

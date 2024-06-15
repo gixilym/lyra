@@ -3,7 +3,7 @@ import type { ZustandStore } from "../utils/types";
 
 export const configStore: ZustandStore = create((set: any) => ({
   paperIsOpen: false,
-  setPaperIsOpen: () =>  
+  setPaperIsOpen: () =>
     set((state: any) => ({ paperIsOpen: !state.paperIsOpen })),
   spellCheck: false,
   setSpellCheck: () => set((state: any) => ({ spellCheck: !state.spellCheck })),
