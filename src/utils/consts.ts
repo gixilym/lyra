@@ -6,8 +6,6 @@ const MAIN_FOLDER: string = "lyra";
 
 const BACKUP_FOLDER: string = "lyra-backup";
 
-//! la opacidad aparece al mínimo nada más instalar
-
 const PAGES: Pages = {
   presentation: "/",
   list: "/list",
@@ -63,6 +61,7 @@ const SELECT_STYLES = {
 const INTRODUCTION: string = `lyra es tu espacio para dejar volar tu creatividad sin distracciones.\n\nDiseñada para aquellos que aman escribir de manera enfocada, ya sea un libro, pensamientos, un diario personal, o cualquier tipo de contenido.\n\nFunciona sin conexión, asegurando que tus escritos se mantengan seguros, privados y accesibles en tu dispositivo. No se recopilan datos de usuario.\n\nOfrece temas para adaptarse a tu estilo, comandos de teclado para una experiencia de escritura fluida. Disponible en español e inglés (más próximamente)\n\n¡Empieza a escribir en lyra y transforma tus ideas en palabras!`;
 
 export {
+  BACKUP_FOLDER,
   BASE_DIRECTORY,
   FONTS,
   INTRODUCTION,
@@ -71,7 +70,6 @@ export {
   PAGES,
   SELECT_STYLES,
   THEMES,
-  BACKUP_FOLDER,
 };
 
 interface Pages {

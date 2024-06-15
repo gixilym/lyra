@@ -2,11 +2,11 @@ import { EyeOff as HiddenIcon, Eye as ShowIcon } from "lucide-react";
 import { useState } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 import useStorage from "../hooks/useStorage";
+import { configStore } from "../store/configStore";
 import { PAGES, THEMES } from "../utils/consts";
 import translations from "../utils/dictionary";
 import { themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
-import { configStore } from "../store/configStore";
 
 function Header(): Component {
   const d = translations(),

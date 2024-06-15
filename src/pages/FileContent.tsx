@@ -34,7 +34,7 @@ function FileContent(): Component {
     [styles, setStyles] = useState<StylesText>({
       fontSize: (getItem("font-size") as string) ?? "text-lg",
       textCenter: (getItem("text-center") as string) ?? "text-start",
-      opacity: (getItem("opacity") as string) ?? 1,
+      opacity: (getItem("opacity") as string) ?? 10,
     });
 
   useEffect(() => {
