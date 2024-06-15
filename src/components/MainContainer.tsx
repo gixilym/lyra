@@ -15,15 +15,11 @@ import Header from "./Header";
 listenCommands(commands);
 
 function MainContainer({ children }: PropsWithChildren): Component {
-  const fontFamily = myFont(true),
-    { bindGlobal: listen }: any = commands,
-    { isSunnyDay, isDarkNigth } = themes(),
-    content = document.getElementById("content");
+  const fontFamily = myFont(true);
+  const { bindGlobal: listen }: any = commands;
+  const { isSunnyDay, isDarkNigth } = themes() 
 
-  window.addEventListener("contextmenu", e => e.preventDefault());
-  content?.addEventListener("contextmenu", e => e.stopPropagation());
-
-  listen("f11", () => toggleFullScreen());
+  listen("f11", () => toggleFullScreen())
 
   return (
     <motion.main
@@ -51,5 +47,3 @@ function MainContainer({ children }: PropsWithChildren): Component {
 }
 
 export default MainContainer;
-
-
