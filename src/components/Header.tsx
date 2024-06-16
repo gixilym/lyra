@@ -105,7 +105,7 @@ function Header(): Component {
                   "cursor-default w-full"
                 )}
               >
-            got    {d.List}
+                {d.List}
               </a>
               <a
                 href={PAGES.preferences}
