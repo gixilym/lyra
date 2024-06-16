@@ -1,8 +1,8 @@
 import type { ChangeEvent, ReactNode } from "react";
 import type { PathMatch } from "react-router-dom";
-import { StoreApi, UseBoundStore } from "zustand";
+import type { StoreApi, UseBoundStore } from "zustand";
 
-type Component = ReactNode;
+type Component = ReactNode | JSX.Element | JSX.Element[];
 
 type Match = PathMatch<string> | null;
 
@@ -17,7 +17,7 @@ interface File {
 
 interface StylesText {
   fontSize: string;
-  textCenter: string;
+  alignText: string;
   opacity: string;
 }
 

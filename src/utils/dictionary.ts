@@ -83,7 +83,7 @@ function translations() {
       "Contacta este correo para preguntas sobre lyra"
     ),
     TextOpacity: userLanguage("Text opacity", "Opacidad del texto"),
-    TestText: userLanguage("Test text", "Texto de prueba"),
+    TestText: userLanguage("test text", "texto de prueba"),
     FullScreen: userLanguage("Full screen", "Pantalla completa"),
     Updates: userLanguage("Updates", "Actualizaciones"),
     Version: userLanguage("version", "versión"),
@@ -93,7 +93,7 @@ function translations() {
     OfflineAccess: userLanguage("offline access", "acceso sin conexión"),
     MinimalDesing: userLanguage("minimal design", "diseño minimalista"),
     FocusedWriting: userLanguage("focused writing", "escritura enfocada"),
-    CenterText: userLanguage("Center text", "Centrar texto"),
+    AlternateText: userLanguage("Alternate text", "Alternar texto"),
     On: userLanguage("on", "del"),
     Modified: userLanguage("Modified", "Modificado"),
     CopiedToClipboard: userLanguage(

@@ -105,7 +105,7 @@ function Header(): Component {
                   "cursor-default w-full"
                 )}
               >
-                {d.List}
+            got    {d.List}
               </a>
               <a
                 href={PAGES.preferences}
@@ -147,10 +147,10 @@ function Header(): Component {
                 <p>{d.Search}</p>
                 <kbd> CTRL + F</kbd>
               </div>
-              <div className="cursor-default w-full flex justify-between items-center gap-x-4">
+              {/* <div className="cursor-default w-full flex justify-between items-center gap-x-4">
                 <p>{d.CheckSpelling}</p>
                 <kbd> CTRL + M</kbd>
-              </div>
+              </div> */}
               <div className="cursor-default w-full flex justify-between items-center gap-x-4">
                 <p>{d.ReduceTextSize}</p>
                 <kbd> CTRL + B</kbd>
@@ -160,7 +160,7 @@ function Header(): Component {
                 <kbd> CTRL + N</kbd>
               </div>
               <div className="cursor-default w-full flex justify-between items-center gap-x-4">
-                <p>{d.CenterText}</p>
+                <p>{d.AlternateText}</p>
                 <kbd> CTRL + H</kbd>
               </div>
               <div className="cursor-default w-full flex justify-between items-center gap-x-4">

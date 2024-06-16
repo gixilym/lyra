@@ -17,9 +17,10 @@ listenCommands(commands);
 function MainContainer({ children }: PropsWithChildren): Component {
   const fontFamily = myFont(true);
   const { bindGlobal: listen }: any = commands;
-  const { isSunnyDay, isDarkNigth } = themes() 
+  const { isSunnyDay, isDarkNigth } = themes();
 
-  listen("f11", () => toggleFullScreen())
+  addEventListener("contextmenu", (e: Event) => e.preventDefault());
+  listen("f11", () => toggleFullScreen());
 
   return (
     <motion.main

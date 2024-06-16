@@ -6,29 +6,92 @@ import { notification } from "./helpers";
 import type { StylesText } from "./types";
 
 async function toggleFullScreen(): Promise<void> {
-  const isFullScreen = await appWindow.isFullscreen();
+  const isFullScreen: boolean = await appWindow.isFullscreen();
   if (isFullScreen) appWindow.setFullscreen(false);
   else appWindow.setFullscreen(true);
 }
 
-function centerText(styles: StylesText, setStyles: SetStyles): void {
+function alignText(styles: StylesText, setStyles: SetStyles): void {
   const { setItem } = useStorage();
-  const textMode: string =
-    styles.textCenter == "text-center" ? "text-start" : "text-center";
-  setItem("text-center", textMode);
-  setStyles({ ...styles, textCenter: textMode });
+
+  function alternateText(): string {
+    switch (styles.alignText) {
+      case "text-start":
+        return "text-center";
+
+      case "text-center":
+        return "text-right";
+
+      case "text-right":
+        return "text-start";
+
+      default:
+        return "text-start";
+    }
+  }
+
+  setItem("align-text", alternateText());
+  setStyles({ ...styles, alignText: alternateText() });
 }
 
 function increaseText(styles: StylesText, setStyles: SetStyles): void {
-  const { setItem } = useStorage();
-  setItem("font-size", "text-xl");
-  setStyles({ ...styles, fontSize: "text-xl" });
+  const { setItem, getItem } = useStorage();
+  const textSize: string = (getItem("font-size") as string) ?? "text-lg";
+
+  function changeSize(): string {
+    switch (textSize) {
+      case "text-sm":
+        return "text-md";
+
+      case "text-md":
+        return "text-lg";
+
+      case "text-lg":
+        return "text-xl";
+
+      case "text-xl":
+        return "text-2xl";
+
+      case "text-2xl":
+        return "text-2xl";
+
+      default:
+        return "text-lg";
+    }
+  }
+
+  setItem("font-size", changeSize());
+  setStyles({ ...styles, fontSize: changeSize() });
 }
 
 function reduceText(styles: StylesText, setStyles: SetStyles): void {
-  const { setItem } = useStorage();
-  setItem("font-size", "text-lg");
-  setStyles({ ...styles, fontSize: "text-lg" });
+  const { setItem, getItem } = useStorage();
+  const textSize: string = (getItem("font-size") as string) ?? "text-lg";
+
+  function changeSize(): string {
+    switch (textSize) {
+      case "text-sm":
+        return "text-sm";
+
+      case "text-md":
+        return "text-sm";
+
+      case "text-lg":
+        return "text-md";
+
+      case "text-xl":
+        return "text-lg";
+
+      case "text-2xl":
+        return "text-xl";
+
+      default:
+        return "text-lg";
+    }
+  }
+
+  setItem("font-size", changeSize());
+  setStyles({ ...styles, fontSize: changeSize() });
 }
 
 function toggleSpellchecker(spellCheck: boolean, setSpellCheck: any): void {
@@ -43,7 +106,7 @@ function toggleSpellchecker(spellCheck: boolean, setSpellCheck: any): void {
 }
 
 export {
-  centerText,
+  alignText,
   increaseText,
   reduceText,
   toggleFullScreen,

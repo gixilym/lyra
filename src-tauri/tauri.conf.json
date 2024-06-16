@@ -47,13 +47,39 @@
       "active": true,
       "targets": "all",
       "identifier": "com.lyra.dev",
+      "publisher": "lyra",
+      "shortDescription": "focused writing",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
-        "icons/128x128.png",
+        "icons/128x128@2x.png",
         "icons/icon.icns",
-        "icons/icon.ico"
-      ]
+        "icons/icon.ico",
+        "icons/icon.png"
+      ],
+      "windows": {
+        "allowDowngrades": true,
+        "certificateThumbprint": null,
+        "digestAlgorithm": null,
+        "nsis": null,
+        "timestampUrl": null,
+        "tsp": false,
+        "webviewFixedRuntimePath": null,
+        "webviewInstallMode": {
+          "silent": true,
+          "type": "downloadBootstrapper"
+        },
+        "wix": {
+          "language": [
+            "en-US",
+            "es-ES"
+          ],
+          "dialogImagePath": "./target/win/dialog-win.png",
+          "template": "./target/win/main.wxs",
+          "bannerPath": "./target/win/banner-win.png",
+          "license": "../LICENSE"
+        }
+      }
     },
     "security": {
       "csp": null
@@ -62,7 +88,7 @@
       {
         "label": "lyra-window",
         "minWidth": 600,
-        "minHeight": 500,
+        "minHeight": 540,
         "resizable": true,
         "title": "lyra",
         "width": 1100,

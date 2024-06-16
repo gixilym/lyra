@@ -127,7 +127,43 @@ async function backupExists(): Promise<boolean> {
   return res;
 }
 
+function stylesSelect(): any {
+  const { isSunnyDay } = themes();
+  return {
+    placeholder: (styles: any) => ({
+      ...styles,
+      color: isSunnyDay ? "#000" : "#d8d8d8",
+    }),
+    singleValue: (styles: any) => ({
+      ...styles,
+      color: isSunnyDay ? "#000" : "#d8d8d8",
+    }),
+    control: (styles: any) => ({
+      ...styles,
+      backgroundColor: isSunnyDay ? "#c0c0c0" : "#2b2b2b",
+      border: isSunnyDay ? "1px solid #2b2b2b" : "1px solid #c0c0c0",
+      color: isSunnyDay ? "#000" : "#d8d8d8",
+      boxShadow: "0",
+      width: "160px",
+    }),
+    option: (styles: any) => ({
+      ...styles,
+      ":active": { backgroundColor: isSunnyDay ? "#b0b0b0" : "#2b2b2b" },
+      ":hover": { backgroundColor: isSunnyDay ? "#b0b0b0" : "#3e3e3e" },
+      backgroundColor: isSunnyDay ? "#c0c0c0" : "#2b2b2b",
+      border: 0,
+      color: isSunnyDay ? "#000" : "#e7e7e7",
+    }),
+    menu: (styles: any) => ({
+      ...styles,
+      backgroundColor: isSunnyDay ? "#c0c0c0" : "#2b2b2b",
+      marginTop: 2,
+    }),
+  };
+}
+
 export {
+  stylesSelect,
   backupExists,
   myLastModified,
   copyText,

@@ -6,14 +6,8 @@ import InfoFile from "../components/InfoFile";
 import MainContainer from "../components/MainContainer";
 import useFile from "../hooks/useFile";
 import useStorage from "../hooks/useStorage";
-import { configStore } from "../store/configStore";
 import { fileStore } from "../store/fileStore";
-import {
-  centerText,
-  increaseText,
-  reduceText,
-  toggleSpellchecker,
-} from "../utils/commands";
+import { alignText, increaseText, reduceText } from "../utils/commands";
 import { FONTS } from "../utils/consts";
 import { copyText, getDate, myFont, myLastModified } from "../utils/helpers";
 import type { Component, StylesText } from "../utils/types";
@@ -25,16 +19,16 @@ function FileContent(): Component {
     { selectedFile } = fileStore(),
     { saveFileContent } = useFile(),
     { bindGlobal: listen }: any = commands,
-    { spellCheck, setSpellCheck } = configStore(),
-    oldContent = selectedFile.content ?? "",
+    // { spellCheck, setSpellCheck } = configStore(),
+    oldContent: string = selectedFile.content ?? "",
     [content, setContent] = useState<string>(() => selectedFile.content ?? ""),
     fontFamily = myFont(true),
     lastModifiedIsActive = myLastModified(),
     [wordCounts, setWordCounts] = useState<number>(0),
     [styles, setStyles] = useState<StylesText>({
-      fontSize: (getItem("font-size") as string) ?? "text-lg",
-      textCenter: (getItem("text-center") as string) ?? "text-start",
-      opacity: (getItem("opacity") as string) ?? 10,
+      fontSize: getItem("font-size") ?? "text-lg",
+      alignText: getItem("align-text") ?? "text-start",
+      opacity: getItem("opacity") ?? "10",
     });
 
   useEffect(() => {
@@ -45,10 +39,10 @@ function FileContent(): Component {
 
   listen("ctrl+j", (e: Event) => e.preventDefault());
   listen("ctrl+g", (e: Event) => e.preventDefault());
-  listen("ctrl+m", () => toggleSpellchecker(spellCheck, setSpellCheck));
+  // listen("ctrl+m", () => toggleSpellchecker(spellCheck, setSpellCheck));
   listen("ctrl+b", () => reduceText(styles, setStyles));
   listen("ctrl+n", () => increaseText(styles, setStyles));
-  listen("ctrl+h", () => centerText(styles, setStyles));
+  listen("ctrl+h", () => alignText(styles, setStyles));
   listen("ctrl+a", () => copyText(content));
 
   function calculateWordCount(text: string): void {
@@ -74,7 +68,7 @@ function FileContent(): Component {
         <textarea
           value={content}
           onChange={e => setContent(e.target.value)}
-          spellCheck={spellCheck}
+          // spellCheck={spellCheck}
           autoFocus
           placeholder="..."
           style={{ opacity: Number(styles.opacity) / 10 }}
@@ -82,7 +76,7 @@ function FileContent(): Component {
             fontFamily == FONTS[0].value ? "tracking-normal" : "tracking-wide",
             twJoin(
               styles.fontSize,
-              styles.textCenter,
+              styles.alignText,
               "w-full h-full sm:pb-20 lg:px-0 px-4 resize-none border-none focus:ring-0 focus:outline-none sm:min-w-[600px] max-w-[800px] bg-transparent placeholder:text-gray-100/50"
             )
           )}
