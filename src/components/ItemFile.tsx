@@ -11,6 +11,7 @@ import { PAGES } from "../utils/consts";
 import { navigation, notification, paperFiles, themes } from "../utils/helpers";
 import type { Component, File } from "../utils/types";
 import MenuFile from "./MenuFile";
+import { SyntheticEvent } from "react";
 
 function ItemFile({ fileName }: { fileName: string }): Component {
   const { goTo } = navigation(),
@@ -29,7 +30,7 @@ function ItemFile({ fileName }: { fileName: string }): Component {
     goTo(PAGES.file);
   }
 
-  function recoveryPaperItem(event: any): void {
+  function recoveryPaperItem(event: SyntheticEvent): void {
     event.stopPropagation();
     Dialog.fire({
       title: d.AreYouSure,
@@ -54,7 +55,7 @@ function ItemFile({ fileName }: { fileName: string }): Component {
     });
   }
 
-  function removeItem(event: any): void {
+  function removeItem(event: SyntheticEvent): void {
     event.stopPropagation();
     Dialog.fire({
       title: d.AreYouSure,

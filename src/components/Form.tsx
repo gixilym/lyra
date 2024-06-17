@@ -1,5 +1,5 @@
 import { FilePlus as AddIcon, Folders as PaperIcon } from "lucide-react";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, type SyntheticEvent, useState } from "react";
 import Dialog from "sweetalert2";
 import { twMerge } from "tailwind-merge";
 import useFile from "../hooks/useFile";
@@ -49,7 +49,7 @@ function Form(): Component {
     goTo(PAGES.file);
   }
 
-  function recoveryEvery(event: any): void {
+  function recoveryEvery(event: SyntheticEvent): void {
     event.stopPropagation();
     Dialog.fire({
       title: d.AreYouSure,
@@ -74,7 +74,7 @@ function Form(): Component {
     });
   }
 
-  function deleteEvery(event: any): void {
+  function deleteEvery(event: SyntheticEvent): void {
     event.stopPropagation();
     Dialog.fire({
       title: d.AreYouSure,
@@ -97,9 +97,15 @@ function Form(): Component {
     });
   }
 
+  function handleSubmit(event: FormEvent): void {
+    event.preventDefault();
+    if (fileName) addFile(event);
+    else return;
+  }
+
   return (
     <form
-      onSubmit={event => event.preventDefault()}
+      onSubmit={handleSubmit}
       className="flex flex-col justify-center items-center w-full text-slate-400 gap-y-6"
     >
       <div className="flex justify-center items-center gap-x-3 w-full">

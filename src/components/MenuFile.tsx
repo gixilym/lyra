@@ -12,6 +12,7 @@ import {
   themes,
 } from "../utils/helpers";
 import type { Component } from "../utils/types";
+import { SyntheticEvent } from "react";
 
 function MenuFile({ fileName }: { fileName: string }): Component {
   const d = translations(),
@@ -22,7 +23,7 @@ function MenuFile({ fileName }: { fileName: string }): Component {
     { isSunnyDay } = themes(),
     paper = paperFiles();
 
-  function editFileName(event: any): void {
+  function editFileName(event: SyntheticEvent): void {
     event.stopPropagation();
     Dialog.fire({
       title: d.EnterNewName,
@@ -50,7 +51,7 @@ function MenuFile({ fileName }: { fileName: string }): Component {
     });
   }
 
-  function moveToTrash(event: any): void {
+  function moveToTrash(event: SyntheticEvent): void {
     event.stopPropagation();
     Dialog.fire({
       title: d.AreYouSure,
