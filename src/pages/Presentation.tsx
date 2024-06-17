@@ -18,7 +18,6 @@ function Presentation(): Component {
     verifyMainFolder();
   }, []);
 
-
   return (
     <MainContainer>
       <section className="px-6 sm:px-0 w-full max-w-[700px] h-full min-h-[300px] flex flex-col justify-between items-center sm:mt-10 mt-0">
@@ -81,7 +80,7 @@ function Presentation(): Component {
         >
           <p>{d.Version}: 1.0.0</p>
           <a
-            href="https://github.com/gixilym"
+            href="https://gixi.me/"
             target="_blank"
             className="cursor-default hover:underline"
           >
@@ -89,10 +88,6 @@ function Presentation(): Component {
           </a>
         </div>
       </section>
-
-
-
-
     </MainContainer>
   );
 }

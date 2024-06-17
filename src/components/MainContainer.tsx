@@ -19,6 +19,7 @@ function MainContainer({ children }: PropsWithChildren): Component {
   const { bindGlobal: listen }: any = commands;
   const { isSunnyDay, isDarkNigth } = themes();
 
+  document.body.spellcheck = false;
   addEventListener("contextmenu", (e: Event) => e.preventDefault());
   listen("f11", () => toggleFullScreen());
 

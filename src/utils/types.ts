@@ -1,8 +1,10 @@
-import type { ChangeEvent, ReactNode } from "react";
+import type { ChangeEvent, LazyExoticComponent, ReactNode } from "react";
 import type { PathMatch } from "react-router-dom";
 import type { StoreApi, UseBoundStore } from "zustand";
 
 type Component = ReactNode | JSX.Element | JSX.Element[];
+
+type LazyCmp = LazyExoticComponent<() => Component>;
 
 type Match = PathMatch<string> | null;
 
@@ -21,4 +23,12 @@ interface StylesText {
   opacity: string;
 }
 
-export type { Component, File, Match, SelectEvent, StylesText, ZustandStore };
+export type {
+  Component,
+  File,
+  Match,
+  SelectEvent,
+  StylesText,
+  ZustandStore,
+  LazyCmp,
+};
