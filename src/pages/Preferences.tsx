@@ -1,16 +1,17 @@
 import {
+  Calendar as CalendarIcon,
+  Quote as CountIcon,
   CaseSensitive as FontIcon,
   Languages as LanguageIcon,
-  Quote as CountIcon,
   Lightbulb as OpacityIcon,
-  Calendar as CalendarIcon,
 } from "lucide-react";
+import { useState } from "react";
 import Select from "react-select";
 import { twMerge } from "tailwind-merge";
 import MainContainer from "../components/MainContainer";
 import useStorage from "../hooks/useStorage";
-import translations from "../utils/dictionary";
 import { FONTS, LANGS } from "../utils/consts";
+import translations from "../utils/dictionary";
 import {
   myFont,
   myLang,
@@ -20,7 +21,6 @@ import {
   themes,
 } from "../utils/helpers";
 import type { Component } from "../utils/types";
-import { useState } from "react";
 
 function Preferences(): Component {
   const { isSunnyDay } = themes(),

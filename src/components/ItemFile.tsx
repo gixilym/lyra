@@ -11,7 +11,7 @@ import { PAGES } from "../utils/consts";
 import { navigation, notification, paperFiles, themes } from "../utils/helpers";
 import type { Component, File } from "../utils/types";
 import MenuFile from "./MenuFile";
-import { SyntheticEvent } from "react";
+import { SyntheticEvent } from "react"; 
 
 function ItemFile({ fileName }: { fileName: string }): Component {
   const { goTo } = navigation(),
@@ -20,7 +20,6 @@ function ItemFile({ fileName }: { fileName: string }): Component {
     { paperIsOpen } = configStore(),
     { setItem } = useStorage(),
     { isSunnyDay } = themes(),
-    paper = paperFiles(),
     d = translations();
 
   async function openFile(): Promise<void> {
@@ -32,6 +31,7 @@ function ItemFile({ fileName }: { fileName: string }): Component {
 
   function recoveryPaperItem(event: SyntheticEvent): void {
     event.stopPropagation();
+    const paper = paperFiles();
     Dialog.fire({
       title: d.AreYouSure,
       text: d.RestoreQuestion,
@@ -57,6 +57,7 @@ function ItemFile({ fileName }: { fileName: string }): Component {
 
   function removeItem(event: SyntheticEvent): void {
     event.stopPropagation();
+    const paper = paperFiles();
     Dialog.fire({
       title: d.AreYouSure,
       text: d.DeleteQuestion,

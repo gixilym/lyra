@@ -25,7 +25,7 @@ function TypingAnimation(props: Props): Component {
       transition={{ duration: 0.4, delay: 0.2 }}
       className={className}
     >
-      &nbsp;{displayedText ? displayedText : text}&nbsp;
+      &nbsp;{displayedText || text}&nbsp;
     </motion.p>
   );
 }

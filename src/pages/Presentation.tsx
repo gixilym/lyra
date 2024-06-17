@@ -37,7 +37,7 @@ function Presentation(): Component {
             text={d.FocusedWriting}
             className={twMerge(
               isSunnyDay ? "text-black/90" : "text-gray-200",
-              "sm:text-3xl text-2xl"
+              "sm:text-3xl text-lg"
             )}
           />
 

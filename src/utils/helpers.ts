@@ -163,20 +163,20 @@ function stylesSelect(): any {
 }
 
 export {
-  stylesSelect,
   backupExists,
-  myLastModified,
   copyText,
-  myWordCount,
+  getDate,
   myFont,
   myLang,
+  myLastModified,
+  myWordCount,
   nameIsValid,
   navigation,
   notification,
   paperFiles,
+  stylesSelect,
   themes,
   verifyMainFolder,
-  getDate,
 };
 
 interface Themes {

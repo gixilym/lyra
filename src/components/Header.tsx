@@ -79,7 +79,7 @@ function Header(): Component {
               >
                 {d.Preferences}
               </a>
-              <a
+              {/* <a
                 href={PAGES.backup}
                 className={twMerge(
                   isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
@@ -87,7 +87,7 @@ function Header(): Component {
                 )}
               >
                 {d.Backup}
-              </a>
+              </a> */}
             </div>
           )}
         </details>

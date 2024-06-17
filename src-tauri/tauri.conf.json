@@ -96,15 +96,7 @@
         "decorations": true,
         "focus": true,
         "center": true,
-        "visible": false
-      },
-      {
-        "width": 400,
-        "height": 150,
-        "decorations": false,
-        "url": "splashscreen.html",
-        "label": "splashscreen",
-        "center": true
+        "visible": true
       }
     ]
   }

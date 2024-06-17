@@ -12,7 +12,7 @@ import {
   themes,
 } from "../utils/helpers";
 import type { Component } from "../utils/types";
-import { SyntheticEvent } from "react";
+import type { SyntheticEvent } from "react";
 
 function MenuFile({ fileName }: { fileName: string }): Component {
   const d = translations(),
@@ -20,8 +20,7 @@ function MenuFile({ fileName }: { fileName: string }): Component {
     files: string[] = filesArr,
     { renameFile } = useFile(),
     { setItem } = useStorage(),
-    { isSunnyDay } = themes(),
-    paper = paperFiles();
+    { isSunnyDay } = themes();
 
   function editFileName(event: SyntheticEvent): void {
     event.stopPropagation();
@@ -53,6 +52,7 @@ function MenuFile({ fileName }: { fileName: string }): Component {
 
   function moveToTrash(event: SyntheticEvent): void {
     event.stopPropagation();
+    const paper = paperFiles();
     Dialog.fire({
       title: d.AreYouSure,
       text: d.MoveToTrash,
