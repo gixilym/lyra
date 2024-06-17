@@ -86,7 +86,7 @@
     },
     "windows": [
       {
-        "label": "lyra-window",
+        "label": "main",
         "minWidth": 600,
         "minHeight": 540,
         "resizable": true,
@@ -95,6 +95,15 @@
         "height": 600,
         "decorations": true,
         "focus": true,
+        "center": true,
+        "visible": false
+      },
+      {
+        "width": 400,
+        "height": 150,
+        "decorations": false,
+        "url": "splashscreen.html",
+        "label": "splashscreen",
         "center": true
       }
     ]

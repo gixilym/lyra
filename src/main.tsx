@@ -1,9 +1,14 @@
+import { invoke } from "@tauri-apps/api";
 import { lazy, StrictMode, Suspense } from "react";
 import { type Container, createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PresentationPage from "./pages/Presentation";
 import "./styles.css";
 import type { LazyCmp } from "./utils/types";
+
+document.addEventListener("DOMContentLoaded", () => {
+  invoke("close_splashscreen");
+});
 
 const ROOT: Container =
   document.getElementById("root") ?? document.createElement("root");
