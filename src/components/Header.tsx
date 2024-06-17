@@ -36,45 +36,8 @@ function Header(): Component {
   }
 
   function toggleMenu(menuId: string): void {
-    switch (menuId) {
-      case "commands":
-        closeMenu("file");
-        closeMenu("help");
-        closeMenu("themes");
-        setMenu({ file: false, commands: true, help: false, themes: false });
-        break;
-
-      case "help":
-        closeMenu("file");
-        closeMenu("commands");
-        closeMenu("themes");
-        setMenu({
-          file: false,
-          commands: false,
-          help: true,
-          themes: false,
-        });
-        break;
-
-      case "themes":
-        closeMenu("file");
-        closeMenu("commands");
-        closeMenu("help");
-        setMenu({
-          file: false,
-          commands: false,
-          help: false,
-          themes: true,
-        });
-        break;
-
-      case "file":
-        closeMenu("commands");
-        closeMenu("help");
-        closeMenu("themes");
-        setMenu({ file: true, commands: false, help: false, themes: false });
-        break;
-    }
+    closeAllMenus();
+    setMenu(prevState => ({ ...prevState, [menuId]: true }));
   }
 
   return showHeader ? (
