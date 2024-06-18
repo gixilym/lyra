@@ -32,9 +32,27 @@ const FONTS: Fonts = [
   { value: "font-sara", label: "Sarabun" },
 ];
 
+const TEXT_SIZES: TextSizes = {
+  sm: "text-sm",
+  md: "text-md",
+  lg: "text-lg",
+  xl: "text-xl",
+  xxl: "text-2xl",
+};
+
+const TEXT_ALIGNS: AlignsText = {
+  start: "text-start",
+  center: "text-center",
+  end: "text-end",
+};
+
+const DEFAULT_OPACITY: string = "10";
+
 const INTRODUCTION: string = `lyra es tu espacio para dejar volar tu creatividad sin distracciones.\n\nDiseñada para aquellos que aman escribir de manera enfocada, ya sea un libro, pensamientos, un diario personal, o cualquier tipo de contenido.\n\nFunciona sin conexión, asegurando que tus escritos se mantengan seguros, privados y accesibles en tu dispositivo. No se recopilan datos de usuario.\n\nOfrece temas para adaptarse a tu estilo, comandos de teclado para una experiencia de escritura fluida. Disponible en español e inglés (más próximamente)\n\n¡Empieza a escribir en lyra y transforma tus ideas en palabras!`;
 
 export {
+  DEFAULT_OPACITY,
+  TEXT_ALIGNS,
   BACKUP_FOLDER,
   BASE_DIRECTORY,
   FONTS,
@@ -43,7 +61,22 @@ export {
   MAIN_FOLDER,
   PAGES,
   THEMES,
+  TEXT_SIZES,
 };
+
+interface TextSizes {
+  sm: string;
+  md: string;
+  lg: string;
+  xl: string;
+  xxl: string;
+}
+
+interface AlignsText {
+  start: string;
+  center: string;
+  end: string;
+}
 
 interface Pages {
   presentation: string;

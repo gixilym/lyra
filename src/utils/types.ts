@@ -4,7 +4,7 @@ import type { StoreApi, UseBoundStore } from "zustand";
 
 type Component = ReactNode | JSX.Element | JSX.Element[];
 
-type LazyCmp = LazyExoticComponent<() => Component>;
+type LazyCmp = LazyExoticComponent<(arg0: any) => Component>;
 
 type Match = PathMatch<string> | null;
 

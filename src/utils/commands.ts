@@ -4,6 +4,7 @@ import useStorage from "../hooks/useStorage";
 import translations from "./dictionary";
 import { notification } from "./helpers";
 import type { StylesText } from "./types";
+import { PAGES, TEXT_ALIGNS, TEXT_SIZES } from "./consts";
 
 async function toggleFullScreen(): Promise<void> {
   const isFullScreen: boolean = await appWindow.isFullscreen();
@@ -11,97 +12,104 @@ async function toggleFullScreen(): Promise<void> {
   else appWindow.setFullscreen(true);
 }
 
-function alignText(styles: StylesText, setStyles: SetStyles): void {
-  const { setItem } = useStorage();
+function alignText(styles: StylesText, setStyles: fnStyles): void {
+  if (location.pathname == PAGES.file) {
+    const { setItem } = useStorage();
+    const { start, center, end } = TEXT_ALIGNS;
 
-  function alternateText(): string {
-    switch (styles.alignText) {
-      case "text-start":
-        return "text-center";
+    function alternateText(): string {
+      switch (styles.alignText) {
+        case start:
+          return center;
 
-      case "text-center":
-        return "text-right";
+        case center:
+          return end;
 
-      case "text-right":
-        return "text-start";
+        case end:
+          return start;
 
-      default:
-        return "text-start";
+        default:
+          return start;
+      }
     }
-  }
 
-  setItem("align-text", alternateText());
-  setStyles({ ...styles, alignText: alternateText() });
+    setItem("align-text", alternateText());
+    setStyles({ ...styles, alignText: alternateText() });
+  }
 }
 
-function increaseText(styles: StylesText, setStyles: SetStyles): void {
-  const { setItem, getItem } = useStorage();
-  const textSize: string = (getItem("font-size") as string) ?? "text-lg";
+function increaseText(styles: StylesText, setStyles: fnStyles): void {
+  if (location.pathname == PAGES.file) {
+    const { setItem, getItem } = useStorage();
+    const { sm, md, lg, xl, xxl } = TEXT_SIZES;
+    const textSize: string = (getItem("font-size") as string) ?? lg;
 
-  function changeSize(): string {
-    switch (textSize) {
-      case "text-sm":
-        return "text-md";
+    function changeSize(): string {
+      switch (textSize) {
+        case sm:
+          return md;
 
-      case "text-md":
-        return "text-lg";
+        case md:
+          return lg;
 
-      case "text-lg":
-        return "text-xl";
+        case lg:
+          return xl;
 
-      case "text-xl":
-        return "text-2xl";
+        case xl:
+          return xxl;
 
-      case "text-2xl":
-        return "text-2xl";
+        case xxl:
+          return xxl;
 
-      default:
-        return "text-lg";
+        default:
+          return lg;
+      }
     }
-  }
 
-  setItem("font-size", changeSize());
-  setStyles({ ...styles, fontSize: changeSize() });
+    setItem("font-size", changeSize());
+    setStyles({ ...styles, fontSize: changeSize() });
+  }
 }
 
-function reduceText(styles: StylesText, setStyles: SetStyles): void {
-  const { setItem, getItem } = useStorage();
-  const textSize: string = (getItem("font-size") as string) ?? "text-lg";
+function reduceText(styles: StylesText, setStyles: fnStyles): void {
+  if (location.pathname == PAGES.file) {
+    const { setItem, getItem } = useStorage();
+    const { sm, md, lg, xl, xxl } = TEXT_SIZES;
+    const textSize: string = getItem("font-size") ?? lg;
 
-  function changeSize(): string {
-    switch (textSize) {
-      case "text-sm":
-        return "text-sm";
+    function changeSize(): string {
+      switch (textSize) {
+        case sm:
+          return sm;
 
-      case "text-md":
-        return "text-sm";
+        case md:
+          return sm;
 
-      case "text-lg":
-        return "text-md";
+        case lg:
+          return md;
 
-      case "text-xl":
-        return "text-lg";
+        case xl:
+          return lg;
 
-      case "text-2xl":
-        return "text-xl";
+        case xxl:
+          return xl;
 
-      default:
-        return "text-lg";
+        default:
+          return lg;
+      }
     }
-  }
 
-  setItem("font-size", changeSize());
-  setStyles({ ...styles, fontSize: changeSize() });
+    setItem("font-size", changeSize());
+    setStyles({ ...styles, fontSize: changeSize() });
+  }
 }
 
 function toggleSpellchecker(spellCheck: boolean, setSpellCheck: any): void {
-  const d = translations();
-  if (spellCheck) {
+  if (location.pathname == PAGES.file) {
+    const d = translations();
     setSpellCheck();
-    return notification("error", d.SpellcheckerOff);
-  } else {
-    setSpellCheck();
-    return notification("success", d.SpellcheckerOn);
+    if (spellCheck) notification("error", d.SpellcheckerOff);
+    else notification("success", d.SpellcheckerOn);
   }
 }
 
@@ -113,4 +121,4 @@ export {
   toggleSpellchecker,
 };
 
-type SetStyles = Dispatch<SetStateAction<StylesText>>;
+type fnStyles = Dispatch<SetStateAction<StylesText>>;
