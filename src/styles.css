@@ -2,18 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply caret-indigo-400 bg-black/90 text-gray-300 grid place-content-center place-items-center overflow-y-hidden select-none;
-}
-
-::-webkit-scrollbar {
-  @apply bg-transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-transparent;
-}
-
 ::selection {
   @apply bg-gray-700/80;
 }
@@ -24,4 +12,40 @@ details summary::-webkit-details-marker {
 
 details summary {
   @apply list-none;
+}
+
+body {
+  @apply caret-indigo-400 bg-black/90 text-gray-300 grid place-content-center place-items-center overflow-x-hidden overflow-y-auto select-none;
+  --scrollbar-thumb-color: #374151cc;
+  --scrollbar-border-thickness: 0px;
+  --scrollbar-width: 15px;
+  --scrollbar-height: 15px;
+  --scrollbar-track-color: #1a1a1a;
+  --scrollbar-corner-color: #1a1a1a;
+  --scrollbar-border-color: #1a1a1a;
+}
+body::-webkit-scrollbar {
+  width: var(--scrollbar-width, 20px);
+  height: var(--scrollbar-height, 20px);
+}
+body::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color, #1a1a1a);
+  border: var(--scrollbar-border-thickness, 3px) solid
+    var(--scrollbar-border-color, #1a1a1a);
+  border-radius: var(--scrollbar-border-radius, 4px);
+}
+body::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color, #1a1a1a);
+}
+body::-webkit-scrollbar-corner {
+  background: var(--scrollbar-corner-color, #1a1a1a);
+  border: var(--scrollbar-border-thickness, 3px) solid
+    var(--scrollbar-border-color, #1a1a1a);
+  border-radius: var(--scrollbar-border-radius, 4px);
+}
+body::-webkit-scrollbar-button:vertical:start:increment,
+#preview::-webkit-scrollbar-button:vertical:end:decrement,
+#preview::-webkit-scrollbar-button:horizontal:start:increment,
+#preview::-webkit-scrollbar-button:horizontal:end:decrement {
+  display: var(--show-double-buttons, none);
 }

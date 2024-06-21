@@ -21,6 +21,7 @@ interface StylesText {
   fontSize: string;
   alignText: string;
   opacity: string;
+  letterSpacing: string;
 }
 
 export type {

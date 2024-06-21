@@ -7,7 +7,7 @@ import { type PropsWithChildren } from "react";
 import { Toaster } from "react-hot-toast";
 import { twJoin, twMerge } from "tailwind-merge";
 import { toggleFullScreen } from "../utils/commands";
-import { myFont, themes } from "../utils/helpers";
+import { myFontVal, themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -15,7 +15,7 @@ import Header from "./Header";
 listenCommands(commands);
 
 function MainContainer({ children }: PropsWithChildren): Component {
-  const fontFamily = myFont(true);
+  const fontFamily = myFontVal();
   const { bindGlobal: listen }: any = commands;
   const { isSunnyDay, isDarkNigth } = themes();
 

@@ -1,7 +1,7 @@
 import listenCommands from "bind-mousetrap-global";
 import commands from "mousetrap";
 import { lazy, Suspense, useEffect, useState } from "react";
-import { twJoin, twMerge } from "tailwind-merge";
+import { twJoin } from "tailwind-merge";
 import MainContainer from "../components/MainContainer";
 import useFile from "../hooks/useFile";
 import useStorage from "../hooks/useStorage";
@@ -13,13 +13,8 @@ import {
   reduceText,
   toggleSpellchecker,
 } from "../utils/commands";
-import {
-  DEFAULT_OPACITY,
-  FONTS,
-  TEXT_ALIGNS,
-  TEXT_SIZES,
-} from "../utils/consts";
-import { copyText, getDate, myFont, myLastModified } from "../utils/helpers";
+import { DEFAULT_OPACITY, TEXT_ALIGNS, TEXT_SIZES } from "../utils/consts";
+import { copyText, getDate, myLastModified } from "../utils/helpers";
 import type { Component, LazyCmp, StylesText } from "../utils/types";
 
 listenCommands(commands);
@@ -34,13 +29,13 @@ function FileContent(): Component {
     { spellCheck, setSpellCheck } = configStore(),
     oldContent: string = selectedFile.content ?? "",
     [content, setContent] = useState<string>(() => selectedFile.content ?? ""),
-    fontFamily = myFont(true),
     lastModifiedIsActive = myLastModified(),
     [wordCounts, setWordCounts] = useState<number>(0),
     [styles, setStyles] = useState<StylesText>({
       fontSize: getItem("font-size") ?? TEXT_SIZES.lg,
       alignText: getItem("align-text") ?? TEXT_ALIGNS.start,
       opacity: getItem("opacity") ?? DEFAULT_OPACITY,
+      letterSpacing: getItem("spacing") ?? "0",
     });
 
   document
@@ -89,19 +84,18 @@ function FileContent(): Component {
           spellCheck={spellCheck}
           autoFocus
           placeholder="..."
-          style={{ opacity: Number(styles.opacity) / 10 }}
-          className={twMerge(
-            fontFamily == FONTS[0].value ? "tracking-normal" : "tracking-wide",
-            twJoin(
-              styles.fontSize,
-              styles.alignText,
-              "w-full h-full sm:pb-20 lg:px-0 px-4 resize-none border-none focus:ring-0 focus:outline-none sm:min-w-[600px] max-w-[800px] bg-transparent placeholder:text-gray-100/50"
-            )
+          style={{
+            opacity: Number(styles.opacity) / 10,
+            letterSpacing: `${styles.letterSpacing}px`,
+          }}
+          className={twJoin(
+            styles.fontSize,
+            styles.alignText,
+            "w-full h-full sm:pb-20 lg:px-0 px-4 resize-none border-none focus:ring-0 focus:outline-none sm:min-w-[600px] max-w-[800px] bg-transparent placeholder:text-gray-100/50"
           )}
         />
       </div>
     </MainContainer>
   );
 }
-
 export default FileContent;

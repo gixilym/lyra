@@ -8,12 +8,10 @@ import type { LazyCmp } from "./utils/types";
 const ROOT: Container =
   document.getElementById("root") ?? document.createElement("root");
 
-const ListPage: LazyCmp = lazy(() => import("./pages/ListView"));
+const ListPage: LazyCmp = lazy(() => import("./pages/List"));
 const FilePage: LazyCmp = lazy(() => import("./pages/FileContent"));
 const PreferencesPage: LazyCmp = lazy(() => import("./pages/Preferences"));
 const SupportPage: LazyCmp = lazy(() => import("./pages/Support"));
-// const BackupPage: LazyCmp = lazy(() => import("./pages/Backup"));
-// const UpdatesPage: LazyCmp = lazy(() => import("./pages/Updates"));
 
 const router = createBrowserRouter([
   {
@@ -36,16 +34,6 @@ const router = createBrowserRouter([
     path: "/support",
     element: <SupportPage />,
   },
-  /*
-  {
-    path: "/backup",
-    element: <BackupPage />,
-  },
-  {
-    path: "/updates",
-    element: <UpdatesPage />,
-  }, 
-  */
 ]);
 
 createRoot(ROOT).render(

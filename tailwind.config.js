@@ -6,6 +6,9 @@ export default {
     fontFamily: {
       duo: ["iA Writer Duo", "system-ui"],
       sara: ["sarabun", "system-ui"],
+      cursive: ["cursive", "system-ui"],
+      revert: ["revert", "system-ui"],
+      serif: ["sans-serif", "system-ui"],
     },
   },
   plugins: [],

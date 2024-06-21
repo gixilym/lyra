@@ -1,4 +1,11 @@
-function useStorage(): StorageFunctions {
+interface Storage {
+  getItem: (key: string) => string | null;
+  setItem: (key: string, value: string) => void;
+  removeItem: (key: string) => void;
+  clearEverything: () => void;
+}
+
+function useStorage(): Storage {
   function getItem(key: string): string | null {
     const item: string | null = window.localStorage.getItem(key);
     return item;
@@ -14,13 +21,12 @@ function useStorage(): StorageFunctions {
     return item;
   }
 
-  return { getItem, setItem, removeItem };
+  function clearEverything(): void {
+    const item: void = window.localStorage.clear();
+    return item;
+  }
+
+  return { getItem, setItem, removeItem, clearEverything };
 }
 
 export default useStorage;
-
-interface StorageFunctions {
-  getItem: (key: string) => string | null;
-  setItem: (key: string, value: string) => void;
-  removeItem: (key: string) => void;
-}

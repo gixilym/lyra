@@ -3,13 +3,13 @@ import useFile from "../hooks/useFile";
 import useStorage from "../hooks/useStorage";
 import { configStore } from "../store/configStore";
 import type { Component } from "../utils/types";
-import Form from "./Form";
 import { fileStore } from "../store/fileStore";
-import ListFiles from "./ListFiles";
-import Loading from "./Loading";
-import MainContainer from "./MainContainer";
+import Loading from "../components/Loading";
+import ListFiles from "../components/ListFiles";
+import Form from "../components/Form";
+import MainContainer from "../components/MainContainer";
 
-function ListContainer(): Component {
+function List(): Component {
   const { getFiles } = useFile(),
     { setItem } = useStorage(),
     { paperIsOpen } = configStore(),
@@ -28,7 +28,7 @@ function ListContainer(): Component {
   return (
     <MainContainer>
       <div className="flex flex-row justify-center items-start w-full h-full">
-        <div className="w-full max-w-[580px] h-5/6 overflow-x-hidden overflow-y-visible flex flex-col justify-center items-center">
+        <div className="w-full max-w-[580px] h-5/6 overflow-x-hidden overflow-y-visible flex flex-col justify-center items-center gap-y-8">
           <Form />
           {loading ? <Loading /> : <ListFiles arr={files} />}
         </div>
@@ -37,4 +37,4 @@ function ListContainer(): Component {
   );
 }
 
-export default ListContainer;
+export default List;

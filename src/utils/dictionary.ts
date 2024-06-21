@@ -13,6 +13,20 @@ function translations() {
       "Last backup created at",
       "Ultima copia de seguridad creada el"
     ),
+    ResetPreferences: userLanguage(
+      "Reset preferences",
+      "Restablecer preferencias"
+    ),
+    Suggestions: userLanguage("Suggestions", "Sugerencias"),
+    SuggestionsText: userLanguage(
+      "Your suggestions help us improve. If you have ideas or improvements that you would like to see in lyra soon, feel free to send them.",
+      "Tus sugerencias nos ayudan a mejorar. Si tienes ideas o mejoras que te gustaría ver en lyra pronto, no dudes en enviarlas."
+    ),
+    Errors: userLanguage("Errors", "Errores"),
+    ErrorsText: userLanguage(
+      "If you find a bug in the app, please provide a detailed description of the problem, steps to reproduce it, and any screenshots that may help.",
+      "Si encuentras un error en la aplicación, por favor proporciona una descripción detallada del problema, pasos para reproducirlo y cualquier captura de pantalla que pueda ayudar."
+    ),
     Creating: userLanguage("creating...", "creando..."),
     CreateBackup: userLanguage("create backup", "crear copia de seguridad"),
     CopyCreated: userLanguage("copy created", "copia creada"),
@@ -83,7 +97,12 @@ function translations() {
       "Contacta este correo para preguntas sobre lyra"
     ),
     TextOpacity: userLanguage("Text opacity", "Opacidad del texto"),
-    TestText: userLanguage("test text", "texto de prueba"),
+    LetterSpacing: userLanguage("Letter spacing", "Espacio entre letras"),
+    TestText: userLanguage("Test Text", "Texto de Prueba"),
+    TestParagraph: userLanguage(
+      " In a small village surrounded by mountains, there lived a young man named Emiliano, known for his ability to tell magical stories. One day, while exploring an old nearby forest, he found an ancient book covered in dust and moss. Upon opening it, he discovered that it contained tales about a mysterious lost kingdom that only revealed itself to those with a pure heart and a mind open to imagination. ",
+      "En una pequeña aldea rodeada de montañas, vivía un joven llamado Emiliano, conocido por su habilidad para contar historias mágicas. Un día, mientras exploraba un viejo bosque cercano, encontró un antiguo libro cubierto de polvo y musgo. Al abrirlo, descubrió que contenía relatos sobre un misterioso reino perdido que solo se revelaba a aquellos con un corazón puro y una mente abierta a la imaginación."
+    ),
     FullScreen: userLanguage("Full screen", "Pantalla completa"),
     Updates: userLanguage("Updates", "Actualizaciones"),
     Version: userLanguage("version", "versión"),

@@ -6,7 +6,6 @@ import useStorage from "../hooks/useStorage";
 import {
   BACKUP_FOLDER,
   BASE_DIRECTORY,
-  FONTS,
   INTRODUCTION,
   LANGS,
   MAIN_FOLDER,
@@ -84,11 +83,35 @@ function myLang(): string {
   return lang == LANGS.en ? "English" : "Español";
 }
 
-function myFont(value: boolean): string {
+function myFontLabel(): string {
   const { getItem } = useStorage();
-  const font: string = getItem("font") ?? FONTS[0].value;
-  const val = value ? "value" : "label";
-  return font == FONTS[0].value ? FONTS[0][val] : FONTS[1][val];
+  const font: string = getItem("font") ?? "font-duo";
+
+  switch (font) {
+    case "font-duo":
+      return "Monospace";
+
+    case "font-sara":
+      return "Sarabun";
+
+    case "font-cursive":
+      return "Cursive";
+
+    case "font-revert":
+      return "Revert";
+
+    case "font-serif":
+      return "Sans serif";
+
+    default:
+      return "Monospace";
+  }
+}
+
+function myFontVal(): string {
+  const { getItem } = useStorage();
+  const font: string = getItem("font") ?? "font-duo";
+  return font;
 }
 
 function myWordCount(): boolean {
@@ -164,9 +187,10 @@ function stylesSelect(): any {
 
 export {
   backupExists,
+  myFontVal,
   copyText,
   getDate,
-  myFont,
+  myFontLabel,
   myLang,
   myLastModified,
   myWordCount,

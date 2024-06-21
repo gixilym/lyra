@@ -41,7 +41,7 @@ function alignText(styles: StylesText, setStyles: fnStyles): void {
 function increaseText(styles: StylesText, setStyles: fnStyles): void {
   if (location.pathname == PAGES.file) {
     const { setItem, getItem } = useStorage();
-    const { sm, md, lg, xl, xxl } = TEXT_SIZES;
+    const { sm, md, lg, xl, xxl, xxxl } = TEXT_SIZES;
     const textSize: string = (getItem("font-size") as string) ?? lg;
 
     function changeSize(): string {
@@ -59,7 +59,10 @@ function increaseText(styles: StylesText, setStyles: fnStyles): void {
           return xxl;
 
         case xxl:
-          return xxl;
+          return xxxl;
+
+        case xxxl:
+          return xxxl;
 
         default:
           return lg;
@@ -74,7 +77,7 @@ function increaseText(styles: StylesText, setStyles: fnStyles): void {
 function reduceText(styles: StylesText, setStyles: fnStyles): void {
   if (location.pathname == PAGES.file) {
     const { setItem, getItem } = useStorage();
-    const { sm, md, lg, xl, xxl } = TEXT_SIZES;
+    const { sm, md, lg, xl, xxl, xxxl } = TEXT_SIZES;
     const textSize: string = getItem("font-size") ?? lg;
 
     function changeSize(): string {
@@ -93,6 +96,9 @@ function reduceText(styles: StylesText, setStyles: fnStyles): void {
 
         case xxl:
           return xl;
+
+        case xxxl:
+          return xxl;
 
         default:
           return lg;

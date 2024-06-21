@@ -20,7 +20,7 @@ function ZoneToOpenList(): Component {
     return (
       <div
         onMouseEnter={() => goTo(PAGES.list)}
-        className="absolute bottom-0 left-0 w-16 h-48 text-transparent bg-transparent"
+        className="fixed bottom-0 left-0 w-16 h-48 text-transparent bg-transparent"
       >
         .
       </div>

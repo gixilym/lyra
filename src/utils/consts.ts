@@ -27,17 +27,13 @@ const LANGS: Langs = {
   en: "EN",
 };
 
-const FONTS: Fonts = [
-  { value: "font-duo", label: "Monospace" },
-  { value: "font-sara", label: "Sarabun" },
-];
-
 const TEXT_SIZES: TextSizes = {
   sm: "text-sm",
   md: "text-md",
   lg: "text-lg",
   xl: "text-xl",
   xxl: "text-2xl",
+  xxxl: "text-3xl",
 };
 
 const TEXT_ALIGNS: AlignsText = {
@@ -55,7 +51,6 @@ export {
   TEXT_ALIGNS,
   BACKUP_FOLDER,
   BASE_DIRECTORY,
-  FONTS,
   INTRODUCTION,
   LANGS,
   MAIN_FOLDER,
@@ -70,6 +65,7 @@ interface TextSizes {
   lg: string;
   xl: string;
   xxl: string;
+  xxxl: string;
 }
 
 interface AlignsText {
@@ -99,4 +95,4 @@ interface Langs {
   en: string;
 }
 
-type Fonts = { value: string; label: string }[];
+
