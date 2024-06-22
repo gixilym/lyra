@@ -3,7 +3,7 @@ import { LANGS } from "./consts";
 
 function userLanguage(enText: string, esText: string): string {
   const { getItem } = useStorage();
-  const language: string = getItem("language") ?? LANGS.en;
+  const language: string = getItem("language", LANGS.en);
   return language == LANGS.en ? enText : esText;
 }
 
@@ -26,6 +26,14 @@ function translations() {
     ErrorsText: userLanguage(
       "If you find a bug in the app, please provide a detailed description of the problem, steps to reproduce it, and any screenshots that may help.",
       "Si encuentras un error en la aplicación, por favor proporciona una descripción detallada del problema, pasos para reproducirlo y cualquier captura de pantalla que pueda ayudar."
+    ),
+    Aligment: userLanguage("Aligment", "Alineación"),
+    Left: userLanguage("Left", "Izquierda"),
+    Right: userLanguage("Right", "Derecha"),
+    Centered: userLanguage("Centered", "Centrado"),
+    RememberToUseKeyboardShortcuts: userLanguage(
+      "Remember to use keyboard shortcuts!",
+      "¡Recuerda usar atajos de teclado!"
     ),
     Creating: userLanguage("creating...", "creando..."),
     CreateBackup: userLanguage("create backup", "crear copia de seguridad"),
@@ -80,14 +88,8 @@ function translations() {
       "Increase text size",
       "Aumentar tamaño del texto"
     ),
-    SpellcheckerOff: userLanguage(
-      "Spellchecker off",
-      "Corrector ortográfico desactivado"
-    ),
-    SpellcheckerOn: userLanguage(
-      "Spellchecker on",
-      "Corrector ortográfico activado"
-    ),
+    SpellcheckerOff: userLanguage("spellchecker off", "ortografía desactivada"),
+    SpellcheckerOn: userLanguage("spellchecker on", "ortografía activada"),
     GoToTheListByPlacingTheCursorHere: userLanguage(
       "go to the list by placing the cursor here",
       "accede a la lista colocando el cursor aquí"
@@ -100,7 +102,7 @@ function translations() {
     LetterSpacing: userLanguage("Letter spacing", "Espacio entre letras"),
     TestText: userLanguage("Test Text", "Texto de Prueba"),
     TestParagraph: userLanguage(
-      " In a small village surrounded by mountains, there lived a young man named Emiliano, known for his ability to tell magical stories. One day, while exploring an old nearby forest, he found an ancient book covered in dust and moss. Upon opening it, he discovered that it contained tales about a mysterious lost kingdom that only revealed itself to those with a pure heart and a mind open to imagination. ",
+      "In a small town surrounded by mountains, a young man named Emiliano lived, known for his ability to tell magical stories. One day, while exploring an old nearby forest, he found an old book covered with dust and moss. When he opened it, he discovered that he contained stories about a mysterious lost kingdom that only revealed those with a pure heart and an open mind to imagination.",
       "En una pequeña aldea rodeada de montañas, vivía un joven llamado Emiliano, conocido por su habilidad para contar historias mágicas. Un día, mientras exploraba un viejo bosque cercano, encontró un antiguo libro cubierto de polvo y musgo. Al abrirlo, descubrió que contenía relatos sobre un misterioso reino perdido que solo se revelaba a aquellos con un corazón puro y una mente abierta a la imaginación."
     ),
     FullScreen: userLanguage("Full screen", "Pantalla completa"),

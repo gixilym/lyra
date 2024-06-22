@@ -6,7 +6,7 @@ export const configStore: ZustandStore = create((set: any) => ({
   setPaperIsOpen: () =>
     set((state: any) => ({ paperIsOpen: !state.paperIsOpen })),
   spellCheck: false,
-  setSpellCheck: () => set((state: any) => ({ spellCheck: !state.spellCheck })),
+  setSpellCheck: (newState: boolean) => set(() => ({ spellCheck: newState })),
   showHeader: true,
   setShowHeader: () => set((state: any) => ({ showHeader: !state.showHeader })),
 }));

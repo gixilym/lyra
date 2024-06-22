@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import Select from "react-select";
-import { twMerge } from "tailwind-merge";
+import { twJoin, twMerge } from "tailwind-merge";
 import InfoFile from "../components/InfoFile";
 import MainContainer from "../components/MainContainer";
 import useStorage from "../hooks/useStorage";
@@ -26,6 +26,8 @@ import {
 } from "../utils/helpers";
 import type { Component } from "../utils/types";
 
+const d = translations();
+
 const fontsOptions: Options[] = [
   { value: "font-duo", label: "Monospace" },
   { value: "font-sara", label: "Sarabun" },
@@ -39,19 +41,38 @@ const langsOptions: Options[] = [
   { value: LANGS.es, label: "Español" },
 ] as const;
 
+const alignsOptions: Options[] = [
+  { value: "text-start", label: d.Left },
+  { value: "text-center", label: d.Centered },
+  { value: "text-end", label: d.Right },
+] as const;
+
 function Preferences(): Component {
-  const d = translations(),
-    lang = myLang(),
+  const lang = myLang(),
     fontFamily = myFontLabel(),
     wordCount = myWordCount(),
     lastModifiedIsActive = myLastModified(),
     { isSunnyDay } = themes(),
     { getItem, setItem, clearEverything } = useStorage(),
     reload = (): void => window.location.reload(),
-    getOpacity = (): number => Number(getItem("opacity")) ?? 10,
-    getSpacing = (): number => Number(getItem("spacing")) ?? 0,
+    getAlign = (): string => getItem("align-text", "text-start"),
+    getOpacity = (): number => Number(getItem("opacity", "10")),
+    getSpacing = (): number => Number(getItem("spacing", "0")),
     [opacity, setOpacity] = useState<number>(getOpacity()),
     [spacing, setSpacing] = useState<number>(getSpacing());
+
+  function getAlignLabel(): string {
+    switch (getAlign()) {
+      case "text-start":
+        return d.Left;
+      case "text-center":
+        return d.Centered;
+      case "text-end":
+        return d.Right;
+      default:
+        return d.Left;
+    }
+  }
 
   function changeLanguage(value: string): void {
     setItem("language", value);
@@ -84,13 +105,18 @@ function Preferences(): Component {
   }
 
   function resetPreferences(): void {
-    const lang: string = getItem("language") ?? LANGS.en;
-    const msgDisplayed: string = getItem("list-msg") ?? "false";
+    const lang: string = getItem("language", LANGS.en);
+    const msgDisplayed: string = getItem("list-msg", "false");
     const paper: string = JSON.stringify(paperFiles());
     clearEverything();
     setItem("language", lang);
     setItem("list-msg", msgDisplayed);
     setItem("paper", paper);
+    reload();
+  }
+
+  function changeAlign(val: string): void {
+    setItem("align-text", val);
     reload();
   }
 
@@ -184,6 +210,21 @@ function Preferences(): Component {
             </div>
           </div>
           <div className="flex justify-between items-center w-full">
+            <div className="flex justify-center items-center gap-x-3">
+              <FontIcon size={38} />
+              <p className="text-md">Alineación</p>
+            </div>
+            <Select
+              className="sm:text-lg text-sm"
+              isSearchable={false}
+              options={alignsOptions}
+              placeholder={getAlignLabel()}
+              onChange={(e: any) => changeAlign(e.value)}
+              styles={stylesSelect()}
+            />
+          </div>
+
+          <div className="flex justify-between items-center w-full">
             <div className="flex justify-center items-center gap-x-4">
               <SpacingIcon size={28} />
               <p className="text-md">{d.LetterSpacing}</p>
@@ -206,7 +247,6 @@ function Preferences(): Component {
               />
             </div>
           </div>
-
           <div
             onClick={resetPreferences}
             className="flex items-start justify-start gap-x-4 w-full bg-transparent cursor-pointer opacity-65 hover:opacity-100 duration-75"
@@ -215,27 +255,36 @@ function Preferences(): Component {
             <p className="text-md lowercase">{d.ResetPreferences}</p>
           </div>
         </div>
-        <div className="w-3/6 flex flex-col justify-start gap-y-4 items-start px-4 bg-transparent  border border-l-0 border-r-0 pt-2 pb-4  h-full max-h-[515px] overflow-hidden">
-          <InfoFile wordCounts={65} isPreferences={lastModifiedIsActive} />
-          <p
-            className="text-lg font-semibold"
-            style={{
-              letterSpacing: spacing + "px",
-              opacity: opacity ? opacity / 10 : 10,
-            }}
-          >
-            {d.TestText}
+        <div className="w-3/6 flex flex-col justify-start gap-y-4 items-start">
+          <p className="text-start w-full text-pretty pl-4">
+            {d.RememberToUseKeyboardShortcuts} -&gt; <i>{d.Commands}</i>.
           </p>
+          <div className="w-full flex flex-col justify-start gap-y-4 items-start px-4 bg-transparent pt-2 pb-4  h-full max-h-[515px] overflow-hidden">
+            <InfoFile wordCounts={65} isPreferences={lastModifiedIsActive} />
+            <p
+              className={twJoin(getAlign(), "text-lg font-semibold w-full")}
+              style={{
+                letterSpacing: spacing + "px",
+                opacity: opacity ? opacity / 10 : 10,
+              }}
+            >
+              {d.TestText}
+            </p>
 
-          <p
-            className="text-lg"
-            style={{
-              letterSpacing: spacing + "px",
-              opacity: opacity ? opacity / 10 : 10,
-            }}
-          >
-            {d.TestParagraph}
-          </p>
+            <textarea
+              readOnly
+              value={d.TestParagraph}
+              spellCheck={false}
+              className={twJoin(
+                getAlign(),
+                "text-lg w-full bg-transparent outline-0 resize-none min-h-[320px] max-h-[400px] overflow-hidden"
+              )}
+              style={{
+                letterSpacing: spacing + "px",
+                opacity: opacity ? opacity / 10 : 10,
+              }}
+            ></textarea>
+          </div>
         </div>
       </div>
     </MainContainer>

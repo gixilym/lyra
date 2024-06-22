@@ -1,13 +1,13 @@
 interface Storage {
-  getItem: (key: string) => string | null;
+  getItem: (key: string, defaultValue: string) => string;
   setItem: (key: string, value: string) => void;
   removeItem: (key: string) => void;
   clearEverything: () => void;
 }
 
 function useStorage(): Storage {
-  function getItem(key: string): string | null {
-    const item: string | null = window.localStorage.getItem(key);
+  function getItem(key: string, defaultValue: string): string {
+    const item: string = window.localStorage.getItem(key) ?? defaultValue;
     return item;
   }
 

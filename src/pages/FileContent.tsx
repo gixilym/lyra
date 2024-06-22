@@ -32,15 +32,11 @@ function FileContent(): Component {
     lastModifiedIsActive = myLastModified(),
     [wordCounts, setWordCounts] = useState<number>(0),
     [styles, setStyles] = useState<StylesText>({
-      fontSize: getItem("font-size") ?? TEXT_SIZES.lg,
-      alignText: getItem("align-text") ?? TEXT_ALIGNS.start,
-      opacity: getItem("opacity") ?? DEFAULT_OPACITY,
-      letterSpacing: getItem("spacing") ?? "0",
+      fontSize: getItem("font-size", TEXT_SIZES.lg),
+      alignText: getItem("align-text", TEXT_ALIGNS.start),
+      opacity: getItem("opacity", DEFAULT_OPACITY),
+      letterSpacing: getItem("spacing", "0"),
     });
-
-  document
-    .querySelector("textarea")
-    ?.addEventListener("contextmenu", e => e.stopPropagation());
 
   useEffect(() => {
     saveFileContent(selectedFile.name, content ?? "");
@@ -51,10 +47,10 @@ function FileContent(): Component {
   listen("ctrl+j", (e: Event) => e.preventDefault());
   listen("ctrl+g", (e: Event) => e.preventDefault());
   listen("ctrl+m", () => toggleSpellchecker(spellCheck, setSpellCheck));
+  listen("ctrl+a", () => copyText(content));
   listen("ctrl+b", () => reduceText(styles, setStyles));
   listen("ctrl+n", () => increaseText(styles, setStyles));
   listen("ctrl+h", () => alignText(styles, setStyles));
-  listen("ctrl+a", () => copyText(content));
 
   function calculateWordCount(text: string): void {
     const spaces: RegExp = /\s+/;

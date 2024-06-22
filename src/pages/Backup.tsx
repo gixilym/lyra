@@ -27,11 +27,11 @@ function Backup(): Component {
     { getFilePath } = useFile(),
     { getItem, setItem } = useStorage(),
     { startLoading, isLoading, finishLoading } = useLoading(),
-    files: string[] = JSON.parse(getItem("files") as string) ?? [],
+    files: string[] = JSON.parse(getItem("files", "[]")),
     [backupExists, setBackupExists] = useState<boolean>(false),
     [backupCreated, setBackupCreated] = useState<boolean>(false),
-    [backupDate, setBackupDate] = useState<string>(
-      () => getItem("backup-date") ?? "nunca"
+    [backupDate, setBackupDate] = useState<string>(() =>
+      getItem("backup-date", "nunca")
     );
 
   useEffect(() => {

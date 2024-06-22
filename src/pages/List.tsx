@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useFile from "../hooks/useFile";
-import useStorage from "../hooks/useStorage";
 import { configStore } from "../store/configStore";
 import type { Component } from "../utils/types";
 import { fileStore } from "../store/fileStore";
@@ -11,17 +10,13 @@ import MainContainer from "../components/MainContainer";
 
 function List(): Component {
   const { getFiles } = useFile(),
-    { setItem } = useStorage(),
     { paperIsOpen } = configStore(),
-    [loading, setLoading] = useState<boolean>(true),
-    { setFiles, fileIsEdited, files } = fileStore();
+    { setFiles, fileIsEdited, files } = fileStore(),
+    [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getFiles()
-      .then(files => {
-        setFiles(files);
-        setItem("files", JSON.stringify(files));
-      })
+      .then(files => setFiles(files))
       .finally(() => setLoading(false));
   }, [fileIsEdited, paperIsOpen]);
 

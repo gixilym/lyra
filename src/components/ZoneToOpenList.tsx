@@ -11,7 +11,7 @@ function ZoneToOpenList(): Component {
   const { goTo } = navigation(),
     { getItem, setItem } = useStorage(),
     [showMessage, setShowMessage] = useState<boolean>(true),
-    messageDisplayed: string | null = getItem("list-msg"),
+    messageDisplayed: boolean = Boolean(getItem("list-msg", "false")),
     match: Match = useMatch(PAGES.file),
     pathIsFile: boolean = PAGES.file == match?.pathname,
     d = translations();

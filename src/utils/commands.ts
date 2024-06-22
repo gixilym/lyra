@@ -42,7 +42,7 @@ function increaseText(styles: StylesText, setStyles: fnStyles): void {
   if (location.pathname == PAGES.file) {
     const { setItem, getItem } = useStorage();
     const { sm, md, lg, xl, xxl, xxxl } = TEXT_SIZES;
-    const textSize: string = (getItem("font-size") as string) ?? lg;
+    const textSize: string = getItem("font-size", lg);
 
     function changeSize(): string {
       switch (textSize) {
@@ -78,7 +78,7 @@ function reduceText(styles: StylesText, setStyles: fnStyles): void {
   if (location.pathname == PAGES.file) {
     const { setItem, getItem } = useStorage();
     const { sm, md, lg, xl, xxl, xxxl } = TEXT_SIZES;
-    const textSize: string = getItem("font-size") ?? lg;
+    const textSize: string = getItem("font-size", lg);
 
     function changeSize(): string {
       switch (textSize) {
@@ -113,9 +113,13 @@ function reduceText(styles: StylesText, setStyles: fnStyles): void {
 function toggleSpellchecker(spellCheck: boolean, setSpellCheck: any): void {
   if (location.pathname == PAGES.file) {
     const d = translations();
-    setSpellCheck();
-    if (spellCheck) notification("error", d.SpellcheckerOff);
-    else notification("success", d.SpellcheckerOn);
+    if (spellCheck) {
+      notification("error", d.SpellcheckerOff);
+      setSpellCheck(false);
+    } else {
+      notification("success", d.SpellcheckerOn);
+      setSpellCheck(true);
+    }
   }
 }
 

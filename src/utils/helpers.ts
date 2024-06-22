@@ -51,7 +51,7 @@ function nameIsValid(name: string): boolean {
 
 function themes(): Themes {
   const { getItem } = useStorage(),
-    theme: string = getItem("theme") ?? THEMES.clearNigth,
+    theme: string = getItem("theme", THEMES.clearNigth),
     isSunnyDay: boolean = theme == THEMES.sunnyDay,
     isClearNigth: boolean = theme == THEMES.clearNigth,
     isDarkNigth: boolean = theme == THEMES.darkNigth;
@@ -60,7 +60,7 @@ function themes(): Themes {
 
 function paperFiles(): string[] {
   const { getItem } = useStorage();
-  const paper: string[] = JSON.parse(getItem("paper") as string) ?? [];
+  const paper: string[] = JSON.parse(getItem("paper", "[]"));
   return paper;
 }
 
@@ -79,13 +79,13 @@ async function verifyMainFolder(): Promise<void> {
 
 function myLang(): string {
   const { getItem } = useStorage();
-  const lang: string = getItem("language") ?? LANGS.en;
+  const lang: string = getItem("language", LANGS.en);
   return lang == LANGS.en ? "English" : "Español";
 }
 
 function myFontLabel(): string {
   const { getItem } = useStorage();
-  const font: string = getItem("font") ?? "font-duo";
+  const font: string = getItem("font", "font-duo");
 
   switch (font) {
     case "font-duo":
@@ -110,20 +110,19 @@ function myFontLabel(): string {
 
 function myFontVal(): string {
   const { getItem } = useStorage();
-  const font: string = getItem("font") ?? "font-duo";
+  const font: string = getItem("font", "font-duo");
   return font;
 }
 
 function myWordCount(): boolean {
   const { getItem } = useStorage();
-  const isActive: boolean = JSON.parse(getItem("word-count") as string) ?? true;
+  const isActive: boolean = JSON.parse(getItem("word-count", "true"));
   return isActive;
 }
 
 function myLastModified(): boolean {
   const { getItem } = useStorage();
-  const isActive: boolean =
-    JSON.parse(getItem("last-modified") as string) ?? true;
+  const isActive: boolean = JSON.parse(getItem("last-modified", "true"));
   return isActive;
 }
 

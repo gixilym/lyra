@@ -4,7 +4,7 @@ import listenCommands from "bind-mousetrap-global";
 import { motion } from "framer-motion";
 import commands from "mousetrap";
 import { type PropsWithChildren } from "react";
-import { Toaster } from "react-hot-toast";
+
 import { twJoin, twMerge } from "tailwind-merge";
 import { toggleFullScreen } from "../utils/commands";
 import { myFontVal, themes } from "../utils/helpers";
@@ -22,6 +22,9 @@ function MainContainer({ children }: PropsWithChildren): Component {
   document.body.spellcheck = false;
   addEventListener("contextmenu", (e: Event) => e.preventDefault());
   listen("f11", () => toggleFullScreen());
+  document
+    .querySelector("textarea")
+    ?.addEventListener("contextmenu", e => e.stopPropagation());
 
   return (
     <motion.main
@@ -43,7 +46,7 @@ function MainContainer({ children }: PropsWithChildren): Component {
       <Header />
       {children}
       <Footer />
-      <Toaster position="top-right" reverseOrder={false} />
+      
     </motion.main>
   );
 }

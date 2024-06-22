@@ -156,16 +156,16 @@ function Form(): Component {
         />
       </div>
       {paperIsOpen && paper.length > 0 && (
-        <div className="flex justify-center items-center gap-x-6 w-full opacity-80">
+        <div className="flex justify-center items-center gap-x-4 w-full opacity-80 font-sara">
           <button
             onClick={recoveryEvery}
-            className="bg-blue-400 hover:bg-blue-300 duration-75 px-3 py-1 rounded-lg text-black text-md"
+            className="bg-[#5ff3fa] hover:bg-[#7df9ff] duration-75 w-36 py-1 rounded-lg text-black text-lg"
           >
             {d.RecoverEverything}
           </button>
           <button
             onClick={deleteEvery}
-            className="bg-red-500 hover:bg-red-400 duration-75 px-3 py-1 rounded-lg text-white text-md"
+            className="bg-[#ff7575] hover:bg-[#ff8f8f] duration-75 w-36 py-1 rounded-lg text-black text-lg"
           >
             {d.DeleteEverything}
           </button>
