@@ -5,15 +5,16 @@ import useStorage from "../hooks/useStorage";
 import { configStore } from "../store/configStore";
 import { PAGES, THEMES } from "../utils/consts";
 import translations from "../utils/dictionary";
-import { themes } from "../utils/helpers";
+import { navigation, themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
 
 function Header(): Component {
   const d = translations(),
-    { showHeader, setShowHeader } = configStore(),
-    [menu, setMenu] = useState<Menu>(initMenu),
-    { setItem } = useStorage(),
     { isSunnyDay } = themes(),
+    { showHeader, setShowHeader } = configStore(),
+    { setItem } = useStorage(),
+    { goTo } = navigation(),
+    [menu, setMenu] = useState<Menu>(initMenu),
     menuStyles: string = isSunnyDay
       ? "bg-gray-300 border-t-gray-300/90 border-[#979797]"
       : "bg-[#1d1d1d] border-t-gray-900/90 border-[#383838]";
@@ -61,33 +62,24 @@ function Header(): Component {
                 "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-48 py-2 gap-y-2 z-10"
               )}
             >
-              <a
-                href={PAGES.list}
+              <p
+                onClick={() => goTo(PAGES.list)}
                 className={twMerge(
                   isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
                   "cursor-default w-full"
                 )}
               >
                 {d.List}
-              </a>
-              <a
-                href={PAGES.preferences}
+              </p>
+              <p
+                onClick={() => goTo(PAGES.preferences)}
                 className={twMerge(
                   isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
                   "cursor-default w-full"
                 )}
               >
                 {d.Preferences}
-              </a>
-              {/* <a
-                href={PAGES.backup}
-                className={twMerge(
-                  isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
-                  "cursor-default w-full"
-                )}
-              >
-                {d.Backup}
-              </a> */}
+              </p>
             </div>
           )}
         </details>
@@ -185,24 +177,24 @@ function Header(): Component {
                 "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-44 py-2 gap-y-2 z-10"
               )}
             >
-              <a
-                href={PAGES.presentation}
+              <p
+                onClick={() => goTo(PAGES.presentation)}
                 className={twMerge(
                   isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
                   "cursor-default w-full"
                 )}
               >
                 {d.About}
-              </a>
-              <a
-                href={PAGES.support}
+              </p>
+              <p
+                onClick={() => goTo(PAGES.support)}
                 className={twMerge(
                   isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
                   "cursor-default w-full"
                 )}
               >
                 {d.Support}
-              </a>
+              </p>
             </div>
           )}
         </details>

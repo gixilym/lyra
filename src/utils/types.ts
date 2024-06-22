@@ -12,6 +12,8 @@ type ZustandStore = UseBoundStore<StoreApi<any>>;
 
 type SelectEvent = ChangeEvent<HTMLSelectElement>;
 
+type Timer = ReturnType<typeof setTimeout>;
+
 interface File {
   name: string;
   content: string;
@@ -25,6 +27,7 @@ interface StylesText {
 }
 
 export type {
+  Timer,
   Component,
   File,
   Match,

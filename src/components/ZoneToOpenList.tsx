@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useState } from "react";
 import { useMatch } from "react-router-dom";
 import useStorage from "../hooks/useStorage";
@@ -27,12 +26,7 @@ function ZoneToOpenList(): Component {
     );
   } else if (pathIsFile && showMessage) {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 3 }}
-        className="absolute bottom-0 left-0 bg-indigo-100 w-28 h-48 text-black rounded-tr-lg pt-1 px-1.5 flex flex-col justify-start items-center gap-y-3 border-2"
-      >
+      <div className="absolute bottom-0 left-0 bg-indigo-100 w-28 h-48 text-black rounded-tr-lg pt-1 px-1.5 flex flex-col justify-start items-center gap-y-3 border-2">
         <p className="text-center text-black/70 font-semibold text-md">
           {d.GoToTheListByPlacingTheCursorHere}
         </p>
@@ -45,7 +39,7 @@ function ZoneToOpenList(): Component {
         >
           OK
         </button>
-      </motion.div>
+      </div>
     );
   }
 }

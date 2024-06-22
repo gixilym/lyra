@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import { configStore } from "../store/configStore";
 import translations from "../utils/dictionary";
@@ -11,17 +10,14 @@ function NoFiles(): Component {
   const d = translations();
 
   return (
-    <motion.p
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
+    <p
       className={twMerge(
         isSunnyDay ? "text-black/70" : "text-gray-300/90",
         "text-lg"
       )}
     >
       {paperIsOpen ? d.NothingHere : d.AddYourFirstAnnotation}
-    </motion.p>
+    </p>
   );
 }
 

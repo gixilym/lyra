@@ -4,8 +4,6 @@ const BASE_DIRECTORY: { dir: BaseDirectory } = { dir: BaseDirectory.Document };
 
 const MAIN_FOLDER: string = "lyra";
 
-const BACKUP_FOLDER: string = "lyra-backup";
-
 const PAGES: Pages = {
   presentation: "/",
   list: "/list",
@@ -42,8 +40,6 @@ const TEXT_ALIGNS: AlignsText = {
   end: "text-end",
 };
 
-const DEFAULT_OPACITY: string = "10";
-
 const WELCOME_ES: string = "Bienvenido a lyra.txt";
 
 const WELCOME_EN: string = "Welcome to lyra.txt";
@@ -53,9 +49,7 @@ const INTRO_ES: string = `lyra es tu espacio para dejar volar tu creatividad sin
 const INTRO_EN: string = `lyra is your space to let your creativity soar without distractions.\n\nDesigned for those who love focused writing, whether it's a book, thoughts, a personal journal, or any type of content.\n\nIt works offline, ensuring that your writings remain safe, private, and accessible on your device. No user data is collected.\n\nIt offers themes to match your style, keyboard commands for a smooth writing experience. Available in Spanish and English (more coming soon).\n\nStart writing in Lyra and transform your ideas into words!`;
 
 export {
-  DEFAULT_OPACITY,
   TEXT_ALIGNS,
-  BACKUP_FOLDER,
   BASE_DIRECTORY,
   WELCOME_ES,
   WELCOME_EN,

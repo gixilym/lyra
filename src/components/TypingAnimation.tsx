@@ -1,14 +1,16 @@
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import type { Component } from "../utils/types";
+import type { Component, Timer } from "../utils/types";
+import { myAnimations } from "../utils/helpers";
 
 function TypingAnimation(props: Props): Component {
-  const { text, duration = 90, className } = props;
-  const [displayedText, setDisplayedText] = useState<string>("");
-  const [index, setIndex] = useState<number>(0);
+  const { text, duration = 90, className } = props,
+    animations = myAnimations(),
+    [displayedText, setDisplayedText] = useState<string>(""),
+    [index, setIndex] = useState<number>(0),
+    [opacity, setOpacity] = useState<number>(0);
 
   useEffect(() => {
-    const typingEffect = setInterval(() => {
+    const typingEffect: Timer = setInterval(() => {
       if (index < text.length) {
         setDisplayedText(prevState => prevState + text.charAt(index));
         setIndex(index + 1);
@@ -16,18 +18,26 @@ function TypingAnimation(props: Props): Component {
     }, duration);
 
     return () => clearInterval(typingEffect);
-  }, [duration, index]);
+  }, [duration, index, text]);
 
-  return (
-    <motion.p
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4, delay: 0.2 }}
-      className={className}
-    >
-      &nbsp;{displayedText || text}&nbsp;
-    </motion.p>
-  );
+  useEffect(() => {
+    const fadeEffect: Timer = setTimeout(() => setOpacity(1), 200);
+    return () => clearTimeout(fadeEffect);
+  }, []);
+
+  if (animations) {
+    return (
+      <p
+        style={{
+          opacity: opacity,
+          transition: "opacity 0.4s ease-in-out",
+        }}
+        className={className}
+      >
+        &nbsp;{displayedText || text}&nbsp;
+      </p>
+    );
+  } else return <p className={className}>&nbsp;{text}&nbsp;</p>;
 }
 
 export default TypingAnimation;

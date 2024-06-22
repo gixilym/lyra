@@ -6,6 +6,7 @@ import {
   Lightbulb as OpacityIcon,
   RotateCcw as ResetIcon,
   Space as SpacingIcon,
+  Sparkles as AnimationsIcon,
 } from "lucide-react";
 import { useState } from "react";
 import Select from "react-select";
@@ -16,6 +17,7 @@ import useStorage from "../hooks/useStorage";
 import { LANGS } from "../utils/consts";
 import translations from "../utils/dictionary";
 import {
+  myAnimations,
   myFontLabel,
   myLang,
   myLastModified,
@@ -52,6 +54,7 @@ function Preferences(): Component {
     fontFamily = myFontLabel(),
     wordCount = myWordCount(),
     lastModifiedIsActive = myLastModified(),
+    animations = myAnimations(),
     { isSunnyDay } = themes(),
     { getItem, setItem, clearEverything } = useStorage(),
     reload = (): void => window.location.reload(),
@@ -120,6 +123,11 @@ function Preferences(): Component {
     reload();
   }
 
+  function toggleAnimations(): void {
+    setItem("animations", JSON.stringify(!animations));
+    reload();
+  }
+
   return (
     <MainContainer>
       <div className="flex-col lg:flex-row mt-6 mb-14 flex justify-center items-center overflow-x-hidden lg:items-start w-6/6 lg:px-10 lg:gap-x-6 gap-y-20">
@@ -152,6 +160,23 @@ function Preferences(): Component {
               onChange={(e: any) => changeFont(e.value)}
               styles={stylesSelect()}
             />
+          </div>
+          <div className="flex justify-between items-center w-full">
+            <div className="flex justify-center items-center gap-x-5">
+              <AnimationsIcon size={25} />
+              <p className="text-md">Animaciones</p>
+            </div>
+            <button
+              onClick={toggleAnimations}
+              className={twMerge(
+                isSunnyDay
+                  ? "bg-[#c0c0c0] text-black border-[#2b2b2b]"
+                  : "bg-[#2b2b2b] text-[#d8d8d8] border-[#c0c0c0]",
+                "cursor-pointer w-[140px] md:w-[160px] justify-center items-center flex rounded-md border sm:text-lg text-sm h-10"
+              )}
+            >
+              {animations ? d.Enabled : d.Disabled}
+            </button>
           </div>
           <div className="flex justify-between items-center w-full">
             <div className="flex justify-center items-center gap-x-5">

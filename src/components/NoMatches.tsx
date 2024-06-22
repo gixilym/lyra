@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import translations from "../utils/dictionary";
 import { themes } from "../utils/helpers";
@@ -9,17 +8,14 @@ function NoMatches(): Component {
   const { isSunnyDay } = themes();
 
   return (
-    <motion.p
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
+    <p
       className={twMerge(
         isSunnyDay ? "text-black/70" : "text-gray-400",
         "text-lg"
       )}
     >
       {d.NothingHere}
-    </motion.p>
+    </p>
   );
 }
 

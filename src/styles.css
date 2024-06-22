@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+#feather {
+  @apply opacity-0;
+  transition: opacity 1s ease-in-out;
+}
+
+#feather.visible {
+  @apply opacity-100;
+}
+
 ::selection {
   @apply bg-gray-700/80;
 }

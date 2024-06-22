@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-import { Feather as FeatherIcon } from "lucide-react";
 import { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import MainContainer from "../components/MainContainer";
@@ -7,12 +5,14 @@ import TypingAnimation from "../components/TypingAnimation";
 import { PAGES } from "../utils/consts";
 import translations from "../utils/dictionary";
 import {
+  featherAnimation,
   navigation,
   themes,
   verifyMainFolder,
   verifySystemLang,
 } from "../utils/helpers";
 import type { Component } from "../utils/types";
+import FeatherIcon from "../components/FeatherIcon";
 
 function Presentation(): Component {
   const { goTo } = navigation();
@@ -22,6 +22,7 @@ function Presentation(): Component {
   useEffect(() => {
     verifyMainFolder();
     verifySystemLang();
+    featherAnimation();
   }, []);
 
   return (
@@ -46,14 +47,7 @@ function Presentation(): Component {
               "sm:text-3xl text-lg"
             )}
           />
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <FeatherIcon size={70} color="rgb(99,102,241)" />
-          </motion.div>
+          <FeatherIcon />
         </div>
 
         <ol

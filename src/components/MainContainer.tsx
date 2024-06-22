@@ -1,7 +1,6 @@
 import "@fontsource/ia-writer-duo";
 import "@fontsource/sarabun";
 import listenCommands from "bind-mousetrap-global";
-import { motion } from "framer-motion";
 import commands from "mousetrap";
 import { type PropsWithChildren } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
@@ -14,22 +13,18 @@ import Header from "./Header";
 listenCommands(commands);
 
 function MainContainer({ children }: PropsWithChildren): Component {
-  const fontFamily = myFontVal();
-  const { bindGlobal: listen }: any = commands;
-  const { isSunnyDay, isDarkNigth } = themes();
+  const fontFamily = myFontVal(),
+    { bindGlobal: listen }: any = commands,
+    { isSunnyDay, isDarkNigth } = themes(),
+    textarea: Textarea = document.querySelector("textarea");
 
   document.body.spellcheck = false;
-  addEventListener("contextmenu", (e: Event) => e.preventDefault());
   listen("f11", () => toggleFullScreen());
-  document
-    .querySelector("textarea")
-    ?.addEventListener("contextmenu", e => e.stopPropagation());
+  addEventListener("contextmenu", (e: Event) => e.preventDefault());
+  textarea?.addEventListener("contextmenu", (e: Event) => e.stopPropagation());
 
   return (
-    <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
+    <main
       className={twMerge(
         isSunnyDay
           ? "bg-[#e0e0e0] text-gray-800"
@@ -45,8 +40,10 @@ function MainContainer({ children }: PropsWithChildren): Component {
       <Header />
       {children}
       <Footer />
-    </motion.main>
+    </main>
   );
 }
 
 export default MainContainer;
+
+type Textarea = HTMLTextAreaElement | null;

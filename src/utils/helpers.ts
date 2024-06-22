@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import useStorage from "../hooks/useStorage";
 import {
-  BACKUP_FOLDER,
   BASE_DIRECTORY,
   INTRO_EN,
   INTRO_ES,
@@ -16,10 +15,19 @@ import {
   WELCOME_ES,
 } from "./consts";
 import translations from "./dictionary";
+import { flushSync } from "react-dom";
+import type { Timer } from "./types";
 
 function navigation(): { goTo: (route: string) => void } {
+  const animations: boolean = myAnimations();
   const navigate: NavigateFunction = useNavigate();
-  const goTo = (route: string): void => navigate(route);
+
+  function goTo(route: string): void {
+    if (animations) {
+      document.startViewTransition(() => flushSync(() => navigate(route)));
+    } else navigate(route);
+  }
+
   return { goTo };
 }
 
@@ -152,6 +160,12 @@ function myLastModified(): boolean {
   return isActive;
 }
 
+function myAnimations(): boolean {
+  const { getItem } = useStorage();
+  const isActive: boolean = JSON.parse(getItem("animations", "true"));
+  return isActive;
+}
+
 function copyText(text: string): void {
   const d = translations();
   navigator.clipboard.writeText(text);
@@ -168,11 +182,6 @@ function getDate(): string {
     minutes = date.getMinutes().toString().padStart(2, "0"),
     formattedDate = `${hour}:${minutes} h ${d.On} ${day}/${month}/${year}`;
   return formattedDate;
-}
-
-async function backupExists(): Promise<boolean> {
-  const res: boolean = await exists(BACKUP_FOLDER, BASE_DIRECTORY);
-  return res;
 }
 
 function stylesSelect(): any {
@@ -210,8 +219,15 @@ function stylesSelect(): any {
   };
 }
 
+function featherAnimation(): () => void {
+  const div: HTMLElement | null = document.getElementById("feather");
+  const timer: Timer = setTimeout(() => div?.classList.add("visible"), 300);
+  return () => clearTimeout(timer);
+}
+
 export {
-  backupExists,
+  myAnimations,
+  featherAnimation,
   copyText,
   getDate,
   getSystemLang,

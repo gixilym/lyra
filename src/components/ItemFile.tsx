@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { ArrowUpLeft as RecoveryIcon, Trash as RemoveIcon } from "lucide-react";
 import Dialog from "sweetalert2";
 import { twMerge } from "tailwind-merge";
@@ -11,7 +10,7 @@ import { PAGES } from "../utils/consts";
 import { navigation, notification, paperFiles, themes } from "../utils/helpers";
 import type { Component, File } from "../utils/types";
 import MenuFile from "./MenuFile";
-import { SyntheticEvent } from "react"; 
+import { SyntheticEvent } from "react";
 
 function ItemFile({ fileName }: { fileName: string }): Component {
   const { goTo } = navigation(),
@@ -83,11 +82,8 @@ function ItemFile({ fileName }: { fileName: string }): Component {
   }
 
   return (
-    <motion.li
+    <li
       onClick={openFile}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.1, duration: 0.5 }}
       className={twMerge(
         isSunnyDay
           ? "border-gray-600/30 bg-gray-300 hover:bg-gray-400/30 text-gray-800"
@@ -106,7 +102,7 @@ function ItemFile({ fileName }: { fileName: string }): Component {
       ) : (
         <MenuFile fileName={fileName} />
       )}
-    </motion.li>
+    </li>
   );
 }
 

@@ -13,7 +13,7 @@ import {
   reduceText,
   toggleSpellchecker,
 } from "../utils/commands";
-import { DEFAULT_OPACITY, TEXT_ALIGNS, TEXT_SIZES } from "../utils/consts";
+import { TEXT_ALIGNS, TEXT_SIZES } from "../utils/consts";
 import { copyText, getDate, myLastModified } from "../utils/helpers";
 import type { Component, LazyCmp, StylesText } from "../utils/types";
 
@@ -34,7 +34,7 @@ function FileContent(): Component {
     [styles, setStyles] = useState<StylesText>({
       fontSize: getItem("font-size", TEXT_SIZES.lg),
       alignText: getItem("align-text", TEXT_ALIGNS.start),
-      opacity: getItem("opacity", DEFAULT_OPACITY),
+      opacity: getItem("opacity", "10"),
       letterSpacing: getItem("spacing", "0"),
     });
 
