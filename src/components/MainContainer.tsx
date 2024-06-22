@@ -4,7 +4,6 @@ import listenCommands from "bind-mousetrap-global";
 import { motion } from "framer-motion";
 import commands from "mousetrap";
 import { type PropsWithChildren } from "react";
-
 import { twJoin, twMerge } from "tailwind-merge";
 import { toggleFullScreen } from "../utils/commands";
 import { myFontVal, themes } from "../utils/helpers";
@@ -46,7 +45,6 @@ function MainContainer({ children }: PropsWithChildren): Component {
       <Header />
       {children}
       <Footer />
-      
     </motion.main>
   );
 }

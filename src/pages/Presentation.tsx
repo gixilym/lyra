@@ -4,9 +4,14 @@ import { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import MainContainer from "../components/MainContainer";
 import TypingAnimation from "../components/TypingAnimation";
-import translations from "../utils/dictionary";
 import { PAGES } from "../utils/consts";
-import { navigation, themes, verifyMainFolder } from "../utils/helpers";
+import translations from "../utils/dictionary";
+import {
+  navigation,
+  themes,
+  verifyMainFolder,
+  verifySystemLang,
+} from "../utils/helpers";
 import type { Component } from "../utils/types";
 
 function Presentation(): Component {
@@ -16,6 +21,7 @@ function Presentation(): Component {
 
   useEffect(() => {
     verifyMainFolder();
+    verifySystemLang();
   }, []);
 
   return (

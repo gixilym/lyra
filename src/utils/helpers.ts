@@ -1,3 +1,4 @@
+import { invoke } from "@tauri-apps/api";
 import { createDir, exists, writeTextFile } from "@tauri-apps/api/fs";
 import { join } from "@tauri-apps/api/path";
 import toast from "react-hot-toast";
@@ -6,10 +7,13 @@ import useStorage from "../hooks/useStorage";
 import {
   BACKUP_FOLDER,
   BASE_DIRECTORY,
-  INTRODUCTION,
+  INTRO_EN,
+  INTRO_ES,
   LANGS,
   MAIN_FOLDER,
   THEMES,
+  WELCOME_EN,
+  WELCOME_ES,
 } from "./consts";
 import translations from "./dictionary";
 
@@ -60,18 +64,40 @@ function themes(): Themes {
 
 function paperFiles(): string[] {
   const { getItem } = useStorage();
-  const paper: string[] = JSON.parse(getItem("paper", "[]"));
+  const paper = JSON.parse(getItem("paper", "[]"));
   return paper;
 }
 
+async function getSystemLang(): Promise<string> {
+  const lang: string = await invoke("get_system_lang");
+  if (lang.startsWith("es-")) return LANGS.es;
+  else return LANGS.en;
+}
+
+async function verifySystemLang(): Promise<void> {
+  const { setItem, getItem } = useStorage();
+  const langSelected: string = getItem("language", "nothing");
+  if (langSelected == "nothing") {
+    let lang: string = await getSystemLang();
+    lang = lang == LANGS.es ? LANGS.es : LANGS.en;
+    setItem("language", lang);
+    location.reload();
+  }
+}
+
 async function verifyMainFolder(): Promise<void> {
+  const systemLang: string = await getSystemLang(),
+    isSpanish: boolean = systemLang == LANGS.es,
+    welcome: string = isSpanish ? WELCOME_ES : WELCOME_EN,
+    intro: string = isSpanish ? INTRO_ES : INTRO_EN;
+
   while (true) {
     const mainFolderExits: boolean = await exists(MAIN_FOLDER, BASE_DIRECTORY);
-    const path: string = await join(MAIN_FOLDER, "Bienvenido a lyra.txt");
+    const path: string = await join(MAIN_FOLDER, welcome);
     if (!mainFolderExits) {
       createDir(MAIN_FOLDER, BASE_DIRECTORY)
-        .then(() => writeTextFile(path, INTRODUCTION, BASE_DIRECTORY))
-        .catch(e => console.error(`Error creando carpeta lyra: ${e.message}`));
+        .then(() => writeTextFile(path, intro, BASE_DIRECTORY))
+        .catch(e => console.error(`error en 'verifyMainFolder': ${e.message}`));
       break;
     } else break;
   }
@@ -186,10 +212,11 @@ function stylesSelect(): any {
 
 export {
   backupExists,
-  myFontVal,
   copyText,
   getDate,
+  getSystemLang,
   myFontLabel,
+  myFontVal,
   myLang,
   myLastModified,
   myWordCount,
@@ -200,6 +227,7 @@ export {
   stylesSelect,
   themes,
   verifyMainFolder,
+  verifySystemLang,
 };
 
 interface Themes {
