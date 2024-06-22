@@ -17,7 +17,7 @@ function InfoFile({
     wordCountIsActive = myWordCount(),
     { getItem } = useStorage(),
     lastModifiedIsActive = myLastModified(),
-    lastModified: string = getItem(`${selectedFile.name}-modified`) ?? "",
+    lastModified: string = getItem(`${selectedFile.name}-modified`, ""),
     currentDate = getDate();
 
   return (
