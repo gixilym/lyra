@@ -5,14 +5,10 @@ import useFile from "../hooks/useFile";
 import useStorage from "../hooks/useStorage";
 import { fileStore } from "../store/fileStore";
 import translations from "../utils/dictionary";
-import {
-  nameIsValid,
-  notification,
-  paperFiles,
-  themes,
-} from "../utils/helpers";
+import { nameIsValid, notification, themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
 import type { SyntheticEvent } from "react";
+import usePreferences from "../hooks/usePreferences";
 
 function MenuFile({ fileName }: { fileName: string }): Component {
   const d = translations(),
@@ -52,7 +48,7 @@ function MenuFile({ fileName }: { fileName: string }): Component {
 
   function moveToTrash(event: SyntheticEvent): void {
     event.stopPropagation();
-    const paper = paperFiles();
+    const { myPaper } = usePreferences();
     Dialog.fire({
       title: d.AreYouSure,
       text: d.MoveToTrash,
@@ -66,7 +62,7 @@ function MenuFile({ fileName }: { fileName: string }): Component {
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
-        const updatedPaper: string[] = [fileName, ...paper];
+        const updatedPaper: string[] = [fileName, ...myPaper()];
         setItem("paper", JSON.stringify(updatedPaper));
         notification("success", d.SentToTrash);
         editedFile();

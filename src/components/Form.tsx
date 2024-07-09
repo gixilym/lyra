@@ -12,10 +12,10 @@ import {
   nameIsValid,
   navigation,
   notification,
-  paperFiles,
   themes,
 } from "../utils/helpers";
 import type { Component, File } from "../utils/types";
+import usePreferences from "../hooks/usePreferences";
 
 function Form(): Component {
   const d = translations(),
@@ -25,7 +25,7 @@ function Form(): Component {
     { paperIsOpen, setPaperIsOpen } = configStore(),
     [fileName, setFileName] = useState<string>(""),
     { setItem } = useStorage(),
-    paper = paperFiles(),
+    { myPaper } = usePreferences(),
     newFile: File = { name: fileName, content: "" },
     nameIsEmpty: boolean = !fileName,
     { updateListFiles, setSelectedFile, files, editedFile, setFiles } =
@@ -64,7 +64,7 @@ function Form(): Component {
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
-        const updatedFiles: string[] = [...files, paper];
+        const updatedFiles: string[] = [...files, myPaper()];
         setFiles(updatedFiles);
         setItem("files", JSON.stringify(updatedFiles));
         setItem("paper", JSON.stringify([]));
@@ -90,7 +90,7 @@ function Form(): Component {
     }).then(res => {
       if (res.isConfirmed) {
         setItem("paper", JSON.stringify([]));
-        paper.forEach(name => deleteFile(name));
+        myPaper().forEach(name => deleteFile(name));
         notification("success", d.DeletedRecords);
         editedFile();
       }
@@ -155,7 +155,7 @@ function Form(): Component {
           )}
         />
       </div>
-      {paperIsOpen && paper.length > 0 && (
+      {paperIsOpen && myPaper().length > 0 && (
         <div className="flex justify-center items-center gap-x-4 w-full opacity-80 font-sara">
           <button
             onClick={recoveryEvery}

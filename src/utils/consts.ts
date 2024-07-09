@@ -37,7 +37,7 @@ const TEXT_SIZES: TextSizes = {
 const TEXT_ALIGNS: AlignsText = {
   start: "text-start",
   center: "text-center",
-  end: "text-end",
+  end: "text-right",
 };
 
 const WELCOME_ES: string = "Bienvenido a lyra.txt";

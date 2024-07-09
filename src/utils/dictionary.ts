@@ -1,14 +1,15 @@
-import useStorage from "../hooks/useStorage";
+import usePreferences from "../hooks/usePreferences";
 import { LANGS } from "./consts";
 
 function userLanguage(enText: string, esText: string): string {
-  const { getItem } = useStorage();
-  const language: string = getItem("language", LANGS.en);
-  return language == LANGS.en ? enText : esText;
+  const { myLangValue } = usePreferences();
+  const text: string = myLangValue() == LANGS.es ? esText : enText;
+  return text;
 }
 
 function translations() {
   const dictionary = {
+    StartTyping: userLanguage("Start typing...", "Comienza a escribir..."),
     LastBackupCreatedAt: userLanguage(
       "Last backup created at",
       "Ultima copia de seguridad creada el"
@@ -98,6 +99,7 @@ function translations() {
       "Contact this email for questions about lyra",
       "Contacta este correo para preguntas sobre lyra"
     ),
+    FocusOnParagraph: userLanguage("Focus on paragraph", "Focus en párrafo"),
     TextOpacity: userLanguage("Text opacity", "Opacidad del texto"),
     LetterSpacing: userLanguage("Letter spacing", "Espacio entre letras"),
     TestText: userLanguage("Test Text", "Texto de Prueba"),

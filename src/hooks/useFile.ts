@@ -13,7 +13,7 @@ import { BASE_DIRECTORY, MAIN_FOLDER, PAGES } from "../utils/consts";
 import { navigation } from "../utils/helpers";
 import useStorage from "./useStorage";
 
-function useFile(): FilesFunctions {
+function useFile(): Files {
   const { goTo } = navigation();
   const { editedFile } = fileStore();
 
@@ -45,7 +45,7 @@ function useFile(): FilesFunctions {
   }
 
   async function getFiles(): Promise<string[]> {
-    let dir: any = await readDir(MAIN_FOLDER, BASE_DIRECTORY);
+    let dir: any[] = await readDir(MAIN_FOLDER, BASE_DIRECTORY);
     dir = dir.map((f: FileEntry) => f.name?.split(".txt")[0]);
     dir = dir.sort((a: string, b: string) => a.localeCompare(b));
     return dir;
@@ -88,7 +88,7 @@ function useFile(): FilesFunctions {
 
 export default useFile;
 
-interface FilesFunctions {
+interface Files {
   renameFile: (oldName: string, newName: string) => Promise<void>;
   deleteFile: (name: string) => Promise<void>;
   createFile: (name: string) => void;

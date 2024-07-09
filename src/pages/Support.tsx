@@ -11,7 +11,7 @@ function Support(): Component {
 
   return (
     <MainContainer>
-      <div className="flex flex-col justify-center items-center w-4/6 gap-y-10 text-pretty">
+      <div className="px-8 md:px-0 flex flex-col justify-center items-center w-full max-w-[700px] gap-y-10 text-pretty">
         <div className="flex flex-col justify-center items-start gap-y-4">
           <p className="text-lg border-b border-gray-600/80 w-full">
             {d.Suggestions}
@@ -39,17 +39,17 @@ function Support(): Component {
           </p>
         </div>
       </div>
-      <div className="flex gap-x-4 w-4/6 items-center justify-end mb-14 sm:mb-0">
+      <div className="px-8 md:px-0 flex gap-x-4 w-full max-w-[700px] items-center justify-end mb-14 sm:mb-0">
         <address
           className={twMerge(
             isSunnyDay ? "text-blue-800" : "text-blue-300",
             "sm:text-xl text-lg underline font-sara tracking-wider"
           )}
         >
-          gixipixel@gmail.com
+          gixi.tsx@gmail.com
         </address>
         <CopyIcon
-          onClick={() => copyText("gixipixel@gmail.com")}
+          onClick={() => copyText("gixi.tsx@gmail.com")}
           size={30}
           color={isSunnyDay ? "#222222" : "#c0c0c0"}
           className="hover:scale-125 cursor-pointer duration-100"

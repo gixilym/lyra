@@ -88,7 +88,7 @@
       {
         "label": "main",
         "minWidth": 600,
-        "minHeight": 400,
+        "minHeight": 450,
         "resizable": true,
         "title": "lyra",
         "width": 1100,

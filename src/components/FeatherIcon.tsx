@@ -1,13 +1,13 @@
 import { Feather as Icon } from "lucide-react";
-import { myAnimations } from "../utils/helpers";
 import type { Component } from "../utils/types";
+import usePreferences from "../hooks/usePreferences";
 
 function FeatherIcon(): Component {
-  const animations = myAnimations();
+  const { myAnimations } = usePreferences();
 
-  if (animations) {
+  if (myAnimations()) {
     return (
-      <div id="feather">
+      <div id="feather" className="pb-6">
         <Icon size={70} color="rgb(99,102,241)" />
       </div>
     );

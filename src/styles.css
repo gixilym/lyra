@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply caret-indigo-400 bg-black/90 text-gray-300 grid place-content-center place-items-center overflow-x-hidden overflow-y-auto select-none;
+}
+
 #feather {
   @apply opacity-0;
   transition: opacity 1s ease-in-out;
@@ -9,10 +13,6 @@
 
 #feather.visible {
   @apply opacity-100;
-}
-
-::selection {
-  @apply bg-gray-700/80;
 }
 
 details summary::-webkit-details-marker {
@@ -23,38 +23,34 @@ details summary {
   @apply list-none;
 }
 
-body {
-  @apply caret-indigo-400 bg-black/90 text-gray-300 grid place-content-center place-items-center overflow-x-hidden overflow-y-auto select-none;
-  --scrollbar-thumb-color: #374151cc;
-  --scrollbar-border-thickness: 0px;
-  --scrollbar-width: 15px;
-  --scrollbar-height: 15px;
-  --scrollbar-track-color: #1a1a1a;
-  --scrollbar-corner-color: #1a1a1a;
-  --scrollbar-border-color: #1a1a1a;
+::selection {
+  @apply bg-gray-700/80;
 }
-body::-webkit-scrollbar {
-  width: var(--scrollbar-width, 20px);
-  height: var(--scrollbar-height, 20px);
+
+::-webkit-scrollbar {
+  @apply w-0 bg-transparent;
 }
-body::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb-color, #1a1a1a);
-  border: var(--scrollbar-border-thickness, 3px) solid
-    var(--scrollbar-border-color, #1a1a1a);
-  border-radius: var(--scrollbar-border-radius, 4px);
+
+.normal-opacity {
+  @apply !opacity-90 !text-white;
 }
-body::-webkit-scrollbar-track {
-  background: var(--scrollbar-track-color, #1a1a1a);
+
+.quill-container {
+  @apply w-full h-full sm:min-w-[600px] max-w-[800px] bg-transparent px-4 lg:px-0 overflow-x-hidden lg:pb-20;
 }
-body::-webkit-scrollbar-corner {
-  background: var(--scrollbar-corner-color, #1a1a1a);
-  border: var(--scrollbar-border-thickness, 3px) solid
-    var(--scrollbar-border-color, #1a1a1a);
-  border-radius: var(--scrollbar-border-radius, 4px);
+
+.quill-container p {
+  @apply text-white opacity-50;
 }
-body::-webkit-scrollbar-button:vertical:start:increment,
-#preview::-webkit-scrollbar-button:vertical:end:decrement,
-#preview::-webkit-scrollbar-button:horizontal:start:increment,
-#preview::-webkit-scrollbar-button:horizontal:end:decrement {
-  display: var(--show-double-buttons, none);
+
+.quill-container .active {
+  @apply text-white opacity-90;
+}
+
+.ql-editor {
+  @apply outline-0 h-full min-h-[400px] w-full;
+}
+
+.ql-clipboard {
+  @apply outline-0;
 }

@@ -1,25 +1,27 @@
 import { ArrowUpLeft as RecoveryIcon, Trash as RemoveIcon } from "lucide-react";
+import { SyntheticEvent } from "react";
 import Dialog from "sweetalert2";
 import { twMerge } from "tailwind-merge";
 import useFile from "../hooks/useFile";
+import usePreferences from "../hooks/usePreferences";
 import useStorage from "../hooks/useStorage";
 import { configStore } from "../store/configStore";
 import { fileStore } from "../store/fileStore";
-import translations from "../utils/dictionary";
 import { PAGES } from "../utils/consts";
-import { navigation, notification, paperFiles, themes } from "../utils/helpers";
+import translations from "../utils/dictionary";
+import { navigation, notification, themes } from "../utils/helpers";
 import type { Component, File } from "../utils/types";
 import MenuFile from "./MenuFile";
-import { SyntheticEvent } from "react";
 
 function ItemFile({ fileName }: { fileName: string }): Component {
-  const { goTo } = navigation(),
-    { readFile, deleteFile } = useFile(),
-    { setSelectedFile, editedFile, removeFileFromList } = fileStore(),
-    { paperIsOpen } = configStore(),
-    { setItem } = useStorage(),
+  const d = translations(),
+    { goTo } = navigation(),
     { isSunnyDay } = themes(),
-    d = translations();
+    { setItem } = useStorage(),
+    { myPaper } = usePreferences(),
+    { paperIsOpen } = configStore(),
+    { readFile, deleteFile } = useFile(),
+    { setSelectedFile, editedFile, removeFileFromList } = fileStore();
 
   async function openFile(): Promise<void> {
     const fileContent: string = await readFile(fileName);
@@ -30,7 +32,6 @@ function ItemFile({ fileName }: { fileName: string }): Component {
 
   function recoveryPaperItem(event: SyntheticEvent): void {
     event.stopPropagation();
-    const paper = paperFiles();
     Dialog.fire({
       title: d.AreYouSure,
       text: d.RestoreQuestion,
@@ -44,7 +45,7 @@ function ItemFile({ fileName }: { fileName: string }): Component {
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
-        const updatedPaper: string[] = paper.filter(
+        const updatedPaper: string[] = myPaper().filter(
           (f: string) => f != fileName
         );
         setItem("paper", JSON.stringify(updatedPaper));
@@ -56,7 +57,7 @@ function ItemFile({ fileName }: { fileName: string }): Component {
 
   function removeItem(event: SyntheticEvent): void {
     event.stopPropagation();
-    const paper = paperFiles();
+
     Dialog.fire({
       title: d.AreYouSure,
       text: d.DeleteQuestion,
@@ -69,7 +70,7 @@ function ItemFile({ fileName }: { fileName: string }): Component {
       color: isSunnyDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
-        const updatedPaper: string[] = paper.filter(
+        const updatedPaper: string[] = myPaper().filter(
           (f: string) => f != fileName
         );
         removeFileFromList(fileName);

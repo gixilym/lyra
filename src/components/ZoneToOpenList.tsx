@@ -1,21 +1,19 @@
 import { useState } from "react";
-import { useMatch } from "react-router-dom";
+import usePreferences from "../hooks/usePreferences";
 import useStorage from "../hooks/useStorage";
 import { PAGES } from "../utils/consts";
 import translations from "../utils/dictionary";
-import { navigation } from "../utils/helpers";
-import type { Component, Match } from "../utils/types";
+import { navigation, pathIs } from "../utils/helpers";
+import type { Component } from "../utils/types";
 
 function ZoneToOpenList(): Component {
-  const { goTo } = navigation(),
-    { getItem, setItem } = useStorage(),
-    [showMessage, setShowMessage] = useState<boolean>(true),
-    messageDisplayed: boolean = Boolean(getItem("list-msg", "false")),
-    match: Match = useMatch(PAGES.file),
-    pathIsFile: boolean = PAGES.file == match?.pathname,
-    d = translations();
+  const d = translations(),
+    { goTo } = navigation(),
+    { setItem } = useStorage(),
+    { myMsgDisplayed } = usePreferences(),
+    [showMessage, setShowMessage] = useState<boolean>(true);
 
-  if (messageDisplayed) {
+  if (myMsgDisplayed()) {
     return (
       <div
         onMouseEnter={() => goTo(PAGES.list)}
@@ -24,9 +22,9 @@ function ZoneToOpenList(): Component {
         .
       </div>
     );
-  } else if (pathIsFile && showMessage) {
+  } else if (pathIs(PAGES.file) && showMessage) {
     return (
-      <div className="absolute bottom-0 left-0 bg-indigo-100 w-28 h-48 text-black rounded-tr-lg pt-1 px-1.5 flex flex-col justify-start items-center gap-y-3 border-2">
+      <div className="fixed bottom-0 left-0 bg-indigo-100 w-28 h-48 text-black rounded-tr-lg pt-1 px-1.5 flex flex-col justify-start items-center gap-y-3 border-2">
         <p className="text-center text-black/70 font-semibold text-md">
           {d.GoToTheListByPlacingTheCursorHere}
         </p>

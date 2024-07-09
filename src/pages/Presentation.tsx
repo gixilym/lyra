@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
+import FeatherIcon from "../components/FeatherIcon";
 import MainContainer from "../components/MainContainer";
 import TypingAnimation from "../components/TypingAnimation";
 import { PAGES } from "../utils/consts";
@@ -12,7 +13,6 @@ import {
   verifySystemLang,
 } from "../utils/helpers";
 import type { Component } from "../utils/types";
-import FeatherIcon from "../components/FeatherIcon";
 
 function Presentation(): Component {
   const { goTo } = navigation();
@@ -27,24 +27,24 @@ function Presentation(): Component {
 
   return (
     <MainContainer>
-      <section className="px-6 sm:px-0 w-full max-w-[700px] h-full min-h-[300px] flex flex-col justify-between items-center sm:mt-10 mt-0">
+      <section className="px-6 md:px-0 w-full max-w-[700px] h-full min-h-[300px] flex flex-col justify-between items-center">
         <div className="w-full flex justify-start items-end">
           <h1
             className={twMerge(
               isSunnyDay ? "text-black/90" : "text-gray-200 ",
-              "sm:text-7xl text-5xl tracking-tight"
+              "md:text-7xl text-5xl tracking-tight"
             )}
           >
             <span className="text-indigo-500">l</span>y
             <span className="text-indigo-500">r</span>a
-            <span className="sm:text-4xl text-2xl">:</span>
+            <span className="md:text-4xl text-2xl">:</span>
           </h1>
 
           <TypingAnimation
             text={d.FocusedWriting}
             className={twMerge(
               isSunnyDay ? "text-black/90" : "text-gray-200",
-              "sm:text-3xl text-lg"
+              "md:text-3xl text-lg pb-5"
             )}
           />
           <FeatherIcon />
@@ -53,7 +53,7 @@ function Presentation(): Component {
         <ol
           className={twMerge(
             isSunnyDay ? "text-black/90" : "text-gray-200",
-            "sm:text-lg text-md w-full flex justify-start items-center sm:gap-x-3 gap-x-1 [&>span]:text-indigo-500 [&>span]:font-semibold [&>span]:text-2xl"
+            "md:text-lg text-md w-full flex justify-start items-center sm:gap-x-3 gap-x-1 [&>span]:text-indigo-500 [&>span]:font-semibold [&>span]:text-2xl"
           )}
         >
           <li>{d.MinimalDesing}</li>
@@ -75,12 +75,12 @@ function Presentation(): Component {
         <div
           className={twMerge(
             isSunnyDay ? "text-black/90" : "text-gray-400",
-            "flex justify-start gap-x-10 items-center w-full sm:text-lg text-md"
+            "flex justify-start gap-x-10 items-center w-full md:text-lg text-md"
           )}
         >
           <p>{d.Version}: 1.0.0</p>
           <a
-            href="https://gixi.me/"
+            href="https://gixi.dev/"
             target="_blank"
             className="cursor-default hover:underline"
           >

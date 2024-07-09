@@ -19,7 +19,7 @@ interface File {
   content: string;
 }
 
-interface StylesText {
+interface stylesText {
   fontSize: string;
   alignText: string;
   opacity: string;
@@ -32,7 +32,7 @@ export type {
   File,
   Match,
   SelectEvent,
-  StylesText,
+  stylesText,
   ZustandStore,
   LazyCmp,
 };

@@ -4,6 +4,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { twJoin } from "tailwind-merge";
 import MainContainer from "../components/MainContainer";
 import useFile from "../hooks/useFile";
+import usePreferences from "../hooks/usePreferences";
 import useStorage from "../hooks/useStorage";
 import { configStore } from "../store/configStore";
 import { fileStore } from "../store/fileStore";
@@ -13,29 +14,29 @@ import {
   reduceText,
   toggleSpellchecker,
 } from "../utils/commands";
-import { TEXT_ALIGNS, TEXT_SIZES } from "../utils/consts";
-import { copyText, getDate, myLastModified } from "../utils/helpers";
-import type { Component, LazyCmp, StylesText } from "../utils/types";
+import { copyText, getDate } from "../utils/helpers";
+import type { Component, LazyCmp, stylesText } from "../utils/types";
 
 listenCommands(commands);
 
 const LazyInfoFile: LazyCmp = lazy(() => import("../components/InfoFile"));
 
 function FileContent(): Component {
-  const { getItem, setItem } = useStorage(),
+  const { setItem } = useStorage(),
     { selectedFile } = fileStore(),
     { saveFileContent } = useFile(),
     { bindGlobal: listen }: any = commands,
     { spellCheck, setSpellCheck } = configStore(),
     oldContent: string = selectedFile.content ?? "",
     [content, setContent] = useState<string>(() => selectedFile.content ?? ""),
-    lastModifiedIsActive = myLastModified(),
+    { myLastModified, myFontSize, myAlign, myOpacity, mySpacing } =
+      usePreferences(),
     [wordCounts, setWordCounts] = useState<number>(0),
-    [styles, setStyles] = useState<StylesText>({
-      fontSize: getItem("font-size", TEXT_SIZES.lg),
-      alignText: getItem("align-text", TEXT_ALIGNS.start),
-      opacity: getItem("opacity", "10"),
-      letterSpacing: getItem("spacing", "0"),
+    [styles, setStyles] = useState<stylesText>({
+      fontSize: myFontSize(),
+      alignText: myAlign(),
+      opacity: String(myOpacity()),
+      letterSpacing: String(mySpacing()),
     });
 
   useEffect(() => {
@@ -62,7 +63,7 @@ function FileContent(): Component {
   }
 
   function saveLastModified(): void {
-    if (lastModifiedIsActive && oldContent != content) {
+    if (myLastModified() && oldContent != content) {
       const date: string = getDate();
       setItem(`${selectedFile.name}-modified`, date);
     }

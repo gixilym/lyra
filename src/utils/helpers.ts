@@ -1,8 +1,10 @@
 import { invoke } from "@tauri-apps/api";
 import { createDir, exists, writeTextFile } from "@tauri-apps/api/fs";
 import { join } from "@tauri-apps/api/path";
+import { flushSync } from "react-dom";
 import toast from "react-hot-toast";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
+import usePreferences from "../hooks/usePreferences";
 import useStorage from "../hooks/useStorage";
 import {
   BASE_DIRECTORY,
@@ -15,17 +17,18 @@ import {
   WELCOME_ES,
 } from "./consts";
 import translations from "./dictionary";
-import { flushSync } from "react-dom";
 import type { Timer } from "./types";
 
-function navigation(): { goTo: (route: string) => void } {
-  const animations: boolean = myAnimations();
+const reload = (): void => window.location.reload();
+
+function navigation(): Navigation {
+  const { myAnimations } = usePreferences();
   const navigate: NavigateFunction = useNavigate();
 
-  function goTo(route: string): void {
-    if (animations) {
-      document.startViewTransition(() => flushSync(() => navigate(route)));
-    } else navigate(route);
+  function goTo(path: string): void {
+    if (myAnimations()) {
+      document.startViewTransition(() => flushSync(() => navigate(path)));
+    } else navigate(path);
   }
 
   return { goTo };
@@ -62,18 +65,11 @@ function nameIsValid(name: string): boolean {
 }
 
 function themes(): Themes {
-  const { getItem } = useStorage(),
-    theme: string = getItem("theme", THEMES.clearNigth),
-    isSunnyDay: boolean = theme == THEMES.sunnyDay,
-    isClearNigth: boolean = theme == THEMES.clearNigth,
-    isDarkNigth: boolean = theme == THEMES.darkNigth;
+  const { myTheme } = usePreferences(),
+    isSunnyDay: boolean = myTheme() == THEMES.sunnyDay,
+    isClearNigth: boolean = myTheme() == THEMES.clearNigth,
+    isDarkNigth: boolean = myTheme() == THEMES.darkNigth;
   return { isSunnyDay, isClearNigth, isDarkNigth };
-}
-
-function paperFiles(): string[] {
-  const { getItem } = useStorage();
-  const paper = JSON.parse(getItem("paper", "[]"));
-  return paper;
 }
 
 async function getSystemLang(): Promise<string> {
@@ -83,13 +79,13 @@ async function getSystemLang(): Promise<string> {
 }
 
 async function verifySystemLang(): Promise<void> {
-  const { setItem, getItem } = useStorage();
-  const langSelected: string = getItem("language", "nothing");
-  if (langSelected == "nothing") {
+  const { setItem } = useStorage();
+  const { myLangValue } = usePreferences();
+  if (myLangValue("nothing") == "nothing") {
     let lang: string = await getSystemLang();
     lang = lang == LANGS.es ? LANGS.es : LANGS.en;
     setItem("language", lang);
-    location.reload();
+    reload();
   }
 }
 
@@ -109,61 +105,6 @@ async function verifyMainFolder(): Promise<void> {
       break;
     } else break;
   }
-}
-
-function myLang(): string {
-  const { getItem } = useStorage();
-  const lang: string = getItem("language", LANGS.en);
-  return lang == LANGS.en ? "English" : "Español";
-}
-
-function myFontLabel(): string {
-  const { getItem } = useStorage();
-  const font: string = getItem("font", "font-duo");
-
-  switch (font) {
-    case "font-duo":
-      return "Monospace";
-
-    case "font-sara":
-      return "Sarabun";
-
-    case "font-cursive":
-      return "Cursive";
-
-    case "font-revert":
-      return "Revert";
-
-    case "font-serif":
-      return "Sans serif";
-
-    default:
-      return "Monospace";
-  }
-}
-
-function myFontVal(): string {
-  const { getItem } = useStorage();
-  const font: string = getItem("font", "font-duo");
-  return font;
-}
-
-function myWordCount(): boolean {
-  const { getItem } = useStorage();
-  const isActive: boolean = JSON.parse(getItem("word-count", "true"));
-  return isActive;
-}
-
-function myLastModified(): boolean {
-  const { getItem } = useStorage();
-  const isActive: boolean = JSON.parse(getItem("last-modified", "true"));
-  return isActive;
-}
-
-function myAnimations(): boolean {
-  const { getItem } = useStorage();
-  const isActive: boolean = JSON.parse(getItem("animations", "true"));
-  return isActive;
 }
 
 function copyText(text: string): void {
@@ -220,26 +161,26 @@ function stylesSelect(): any {
 }
 
 function featherAnimation(): () => void {
-  const div: HTMLElement | null = document.getElementById("feather");
-  const timer: Timer = setTimeout(() => div?.classList.add("visible"), 300);
+  const feather = document.getElementById("feather") as HTMLDivElement;
+  const timer: Timer = setTimeout(() => feather?.classList.add("visible"), 300);
   return () => clearTimeout(timer);
 }
 
+function pathIs(path: string): boolean {
+  const currentPath: string = window.location.pathname;
+  return currentPath == path;
+}
+
 export {
-  myAnimations,
-  featherAnimation,
   copyText,
+  featherAnimation,
   getDate,
   getSystemLang,
-  myFontLabel,
-  myFontVal,
-  myLang,
-  myLastModified,
-  myWordCount,
   nameIsValid,
   navigation,
   notification,
-  paperFiles,
+  pathIs,
+  reload,
   stylesSelect,
   themes,
   verifyMainFolder,
@@ -251,3 +192,5 @@ interface Themes {
   isClearNigth: boolean;
   isDarkNigth: boolean;
 }
+
+type Navigation = { goTo: (path: string) => void };

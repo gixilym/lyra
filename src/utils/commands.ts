@@ -2,9 +2,10 @@ import { appWindow } from "@tauri-apps/api/window";
 import type { Dispatch, SetStateAction } from "react";
 import useStorage from "../hooks/useStorage";
 import translations from "./dictionary";
-import { notification } from "./helpers";
-import type { StylesText } from "./types";
+import { notification, pathIs } from "./helpers";
+import type { stylesText } from "./types";
 import { PAGES, TEXT_ALIGNS, TEXT_SIZES } from "./consts";
+import usePreferences from "../hooks/usePreferences";
 
 async function toggleFullScreen(): Promise<void> {
   const isFullScreen: boolean = await appWindow.isFullscreen();
@@ -12,8 +13,8 @@ async function toggleFullScreen(): Promise<void> {
   else appWindow.setFullscreen(true);
 }
 
-function alignText(styles: StylesText, setStyles: fnStyles): void {
-  if (location.pathname == PAGES.file) {
+function alignText(styles: stylesText, setStyles: fnStyles): void {
+  if (pathIs(PAGES.file)) {
     const { setItem } = useStorage();
     const { start, center, end } = TEXT_ALIGNS;
 
@@ -38,14 +39,14 @@ function alignText(styles: StylesText, setStyles: fnStyles): void {
   }
 }
 
-function increaseText(styles: StylesText, setStyles: fnStyles): void {
-  if (location.pathname == PAGES.file) {
-    const { setItem, getItem } = useStorage();
+function increaseText(styles: stylesText, setStyles: fnStyles): void {
+  if (pathIs(PAGES.file)) {
+    const { setItem } = useStorage();
+    const { myFontSize } = usePreferences();
     const { sm, md, lg, xl, xxl, xxxl } = TEXT_SIZES;
-    const textSize: string = getItem("font-size", lg);
 
     function changeSize(): string {
-      switch (textSize) {
+      switch (myFontSize()) {
         case sm:
           return md;
 
@@ -74,14 +75,14 @@ function increaseText(styles: StylesText, setStyles: fnStyles): void {
   }
 }
 
-function reduceText(styles: StylesText, setStyles: fnStyles): void {
-  if (location.pathname == PAGES.file) {
-    const { setItem, getItem } = useStorage();
+function reduceText(styles: stylesText, setStyles: fnStyles): void {
+  if (pathIs(PAGES.file)) {
+    const { setItem } = useStorage();
+    const { myFontSize } = usePreferences();
     const { sm, md, lg, xl, xxl, xxxl } = TEXT_SIZES;
-    const textSize: string = getItem("font-size", lg);
 
     function changeSize(): string {
-      switch (textSize) {
+      switch (myFontSize()) {
         case sm:
           return sm;
 
@@ -111,7 +112,7 @@ function reduceText(styles: StylesText, setStyles: fnStyles): void {
 }
 
 function toggleSpellchecker(spellCheck: boolean, setSpellCheck: any): void {
-  if (location.pathname == PAGES.file) {
+  if (pathIs(PAGES.file)) {
     const d = translations();
     if (spellCheck) {
       notification("error", d.SpellcheckerOff);
@@ -131,4 +132,4 @@ export {
   toggleSpellchecker,
 };
 
-type fnStyles = Dispatch<SetStateAction<StylesText>>;
+type fnStyles = Dispatch<SetStateAction<stylesText>>;

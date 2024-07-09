@@ -5,20 +5,20 @@ import commands from "mousetrap";
 import { type PropsWithChildren } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 import { toggleFullScreen } from "../utils/commands";
-import { myFontVal, themes } from "../utils/helpers";
+import { themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
 import Footer from "./Footer";
 import Header from "./Header";
+import usePreferences from "../hooks/usePreferences";
 
 listenCommands(commands);
 
 function MainContainer({ children }: PropsWithChildren): Component {
-  const fontFamily = myFontVal(),
+  const { myFontValue } = usePreferences(),
     { bindGlobal: listen }: any = commands,
     { isSunnyDay, isDarkNigth } = themes(),
     textarea: Textarea = document.querySelector("textarea");
 
-  document.body.spellcheck = false;
   listen("f11", () => toggleFullScreen());
   addEventListener("contextmenu", (e: Event) => e.preventDefault());
   textarea?.addEventListener("contextmenu", (e: Event) => e.stopPropagation());
@@ -32,8 +32,8 @@ function MainContainer({ children }: PropsWithChildren): Component {
           ? "bg-black text-gray-200/90"
           : "bg-[#1a1a1a] text-gray-200/90",
         twJoin(
-          fontFamily,
-          "w-[100vw] min-h-screen flex flex-col items-center justify-start gap-y-10"
+          myFontValue(),
+          "w-[100vw] min-h-screen flex flex-col items-center justify-start lg:gap-y-20"
         )
       )}
     >

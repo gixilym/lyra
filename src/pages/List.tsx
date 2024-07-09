@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
+import Form from "../components/Form";
+import ListFiles from "../components/ListFiles";
+import Loading from "../components/Loading";
+import MainContainer from "../components/MainContainer";
 import useFile from "../hooks/useFile";
 import { configStore } from "../store/configStore";
-import type { Component } from "../utils/types";
 import { fileStore } from "../store/fileStore";
-import Loading from "../components/Loading";
-import ListFiles from "../components/ListFiles";
-import Form from "../components/Form";
-import MainContainer from "../components/MainContainer";
+import type { Component } from "../utils/types";
 
 function List(): Component {
   const { getFiles } = useFile(),
