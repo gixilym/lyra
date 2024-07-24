@@ -12,7 +12,7 @@ import {
 import { useState } from "react";
 import Select from "react-select";
 import { twJoin, twMerge } from "tailwind-merge";
-import InfoFile from "../components/InfoFile";
+import WordsFile from "../components/WordsFile";
 import MainContainer from "../components/MainContainer";
 import usePreferences from "../hooks/usePreferences";
 import useStorage from "../hooks/useStorage";
@@ -157,7 +157,7 @@ function Preferences(): Component {
           <div className="flex justify-between items-center w-full">
             <div className="flex justify-center items-center gap-x-5">
               <AnimationsIcon size={25} />
-              <p className="text-md">Animaciones</p>
+              <p className="text-md">{d.Animations}</p>
             </div>
             <button
               onClick={toggleAnimations}
@@ -234,7 +234,7 @@ function Preferences(): Component {
           <div className="flex justify-between items-center w-full">
             <div className="flex justify-center items-center gap-x-3">
               <AlignIcon size={25} />
-              <p className="text-md">Alineación</p>
+              <p className="text-md">{d.Aligment}</p>
             </div>
             <Select
               className="sm:text-lg text-sm"
@@ -262,7 +262,7 @@ function Preferences(): Component {
               <input
                 type="number"
                 value={spacing}
-                className="w-full h-full outline-0 border-0 text-center text-white bg-transparent"
+                className="w-full h-full outline-0 border-0 text-center bg-transparent"
                 min={0}
                 max={10}
                 onChange={e => changeSpacing(Number(e.target.value))}
@@ -283,9 +283,8 @@ function Preferences(): Component {
             {d.RememberToUseKeyboardShortcuts} -&gt; <i>{d.Commands}</i>.
           </p>
           <div className="w-full flex flex-col justify-start gap-y-4 items-start px-4 bg-transparent pt-2 pb-4  h-full max-h-[515px] overflow-hidden">
-            <InfoFile
+            <WordsFile
               wordCounts={myLangLabel() == langsOptions[1].label ? 65 : 68}
-              isPreferences={myLastModified()}
             />
             <p
               className={twJoin(myAlign(), "text-lg font-semibold w-full")}
@@ -307,7 +306,6 @@ function Preferences(): Component {
               style={{
                 letterSpacing: spacing + "px",
                 opacity: opacity ? opacity / 10 : 10,
-                color: "#ffffffb4",
               }}
             />
           </div>

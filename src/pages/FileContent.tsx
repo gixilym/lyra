@@ -1,8 +1,10 @@
 import listenCommands from "bind-mousetrap-global";
 import commands from "mousetrap";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { twJoin } from "tailwind-merge";
 import MainContainer from "../components/MainContainer";
+import ModifiedFile from "../components/ModifiedFile";
+import WordsFile from "../components/WordsFile";
 import useFile from "../hooks/useFile";
 import usePreferences from "../hooks/usePreferences";
 import useStorage from "../hooks/useStorage";
@@ -15,11 +17,9 @@ import {
   toggleSpellchecker,
 } from "../utils/commands";
 import { copyText, getDate } from "../utils/helpers";
-import type { Component, LazyCmp, stylesText } from "../utils/types";
+import type { Component, stylesText } from "../utils/types";
 
 listenCommands(commands);
-
-const LazyInfoFile: LazyCmp = lazy(() => import("../components/InfoFile"));
 
 function FileContent(): Component {
   const { setItem } = useStorage(),
@@ -71,27 +71,24 @@ function FileContent(): Component {
 
   return (
     <MainContainer>
-      <div className="h-[calc(100dvh-6rem)] flex flex-col gap-y-8 items-center justify-center w-[100vw]">
-        <Suspense fallback={null}>
-          <LazyInfoFile wordCounts={wordCounts} />
-        </Suspense>
-        <textarea
-          value={content}
-          onChange={e => setContent(e.target.value)}
-          spellCheck={spellCheck}
-          autoFocus
-          placeholder="..."
-          style={{
-            opacity: Number(styles.opacity) / 10,
-            letterSpacing: `${styles.letterSpacing}px`,
-          }}
-          className={twJoin(
-            styles.fontSize,
-            styles.alignText,
-            "w-full h-full sm:pb-20 lg:px-0 px-4 resize-none border-none focus:ring-0 focus:outline-none sm:min-w-[600px] max-w-[800px] bg-transparent placeholder:text-gray-100/50"
-          )}
-        />
-      </div>
+      <WordsFile wordCounts={wordCounts} />
+      <ModifiedFile />
+      <textarea
+        value={content}
+        onChange={e => setContent(e.target.value)}
+        spellCheck={spellCheck}
+        autoFocus
+        placeholder="..."
+        style={{
+          opacity: Number(styles.opacity) / 10,
+          letterSpacing: `${styles.letterSpacing}px`,
+        }}
+        className={twJoin(
+          styles.fontSize,
+          styles.alignText,
+          "sm:min-w-[600px] w-full min-h-screen py-6 sm:py-20 px-4 lg:px-44 xl:px-64 resize-none border-none focus:ring-0 focus:outline-none bg-transparent placeholder:text-gray-100/50 text-pretty"
+        )}
+      />
     </MainContainer>
   );
 }

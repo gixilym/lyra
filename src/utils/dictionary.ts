@@ -161,6 +161,8 @@ function translations() {
     ClearNight: userLanguage("Clear night", "Noche clara"),
     DarkNight: userLanguage("Dark night", "Noche oscura"),
     SunnyDay: userLanguage("Sunny day", "Día soleado"),
+    Animations: userLanguage("Animations", "Animaciones"),
+    Alignment: userLanguage("Alignment", "Alineación"),
     AddNewItem: userLanguage("Add a record", "Nuevo registro"),
     EnterName: userLanguage("Enter name", "Ingresa un nombre"),
     RepeatedItem: userLanguage("Repeated name", "Nombre repetido"),
