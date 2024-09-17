@@ -91,10 +91,6 @@ function translations() {
     ),
     SpellcheckerOff: userLanguage("spellchecker off", "ortografía desactivada"),
     SpellcheckerOn: userLanguage("spellchecker on", "ortografía activada"),
-    GoToTheListByPlacingTheCursorHere: userLanguage(
-      "go to the list by placing the cursor here",
-      "accede a la lista colocando el cursor aquí"
-    ),
     ContactThisEmailForQuestions: userLanguage(
       "Contact this email for questions about lyra",
       "Contacta este correo para preguntas sobre lyra"

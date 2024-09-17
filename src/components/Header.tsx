@@ -1,12 +1,13 @@
-import { EyeOff as HiddenIcon, Eye as ShowIcon } from "lucide-react";
+import { ArrowLeft, EyeOff as HiddenIcon, Eye as ShowIcon } from "lucide-react";
 import { useState } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 import useStorage from "../hooks/useStorage";
 import { configStore } from "../store/configStore";
 import { PAGES, THEMES } from "../utils/consts";
 import translations from "../utils/dictionary";
-import { navigation, themes } from "../utils/helpers";
+import { navigation, pathIs, themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
+import { Link } from "react-router-dom";
 
 function Header(): Component {
   const d = translations(),
@@ -203,12 +204,20 @@ function Header(): Component {
             )}
           </details>
         </div>
-        <ShowIcon
-          size={20}
-          onClick={() => setShowHeader()}
-          color={isSunnyDay ? "#1f1f1f9d" : "#ffffff9d"}
-          className="cursor-pointer"
-        />
+
+        <div className="flex gap-x-4 justify-center items-center">
+          {pathIs(PAGES.file) && (
+            <Link to={PAGES.list}>
+              <ArrowLeft size={18} />
+            </Link>
+          )}
+          <ShowIcon
+            size={20}
+            onClick={() => setShowHeader()}
+            color={isSunnyDay ? "#1f1f1f9d" : "#ffffff9d"}
+            className="cursor-pointer"
+          />
+        </div>
       </header>
     </>
   ) : (

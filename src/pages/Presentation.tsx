@@ -35,7 +35,7 @@ function Presentation(): Component {
               "md:text-7xl text-5xl tracking-tight"
             )}
           >
-            <span className="text-indigo-500">l</span>y
+            <span className="text-indigo-500">L</span>y
             <span className="text-indigo-500">r</span>a
             <span className="md:text-4xl text-2xl">:</span>
           </h1>

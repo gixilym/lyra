@@ -9,7 +9,6 @@ import { toggleFullScreen } from "../utils/commands";
 import { PAGES } from "../utils/consts";
 import { pathIs, themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
-import Footer from "./Footer";
 import Header from "./Header";
 
 listenCommands(commands);
@@ -41,7 +40,6 @@ function MainContainer({ children }: PropsWithChildren): Component {
     >
       <Header />
       {children}
-      <Footer />
     </main>
   );
 }

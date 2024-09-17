@@ -39,6 +39,18 @@ function FileContent(): Component {
       letterSpacing: String(mySpacing()),
     });
 
+  /*  function handleScroll(): void {
+    const position: string = String(scrollY.toFixed(0));
+    setItem(`${selectedFile.name}-scroll`, position);
+    console.log("ejecutando");
+  }
+
+  useEffect(() => {
+    scrollTo({ top: myScroll(selectedFile.name), behavior: "instant" });
+    addEventListener("scroll", handleScroll);
+    return () => removeEventListener("scroll", handleScroll);
+  }, []);*/
+
   useEffect(() => {
     saveFileContent(selectedFile.name, content ?? "");
     calculateWordCount(content);

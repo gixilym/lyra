@@ -12,8 +12,8 @@ import {
 import { useState } from "react";
 import Select from "react-select";
 import { twJoin, twMerge } from "tailwind-merge";
-import WordsFile from "../components/WordsFile";
 import MainContainer from "../components/MainContainer";
+import WordsFile from "../components/WordsFile";
 import usePreferences from "../hooks/usePreferences";
 import useStorage from "../hooks/useStorage";
 import { LANGS } from "../utils/consts";
@@ -51,7 +51,6 @@ function Preferences(): Component {
       myWordCount,
       mySpacing,
       myOpacity,
-      myMsgDisplayed,
       myPaper,
     } = usePreferences(),
     { setItem, clearEverything } = useStorage(),
@@ -105,7 +104,6 @@ function Preferences(): Component {
     const paper: string = String(myPaper());
     clearEverything();
     setItem("language", myLangValue());
-    setItem("list-msg", myMsgDisplayed());
     setItem("paper", paper);
     reload();
   }

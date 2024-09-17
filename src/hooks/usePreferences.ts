@@ -73,11 +73,6 @@ function usePreferences(): Preferences {
     return opacity;
   }
 
-  function myMsgDisplayed() {
-    const displayed: string = getItem("list-msg", "false");
-    return displayed;
-  }
-
   function myFontSize(): string {
     const fontSize: string = getItem("font-size", TEXT_SIZES.lg);
     return fontSize;
@@ -93,6 +88,11 @@ function usePreferences(): Preferences {
     return paper;
   }
 
+  function myScroll(fileName: string): number {
+    const scroll: number = Number(getItem(`${fileName}-scroll`, "0"));
+    return scroll;
+  }
+
   return {
     myLastModified,
     myAnimations,
@@ -104,10 +104,10 @@ function usePreferences(): Preferences {
     myWordCount,
     mySpacing,
     myOpacity,
-    myMsgDisplayed,
     myFontSize,
     myTheme,
     myPaper,
+    myScroll,
   };
 }
 
@@ -124,8 +124,8 @@ interface Preferences {
   myWordCount: () => boolean;
   mySpacing: () => number;
   myOpacity: () => number;
-  myMsgDisplayed: () => string;
   myFontSize: () => string;
   myTheme: () => string;
   myPaper: () => string[];
+  myScroll: (fileName: string) => number;
 }
