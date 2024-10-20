@@ -10,18 +10,14 @@ function userLanguage(enText: string, esText: string): string {
 function translations() {
   const dictionary = {
     StartTyping: userLanguage("Start typing...", "Comienza a escribir..."),
-    LastBackupCreatedAt: userLanguage(
-      "Last backup created at",
-      "Ultima copia de seguridad creada el"
-    ),
     ResetPreferences: userLanguage(
       "Reset preferences",
       "Restablecer preferencias"
     ),
     Suggestions: userLanguage("Suggestions", "Sugerencias"),
     SuggestionsText: userLanguage(
-      "Your suggestions help us improve. If you have ideas or improvements that you would like to see in lyra soon, feel free to send them.",
-      "Tus sugerencias nos ayudan a mejorar. Si tienes ideas o mejoras que te gustaría ver en lyra pronto, no dudes en enviarlas."
+      "Your suggestions help us improve. If you have ideas or improvements that you would like to see in Lyra soon, feel free to send them.",
+      "Tus sugerencias nos ayudan a mejorar. Si tienes ideas o mejoras que te gustaría ver en Lyra pronto, no dudes en enviarlas."
     ),
     Errors: userLanguage("Errors", "Errores"),
     ErrorsText: userLanguage(
@@ -36,44 +32,9 @@ function translations() {
       "Remember to use keyboard shortcuts!",
       "¡Recuerda usar atajos de teclado!"
     ),
-    Creating: userLanguage("creating...", "creando..."),
-    CreateBackup: userLanguage("create backup", "crear copia de seguridad"),
-    CopyCreated: userLanguage("copy created", "copia creada"),
-    ImportBackup: userLanguage("import backup", "importar copia de seguridad"),
-    Import: userLanguage("Import", "Importar"),
-    ImportRecords: userLanguage("Import records", "Importar registros"),
-    YouWantToDeleteAllFiles: userLanguage(
-      "You want to delete all files from the paper bin?",
-      "¿Deseas eliminar todos los registros de la papelera?"
-    ),
-    YouWantToRestoreAllFiles: userLanguage(
-      "You want to restore all records from the paper bin?",
-      "¿Deseas restaurar todos los registros de la papelera?"
-    ),
-    IfYouWantToImportFiles: userLanguage(
-      "If you want to import '.txt' files, you need to go to 'C:\\Users\\your-user\\Documents\\lyra' and place them inside 'lyra'.",
-      "Si deseas importar archivos '.txt', debes dirigirte a 'C:\\Users\\tu-usuario\\Documents\\lyra' y colocarlos dentro 'lyra'."
-    ),
-    IfYouWantToImportBackup: userLanguage(
-      "If you want to import a backup, you must go to 'C:\\Users\\your-user\\Documents', look for the 'lyra-backup' folder and change the name to 'lyra'.",
-      "Si deseas importar una copia de seguridad, debes dirigirte a 'C:\\Users\\tu-usuario\\Documents' buscar la carpeta 'lyra-backup' y modificar el nombre por 'lyra'."
-    ),
-    InfoAboutBackup: userLanguage(
-      "Only files that are NOT in the trash will be backed up, if you want to back up the trash you will have to do it manually.",
-      "Solo se respaldarán los archivos que NO estén en la papelera, en caso que desees respaldar la papelera deberás realizarlo manualmente."
-    ),
-    TheBackupIsIn: userLanguage(
-      "The backup is in",
-      "La copia de seguridad se encuentra en"
-    ),
-    YourUser: userLanguage("your-user", "tu-usuario"),
-    Important: userLanguage("Important", "Importante"),
-    RecoverEverything: userLanguage("Recover everything", "Recuperar todo"),
-    RecoveryRecords: userLanguage("Recovery records", "Registros recuperados"),
-    DeleteEverything: userLanguage("Delete everything", "Eliminar todo"),
-    DeletedRecords: userLanguage("Deleted records", "Registros eliminados"),
     LastModified: userLanguage("Last modified", "Última modificación"),
     Archived: userLanguage("Paper Bin", "Papelera"),
+    Confirm: userLanguage("Confirm", "Confirmar"),
     Font: userLanguage("Font", "Fuente"),
     About: userLanguage("About", "Acerca de"),
     Preferences: userLanguage("Preferences", "Preferencias"),
@@ -85,6 +46,10 @@ function translations() {
       "Reduce text size",
       "Reducir tamaño del texto"
     ),
+    EnterTheFileName: userLanguage(
+      "Enter the file name",
+      "Ingrese el nombre del archivo"
+    ),
     IncreaseTextSize: userLanguage(
       "Increase text size",
       "Aumentar tamaño del texto"
@@ -95,7 +60,6 @@ function translations() {
       "Contact this email for questions about lyra",
       "Contacta este correo para preguntas sobre lyra"
     ),
-    FocusOnParagraph: userLanguage("Focus on paragraph", "Focus en párrafo"),
     TextOpacity: userLanguage("Text opacity", "Opacidad del texto"),
     LetterSpacing: userLanguage("Letter spacing", "Espacio entre letras"),
     TestText: userLanguage("Test Text", "Texto de Prueba"),
@@ -104,9 +68,8 @@ function translations() {
       "En una pequeña aldea rodeada de montañas, vivía un joven llamado Emiliano, conocido por su habilidad para contar historias mágicas. Un día, mientras exploraba un viejo bosque cercano, encontró un antiguo libro cubierto de polvo y musgo. Al abrirlo, descubrió que contenía relatos sobre un misterioso reino perdido que solo se revelaba a aquellos con un corazón puro y una mente abierta a la imaginación."
     ),
     FullScreen: userLanguage("Full screen", "Pantalla completa"),
-    Updates: userLanguage("Updates", "Actualizaciones"),
     Version: userLanguage("version", "versión"),
-    DevelopedBy: userLanguage("developed by gixi", "desarrollado por gixi"),
+    DevelopedBy: userLanguage("developed by Gixi", "desarrollado por Gixi"),
     Start: userLanguage("Start", "Iniciar"),
     LocalSaved: userLanguage("local saved", "guardado local"),
     OfflineAccess: userLanguage("offline access", "acceso sin conexión"),
@@ -124,6 +87,7 @@ function translations() {
       "Add your first record",
       "Agrega tu primer registro"
     ),
+    Add: userLanguage("Add", "Agregar"),
     InvalidName: userLanguage("Invalid name", "Nombre inválido"),
     NameAlreadyExists: userLanguage(
       "Name already exists",
@@ -150,22 +114,19 @@ function translations() {
     EnterNewName: userLanguage("Enter new name", "Ingrese el nuevo nombre"),
     Help: userLanguage("Help", "Ayuda"),
     Commands: userLanguage("Commands", "Comandos"),
-    Backup: userLanguage("Backup", "Copia de seguridad"),
     Language: userLanguage("Language", "Idioma"),
     Themes: userLanguage("Themes", "Temas"),
     Support: userLanguage("Support", "Soporte"),
     ClearNight: userLanguage("Clear night", "Noche clara"),
-    DarkNight: userLanguage("Dark night", "Noche oscura"),
     SunnyDay: userLanguage("Sunny day", "Día soleado"),
     Animations: userLanguage("Animations", "Animaciones"),
     Alignment: userLanguage("Alignment", "Alineación"),
-    AddNewItem: userLanguage("Add a record", "Nuevo registro"),
     EnterName: userLanguage("Enter name", "Ingresa un nombre"),
     RepeatedItem: userLanguage("Repeated name", "Nombre repetido"),
-    DeletedFile: userLanguage("Deleted record", "Registro eliminado"),
+    DeletedFile: userLanguage("Deleted record", "Archivo eliminado"),
     MoveToTrash: userLanguage(
       "Do you want to move this record to the paper bin?",
-      "¿Quieres mover este registro a la papelera?"
+      "¿Quieres mover este archivo a la papelera?"
     ),
     SentToTrash: userLanguage("Sent to the paper bin", "Enviado a la papelera"),
     NothingHere: userLanguage("Nothing here...", "Nada por aquí..."),
@@ -173,15 +134,15 @@ function translations() {
     Loading: userLanguage("Loading...", "Cargando..."),
     RestoreQuestion: userLanguage(
       "Do you want to restore this record?",
-      "¿Deseas restaurar este registro?"
+      "¿Deseas restaurar este archivo?"
     ),
     DeleteQuestion: userLanguage(
       "Do you want to remove this record?",
-      "¿Deseas eliminar este registro?"
+      "¿Deseas eliminar este archivo?"
     ),
     Delete: userLanguage("Delete", "Eliminar"),
     Recover: userLanguage("Recover", "Recuperar"),
-    FileRecovered: userLanguage("Record recovered", "Registro recuperado"),
+    FileRecovered: userLanguage("Record recovered", "Archivo recuperado"),
   };
 
   return dictionary;

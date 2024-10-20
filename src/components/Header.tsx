@@ -1,5 +1,6 @@
+import { animated, useSpring } from "@react-spring/web";
 import { ArrowLeft, EyeOff as HiddenIcon, Eye as ShowIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 import useStorage from "../hooks/useStorage";
 import { configStore } from "../store/configStore";
@@ -7,7 +8,6 @@ import { PAGES, THEMES } from "../utils/consts";
 import translations from "../utils/dictionary";
 import { navigation, pathIs, themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
-import { Link } from "react-router-dom";
 
 function Header(): Component {
   const d = translations(),
@@ -18,7 +18,8 @@ function Header(): Component {
     [menu, setMenu] = useState<Menu>(initMenu),
     menuStyles: string = isSunnyDay
       ? "bg-gray-300 border-t-gray-300/90 border-[#979797]"
-      : "bg-[#151515] border-t-gray-900/90 border-[#383838]";
+      : "bg-[#151515] border-t-gray-900/90 border-[#383838]",
+    [styles, api] = useSpring(() => ({ opacity: 1 }));
 
   function closeMenu(id: string): void {
     document.getElementById(id)?.removeAttribute("open");
@@ -42,50 +43,43 @@ function Header(): Component {
     setMenu(prevState => ({ ...prevState, [menuId]: true }));
   }
 
+  useEffect(() => {
+    api.start({
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+      config: { duration: 200 },
+    });
+  }, [showHeader]);
+
   return showHeader ? (
     <>
       <p className="text-transparent">.</p>
-      <header
+      <animated.header
+        style={styles}
         onMouseLeave={closeAllMenus}
         className={twMerge(
           isSunnyDay
             ? "bg-gray-300 text-black/80 border-[#979797] [&>div>details>summary:hover]:text-black"
             : "bg-[#151515] text-white/70 border-[#252525] [&>div>details>summary:hover]:text-white",
           "select-none text-sm cursor-default border-b w-full justify-between items-center flex px-4 h-8 fixed top-0 left-0 z-50"
-        )}
-      >
+        )}>
         <div className="flex gap-x-4 justify-start items-center">
-          <details id="file" className="relative">
-            <summary onClick={() => toggleMenu("file")}>{d.File}</summary>
-
-            {menu.file && (
-              <div
-                className={twJoin(
-                  menuStyles,
-                  "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-48 py-2 gap-y-2 z-10"
-                )}
-              >
-                <p
-                  onClick={() => goTo(PAGES.list)}
-                  className={twMerge(
-                    isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
-                    "cursor-default w-full"
-                  )}
-                >
-                  {d.List}
-                </p>
-                <p
-                  onClick={() => goTo(PAGES.preferences)}
-                  className={twMerge(
-                    isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
-                    "cursor-default w-full"
-                  )}
-                >
-                  {d.Preferences}
-                </p>
-              </div>
-            )}
-          </details>
+          <a
+            href={PAGES.list}
+            className={twMerge(
+              isSunnyDay ? "hover:text-black" : "hover:text-white",
+              "cursor-default"
+            )}>
+            {d.List}
+          </a>
+          <a
+            href={PAGES.preferences}
+            className={twMerge(
+              isSunnyDay ? "hover:text-black" : "hover:text-white",
+              "cursor-default"
+            )}>
+            {d.Preferences}
+          </a>
 
           <details id="commands" className="relative">
             <summary onClick={() => toggleMenu("commands")}>
@@ -97,8 +91,7 @@ function Header(): Component {
                 className={twJoin(
                   menuStyles,
                   "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-[360px] py-2 gap-y-2 z-10"
-                )}
-              >
+                )}>
                 <div className="cursor-default w-full flex justify-between items-center gap-x-4">
                   <p>{d.FullScreen}</p>
                   <kbd> F11</kbd>
@@ -139,33 +132,21 @@ function Header(): Component {
                 className={twJoin(
                   menuStyles,
                   "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-44 py-2 gap-y-2 z-10"
-                )}
-              >
+                )}>
                 <p
                   onClick={() => changeTheme(THEMES.clearNigth)}
                   className={twMerge(
                     isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
                     "cursor-default w-full"
-                  )}
-                >
+                  )}>
                   {d.ClearNight}
-                </p>
-                <p
-                  onClick={() => changeTheme(THEMES.darkNigth)}
-                  className={twMerge(
-                    isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
-                    "cursor-default w-full"
-                  )}
-                >
-                  {d.DarkNight}
                 </p>
                 <p
                   onClick={() => changeTheme(THEMES.sunnyDay)}
                   className={twMerge(
                     isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
                     "cursor-default w-full"
-                  )}
-                >
+                  )}>
                   {d.SunnyDay}
                 </p>
               </div>
@@ -180,15 +161,13 @@ function Header(): Component {
                 className={twJoin(
                   menuStyles,
                   "absolute top-6 left-0 border px-4 flex flex-col justify-center items-start w-44 py-2 gap-y-2 z-10"
-                )}
-              >
+                )}>
                 <p
                   onClick={() => goTo(PAGES.presentation)}
                   className={twMerge(
                     isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
                     "cursor-default w-full"
-                  )}
-                >
+                  )}>
                   {d.About}
                 </p>
                 <p
@@ -196,8 +175,7 @@ function Header(): Component {
                   className={twMerge(
                     isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
                     "cursor-default w-full"
-                  )}
-                >
+                  )}>
                   {d.Support}
                 </p>
               </div>
@@ -207,9 +185,7 @@ function Header(): Component {
 
         <div className="flex gap-x-4 justify-center items-center">
           {pathIs(PAGES.file) && (
-            <Link to={PAGES.list}>
-              <ArrowLeft size={18} />
-            </Link>
+            <ArrowLeft size={18} onClick={() => goTo(PAGES.list)} />
           )}
           <ShowIcon
             size={20}
@@ -218,7 +194,7 @@ function Header(): Component {
             className="cursor-pointer"
           />
         </div>
-      </header>
+      </animated.header>
     </>
   ) : (
     <>

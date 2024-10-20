@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import type { Component, Timer } from "../utils/types";
 import usePreferences from "../hooks/usePreferences";
+import { len } from "../utils/helpers";
+import type { Component, Timer } from "../utils/types";
 
 function TypingAnimation(props: Props): Component {
   const { text, duration = 90, className } = props,
@@ -11,7 +12,7 @@ function TypingAnimation(props: Props): Component {
 
   useEffect(() => {
     const typingEffect: Timer = setInterval(() => {
-      if (index < text.length) {
+      if (index < len(text)) {
         setDisplayedText(prevState => prevState + text.charAt(index));
         setIndex(index + 1);
       } else clearInterval(typingEffect);
@@ -32,8 +33,7 @@ function TypingAnimation(props: Props): Component {
           opacity: opacity,
           transition: "opacity 0.4s ease-in-out",
         }}
-        className={className}
-      >
+        className={className}>
         &nbsp;{displayedText || text}&nbsp;
       </p>
     );

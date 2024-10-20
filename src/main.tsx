@@ -17,7 +17,11 @@ const root = document.getElementById("root") as Container,
   router = createBrowserRouter([
     {
       path: PAGES.presentation,
-      element: <PresentationPage />,
+      element: (
+        <>
+          <PresentationPage />,
+        </>
+      ),
     },
     {
       path: PAGES.list,

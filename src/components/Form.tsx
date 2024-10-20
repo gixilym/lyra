@@ -1,11 +1,22 @@
-import { FilePlus as AddIcon, Folders as PaperIcon } from "lucide-react";
-import { type FormEvent, type SyntheticEvent, useState } from "react";
-import Dialog from "sweetalert2";
+import { animated, useSpring } from "@react-spring/web";
+import {
+  Plus as AddIcon,
+  ArrowDownAz,
+  ArrowDownZa,
+  Archive as PaperIcon,
+} from "lucide-react";
+import {
+  type FormEvent,
+  type SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
+import Dialog, { type SweetAlertResult } from "sweetalert2";
 import { twMerge } from "tailwind-merge";
 import useFile from "../hooks/useFile";
-import useStorage from "../hooks/useStorage";
 import { configStore } from "../store/configStore";
 import { fileStore } from "../store/fileStore";
+import { searchStore } from "../store/searchStore";
 import { PAGES } from "../utils/consts";
 import translations from "../utils/dictionary";
 import {
@@ -15,161 +26,148 @@ import {
   themes,
 } from "../utils/helpers";
 import type { Component, File } from "../utils/types";
-import usePreferences from "../hooks/usePreferences";
 
 function Form(): Component {
   const d = translations(),
     { goTo } = navigation(),
     { isSunnyDay } = themes(),
-    { createFile, deleteFile } = useFile(),
+    { createFile } = useFile(),
     { paperIsOpen, setPaperIsOpen } = configStore(),
     [fileName, setFileName] = useState<string>(""),
-    { setItem } = useStorage(),
-    { myPaper } = usePreferences(),
-    newFile: File = { name: fileName, content: "" },
-    nameIsEmpty: boolean = !fileName,
-    { updateListFiles, setSelectedFile, files, editedFile, setFiles } =
-      fileStore(),
-    nameIsRepeated: boolean = files.some((name: string) => name == fileName);
+    { search, setSearch, order, toggleOrder } = searchStore(),
+    { updateListFiles, setSelectedFile, files } = fileStore(),
+    isRepeated = (fileName: string): boolean =>
+      files.some((name: string) => name == fileName),
+    animation = {
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+      config: { duration: 150 },
+    },
+    [stylesToggle, apiToggle] = useSpring(() => animation),
+    [add, setAdd] = useState<boolean>(true),
+    [stylesAdd, apiAdd] = useSpring(() => animation),
+    [stylesPaper, apiPaper] = useSpring(() => animation);
 
-  function addFile(event: FormEvent): void {
-    event.preventDefault();
-    if (paperIsOpen) return;
-    if (nameIsRepeated) return notification("error", d.RepeatedItem);
-    if (nameIsEmpty) return notification("error", d.EnterName);
-    if (!nameIsValid(fileName)) return;
-    return fileManagement();
+  useEffect(() => {
+    apiToggle.start(animation);
+  }, [order]);
+
+  useEffect(() => {
+    apiPaper.start(animation);
+  }, [paperIsOpen]);
+
+  useEffect(() => {
+    apiAdd.start(animation);
+  }, [add]);
+
+  function addFile(e: SyntheticEvent): void {
+    e.stopPropagation();
+    setAdd(!add);
+    Dialog.fire({
+      title: d.EnterTheFileName,
+      input: "text",
+      showCancelButton: true,
+      inputAttributes: { autoComplete: "off" },
+      inputAutoFocus: true,
+      confirmButtonColor: "#1d74c5",
+      cancelButtonColor: "#565454",
+      confirmButtonText: d.Add,
+      cancelButtonText: d.Cancel,
+      background: isSunnyDay ? "#dedede" : "#202020",
+      color: isSunnyDay ? "#000" : "#fff",
+      customClass: { input: "no-focus-outline" },
+    }).then((res: SweetAlertResult) => {
+      if (res.isConfirmed) {
+        e.preventDefault();
+        const file: File = { name: res.value, content: "" };
+        if (paperIsOpen) return;
+        if (isRepeated(file.name)) return notification("error", d.RepeatedItem);
+        if (!file.name) return notification("error", d.EnterName);
+        if (!nameIsValid(file.name)) return;
+        return fileManagement(file);
+      }
+    });
   }
 
-  function fileManagement(): void {
+  function fileManagement(file: File): void {
     setFileName("");
-    createFile(newFile.name);
-    updateListFiles(newFile.name);
-    setSelectedFile(newFile);
+    createFile(file.name);
+    updateListFiles(file.name);
+    setSelectedFile(file);
     goTo(PAGES.file);
   }
 
-  function recoveryEvery(event: SyntheticEvent): void {
-    event.stopPropagation();
-    Dialog.fire({
-      title: d.AreYouSure,
-      text: d.YouWantToRestoreAllFiles,
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: d.Recover,
-      cancelButtonText: d.Cancel,
-      background: isSunnyDay ? "#dedede" : "#202020",
-      color: isSunnyDay ? "#000" : "#fff",
-    }).then(res => {
-      if (res.isConfirmed) {
-        const updatedFiles: string[] = [...files, myPaper()];
-        setFiles(updatedFiles);
-        setItem("files", JSON.stringify(updatedFiles));
-        setItem("paper", JSON.stringify([]));
-        notification("success", d.RecoveryRecords);
-        editedFile();
-      }
-    });
-  }
-
-  function deleteEvery(event: SyntheticEvent): void {
-    event.stopPropagation();
-    Dialog.fire({
-      title: d.AreYouSure,
-      text: d.YouWantToDeleteAllFiles,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: d.Delete,
-      cancelButtonText: d.Cancel,
-      background: isSunnyDay ? "#dedede" : "#202020",
-      color: isSunnyDay ? "#000" : "#fff",
-    }).then(res => {
-      if (res.isConfirmed) {
-        setItem("paper", JSON.stringify([]));
-        myPaper().forEach(name => deleteFile(name));
-        notification("success", d.DeletedRecords);
-        editedFile();
-      }
-    });
-  }
-
-  function handleSubmit(event: FormEvent): void {
-    event.preventDefault();
-    if (fileName) addFile(event);
+  function handleSubmit(e: FormEvent): void {
+    e.preventDefault();
+    if (fileName) addFile(e);
     else return;
   }
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center items-center w-full text-slate-400 gap-y-6"
-    >
-      <div className="flex justify-center items-center gap-x-3 w-full">
-        <div
+      className="flex flex-col justify-center items-center w-full text-slate-400 gap-y-6 max-w-[340px] opacity-80">
+      <div className="flex justify-end items-start gap-x-3 w-full">
+        <input
+          type="search"
           className={twMerge(
-            paperIsOpen ? "opacity-50" : "opacity-100",
-            "flex flex-row justify-center items-center"
+            isSunnyDay
+              ? "placeholder:text-gray-700 bg-gray-300 text-black border-slate-400"
+              : "placeholder:text-sky-200/60 border-sky-400 bg-gray-800 text-sky-100",
+            "w-full border h-[42px] rounded-md px-4 outline-0"
           )}
-        >
-          <input
-            onChange={e => setFileName(e.target.value)}
-            value={fileName}
-            placeholder={paperIsOpen ? d.Archived : d.AddNewItem}
-            disabled={paperIsOpen}
-            className={twMerge(
-              isSunnyDay
-                ? "placeholder:text-gray-700 bg-gray-300 text-black"
-                : "placeholder:text-gray-400/60 bg-black/20 text-white",
-              paperIsOpen ? "cursor-default" : "cursor-auto",
-              "w-[210px] text-lg h-11 outline-none border-gray-600/30 p-4 border-2 border-r-0 rounded-lg rounded-tr-none rounded-br-none"
-            )}
-            type="text"
-          />
-          <AddIcon
-            onClick={addFile}
-            size={25}
-            opacity={paperIsOpen ? 0.5 : 1}
-            style={{ cursor: paperIsOpen ? "default" : "pointer" }}
-            className={twMerge(
-              isSunnyDay
-                ? "bg-gray-300 hover:bg-gray-400/30"
-                : "bg-black/20 hover:bg-black/50",
-              paperIsOpen &&
-                `hover:${isSunnyDay ? "bg-gray-300" : "bg-black/20"}`,
-              "rounded-lg rounded-bl-none rounded-tl-none border-2 border-l-0 border-gray-600/30 w-11 h-11 p-2 duration-75"
-            )}
-          />
-        </div>
-
-        <PaperIcon
-          size={25}
+          placeholder={d.Search + "..."}
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        <animated.button
+          style={stylesAdd}
+          onClick={addFile}
+          className={twMerge(
+            isSunnyDay
+              ? "bg-gray-300 hover:bg-gray-200 text-slate-800 border border-gray-400"
+              : "bg-gray-800 hover:bg-gray-700 text-sky-400 border border-sky-400",
+            "flex items-center justify-center gap-x-3 px-3 h-[42px] rounded-md transition-colors"
+          )}>
+          <AddIcon size={25} strokeWidth={2.5} />
+        </animated.button>
+        <animated.button
+          style={stylesToggle}
+          onClick={() => toggleOrder(!order)}
+          className={twMerge(
+            isSunnyDay
+              ? "bg-gray-300 hover:bg-gray-200 text-slate-800 border border-gray-400"
+              : "bg-gray-800 hover:bg-gray-700 text-sky-400 border border-sky-400",
+            "flex items-center justify-center gap-x-3 px-3 h-[42px] rounded-md transition-colors"
+          )}>
+          {order ? (
+            <ArrowDownAz size={25} strokeWidth={2} />
+          ) : (
+            <ArrowDownZa size={25} strokeWidth={2} />
+          )}
+        </animated.button>
+        <animated.button
+          style={stylesPaper}
           onClick={setPaperIsOpen}
           className={twMerge(
-            isSunnyDay ? "bg-gray-300" : "bg-black/20",
-            paperIsOpen ? "bg-indigo-800/70" : "bg-inherit",
-            "cursor-pointer border border-gray-600/30 rounded-lg w-11 h-11 p-2 duration-75 hover:scale-95"
-          )}
-        />
+            isSunnyDay
+              ? "bg-gray-300 hover:bg-gray-200 text-slate-800 border border-gray-400"
+              : "bg-gray-800 hover:bg-gray-700 text-sky-400 border border-sky-400",
+            paperIsOpen && isSunnyDay && "bg-gray-400",
+            paperIsOpen && !isSunnyDay && "bg-blue-950",
+            "flex items-center justify-center gap-x-3 border h-[42px] rounded-md transition-colors px-3"
+          )}>
+          <PaperIcon size={20} strokeWidth={2} />
+        </animated.button>
       </div>
-      {paperIsOpen && myPaper().length > 0 && (
-        <div className="flex justify-center items-center gap-x-4 w-full opacity-80 font-sara">
-          <button
-            onClick={recoveryEvery}
-            className="bg-[#5ff3fa] hover:bg-[#7df9ff] duration-75 w-36 py-1 rounded-lg text-black text-lg"
-          >
-            {d.RecoverEverything}
-          </button>
-          <button
-            onClick={deleteEvery}
-            className="bg-[#ff7575] hover:bg-[#ff8f8f] duration-75 w-36 py-1 rounded-lg text-black text-lg"
-          >
-            {d.DeleteEverything}
-          </button>
-        </div>
+      {paperIsOpen && (
+        <p
+          className={twMerge(
+            isSunnyDay ? "text-slate-900" : "text-slate-300",
+            "w-full text-lg text-center"
+          )}>
+          {d.Archived}
+        </p>
       )}
     </form>
   );

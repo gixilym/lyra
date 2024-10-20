@@ -3,11 +3,12 @@
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
     "devPath": "http://localhost:1420",
-    "distDir": "../dist"
+    "distDir": "../dist",
+    "withGlobalTauri": false
   },
   "package": {
-    "productName": "lyra",
-    "version": "1.0.0"
+    "productName": "Lyra",
+    "version": "1.1.0"
   },
   "tauri": {
     "allowlist": {
@@ -32,14 +33,11 @@
         "all": false,
         "exists": true,
         "readDir": true,
-        "copyFile": true,
         "readFile": true,
         "removeFile": true,
         "renameFile": true,
         "createDir": true,
-        "scope": [
-          "$DOCUMENT/**/**"
-        ],
+        "scope": ["$DOCUMENT/**/**"],
         "writeFile": true
       }
     },
@@ -47,8 +45,10 @@
       "active": true,
       "targets": "all",
       "identifier": "com.lyra.dev",
-      "publisher": "lyra",
-      "shortDescription": "lyra",
+      "publisher": "Lyra",
+      "shortDescription": "Lyra",
+      "category": "Utility",
+      "copyright": "Copyright (c) 2024 Lyra",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -68,16 +68,6 @@
         "webviewInstallMode": {
           "silent": true,
           "type": "downloadBootstrapper"
-        },
-        "wix": {
-          "language": [
-            "en-US",
-            "es-ES"
-          ],
-          "dialogImagePath": "./target/win/dialog-win.png",
-          "template": "./target/win/main.wxs",
-          "bannerPath": "./target/win/banner-win.png",
-          "license": "../LICENSE"
         }
       }
     },
@@ -94,10 +84,21 @@
         "width": 1100,
         "height": 600,
         "decorations": true,
-        "focus": true,
         "center": true,
+        "focus": true,
         "visible": true
       }
-    ]
+    ],
+    "updater": {
+      "active": true,
+      "dialog": true,
+      "pubkey": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCrwpfX90HrK2wR8NPjnrdYCj0esGHFOZQ2BQCxH4wSTb4LlcpHMWUaBoOo27d3yXK2bssuFMmmP3qxtyNRPcLnR8+r9NqS0PQQ3yQdxAG0kwbYiNofJAAv+G2GYKpg4h1ppAd48rjlahzCMgdY1KckkuxoKcrGPaqbdE3oN3qezQIDAQAB",
+      "endpoints": [
+        "https://github.com/gixilym/lyra/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "basicUi"
+      }
+    }
   }
 }

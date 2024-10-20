@@ -46,10 +46,10 @@ function notification(type: "success" | "error", msg: string): void {
 }
 
 function nameIsValid(name: string): boolean {
-  const regex: RegExp = /^[a-zA-Z0-9-_ ]+$/;
-  const nameIsLong: boolean = name.length > 25;
-  const invalidSymbols: boolean = !regex.test(name);
-  const d = translations();
+  const d = translations(),
+    regex: RegExp = /^[a-zA-ZÀ-ÿ0-9-_ !¡¿?]+$/,
+    nameIsLong: boolean = len(name) > 25,
+    invalidSymbols: boolean = !regex.test(name);
 
   if (nameIsLong) {
     notification("error", d.VeryLongName);
@@ -67,9 +67,8 @@ function nameIsValid(name: string): boolean {
 function themes(): Themes {
   const { myTheme } = usePreferences(),
     isSunnyDay: boolean = myTheme() == THEMES.sunnyDay,
-    isClearNigth: boolean = myTheme() == THEMES.clearNigth,
-    isDarkNigth: boolean = myTheme() == THEMES.darkNigth;
-  return { isSunnyDay, isClearNigth, isDarkNigth };
+    isClearNigth: boolean = myTheme() == THEMES.clearNigth;
+  return { isSunnyDay, isClearNigth };
 }
 
 async function getSystemLang(): Promise<string> {
@@ -101,7 +100,7 @@ async function verifyMainFolder(): Promise<void> {
     if (!mainFolderExits) {
       createDir(MAIN_FOLDER, BASE_DIRECTORY)
         .then(() => writeTextFile(path, intro, BASE_DIRECTORY))
-        .catch(e => console.error(`error en 'verifyMainFolder': ${e.message}`));
+        .catch(e => console.error(`catch 'verifyMainFolder' ${e.message}`));
       break;
     } else break;
   }
@@ -171,7 +170,17 @@ function pathIs(path: string): boolean {
   return currentPath == path;
 }
 
+const normalize = (text: string): string =>
+  text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+
+const len = (val: string | any[]): number => val.length;
+
 export {
+  len,
   copyText,
   featherAnimation,
   getDate,
@@ -185,12 +194,12 @@ export {
   themes,
   verifyMainFolder,
   verifySystemLang,
+  normalize,
 };
 
 interface Themes {
   isSunnyDay: boolean;
   isClearNigth: boolean;
-  isDarkNigth: boolean;
 }
 
 type Navigation = { goTo: (path: string) => void };

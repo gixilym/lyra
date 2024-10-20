@@ -16,7 +16,7 @@ import {
   reduceText,
   toggleSpellchecker,
 } from "../utils/commands";
-import { copyText, getDate } from "../utils/helpers";
+import { copyText, getDate, len } from "../utils/helpers";
 import type { Component, stylesText } from "../utils/types";
 
 listenCommands(commands);
@@ -39,18 +39,6 @@ function FileContent(): Component {
       letterSpacing: String(mySpacing()),
     });
 
-  /*  function handleScroll(): void {
-    const position: string = String(scrollY.toFixed(0));
-    setItem(`${selectedFile.name}-scroll`, position);
-    console.log("ejecutando");
-  }
-
-  useEffect(() => {
-    scrollTo({ top: myScroll(selectedFile.name), behavior: "instant" });
-    addEventListener("scroll", handleScroll);
-    return () => removeEventListener("scroll", handleScroll);
-  }, []);*/
-
   useEffect(() => {
     saveFileContent(selectedFile.name, content ?? "");
     calculateWordCount(content);
@@ -67,10 +55,12 @@ function FileContent(): Component {
 
   function calculateWordCount(text: string): void {
     const spaces: RegExp = /\s+/;
-    const count: number = text
-      .trim()
-      .split(spaces)
-      .filter((w: string) => w.length > 0).length;
+    const count: number = len(
+      text
+        .trim()
+        .split(spaces)
+        .filter((w: string) => len(w) > 0)
+    );
     setWordCounts(count);
   }
 
@@ -98,7 +88,7 @@ function FileContent(): Component {
         className={twJoin(
           styles.fontSize,
           styles.alignText,
-          "sm:min-w-[600px] w-full min-h-screen py-6 sm:py-20 px-4 lg:px-44 xl:px-64 resize-none border-none focus:ring-0 focus:outline-none bg-transparent placeholder:text-gray-100/50 text-pretty"
+          "sm:min-w-[600px] w-full min-h-screen py-6 sm:py-20 px-10 lg:px-44 xl:px-64 resize-none border-none focus:ring-0 focus:outline-none bg-transparent placeholder:text-gray-100/50 text-pretty"
         )}
       />
     </MainContainer>
