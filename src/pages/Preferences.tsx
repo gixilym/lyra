@@ -1,3 +1,4 @@
+import { animated, useSpring } from "@react-spring/web";
 import {
   AlignLeft as AlignIcon,
   Sparkles as AnimationsIcon,
@@ -55,7 +56,12 @@ function Preferences(): Component {
     } = usePreferences(),
     { setItem, clearEverything } = useStorage(),
     [opacity, setOpacity] = useState<number>(myOpacity()),
-    [spacing, setSpacing] = useState<number>(mySpacing());
+    [spacing, setSpacing] = useState<number>(mySpacing()),
+    [styles] = useSpring(() => ({
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+      config: { duration: 200 },
+    }));
 
   function getAlignLabel(): string {
     switch (myAlign()) {
@@ -120,7 +126,9 @@ function Preferences(): Component {
 
   return (
     <MainContainer>
-      <div className="flex-col lg:flex-row mb-14 flex justify-center items-center overflow-x-hidden lg:items-start w-6/6 lg:px-10 lg:gap-x-6 gap-y-20">
+      <animated.div
+        style={styles}
+        className="flex-col lg:flex-row mb-14 flex justify-center items-center overflow-x-hidden lg:items-start w-6/6 lg:px-10 lg:gap-x-6 gap-y-20">
         <div className="w-full px-6 md:px-0 lg:w-3/6 lg:max-w-[420px] flex flex-col justify-center items-center gap-y-14">
           <div className=" flex justify-between items-center w-full">
             <div className="flex justify-center items-center gap-x-4">
@@ -164,8 +172,7 @@ function Preferences(): Component {
                   ? "bg-[#c0c0c0] text-black border-[#2b2b2b]"
                   : "bg-[#2b2b2b] text-[#d8d8d8] border-[#c0c0c0]",
                 "cursor-pointer w-[140px] md:w-[160px] justify-center items-center flex rounded-md border sm:text-lg text-sm h-10"
-              )}
-            >
+              )}>
               {myAnimations() ? d.Enabled : d.Disabled}
             </button>
           </div>
@@ -182,8 +189,7 @@ function Preferences(): Component {
                   ? "bg-[#c0c0c0] text-black border-[#2b2b2b]"
                   : "bg-[#2b2b2b] text-[#d8d8d8] border-[#c0c0c0]",
                 "cursor-pointer w-[140px] md:w-[160px] justify-center items-center flex rounded-md border sm:text-lg text-sm h-10"
-              )}
-            >
+              )}>
               {myWordCount() ? d.Enabled : d.Disabled}
             </button>
           </div>
@@ -200,8 +206,7 @@ function Preferences(): Component {
                   ? "bg-[#c0c0c0] text-black border-[#2b2b2b]"
                   : "bg-[#2b2b2b] text-[#d8d8d8] border-[#c0c0c0]",
                 "cursor-pointer w-[140px] sm:w-[160px] justify-center items-center flex rounded-md sm:text-lg text-sm h-10 border"
-              )}
-            >
+              )}>
               {myLastModified() ? d.Enabled : d.Disabled}
             </button>
           </div>
@@ -217,8 +222,7 @@ function Preferences(): Component {
                   ? "border-[#2b2b2b]"
                   : "border-[#c0c0c0] bg-[#2b2b2b]",
                 "flex flex-col justify-center py-0.5 items-center border w-[140px] sm:w-[160px] rounded-md h-10 "
-              )}
-            >
+              )}>
               <input
                 type="range"
                 min={1}
@@ -255,8 +259,7 @@ function Preferences(): Component {
                   ? "border-[#2b2b2b]"
                   : "border-[#c0c0c0] bg-[#2b2b2b]",
                 "flex flex-col justify-center py-0.5 items-center border w-[140px] sm:w-[160px] rounded-md h-10"
-              )}
-            >
+              )}>
               <input
                 type="number"
                 value={spacing}
@@ -270,8 +273,7 @@ function Preferences(): Component {
 
           <div
             onClick={resetPreferences}
-            className="flex items-start justify-start gap-x-4 w-full bg-transparent cursor-pointer opacity-65 hover:opacity-100 duration-75"
-          >
+            className="flex items-start justify-start gap-x-4 w-full bg-transparent cursor-pointer opacity-65 hover:opacity-100 duration-75">
             <ResetIcon size={23} />
             <p className="text-md lowercase">{d.ResetPreferences}</p>
           </div>
@@ -289,8 +291,7 @@ function Preferences(): Component {
               style={{
                 letterSpacing: spacing + "px",
                 opacity: opacity ? opacity / 10 : 10,
-              }}
-            >
+              }}>
               {d.TestText}
             </p>
 
@@ -308,7 +309,7 @@ function Preferences(): Component {
             />
           </div>
         </div>
-      </div>
+      </animated.div>
     </MainContainer>
   );
 }
