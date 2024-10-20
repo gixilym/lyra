@@ -40,13 +40,13 @@ const TEXT_ALIGNS: AlignsText = {
   end: "text-right",
 };
 
-const WELCOME_ES: string = "Bienvenido a lyra.txt";
+const WELCOME_ES: string = "Bienvenido a Lyra.txt";
 
-const WELCOME_EN: string = "Welcome to lyra.txt";
+const WELCOME_EN: string = "Welcome to Lyra.txt";
 
-const INTRO_ES: string = `Lyra es tu espacio para dejar volar tu creatividad sin distracciones.\n\nDiseñada para aquellos que aman escribir de manera enfocada, ya sea un libro, pensamientos, un diario personal, o cualquier tipo de contenido.\n\nFunciona sin conexión, asegurando que tus escritos se mantengan seguros, privados y accesibles en tu dispositivo. No se recopilan datos de usuario.\n\nOfrece temas para adaptarse a tu estilo, comandos de teclado para una experiencia de escritura fluida. Disponible en español e inglés (más próximamente)\n\n¡Empieza a escribir en Lyra y transforma tus ideas en palabras!`;
+const INTRO_ES: string = `Lyra es el espacio ideal para escribir sin distracciones. Perfecta para quienes disfrutan de la escritura enfocada, ya sea un libro, pensamientos, o un diario personal. Funciona sin conexión, manteniendo tus textos seguros y privados en tu dispositivo, sin recopilar datos.\n\nCon temas personalizables y comandos de teclado, ofrece una experiencia de escritura fluida adaptada a tu estilo.\n\nDisponible en español e inglés, con más idiomas próximamente.\n\n¡Empieza a escribir con Lyra y da vida a tus ideas!`;
 
-const INTRO_EN: string = `Lyra is your space to let your creativity soar without distractions.\n\nDesigned for those who love focused writing, whether it's a book, thoughts, a personal journal, or any type of content.\n\nIt works offline, ensuring that your writings remain safe, private, and accessible on your device. No user data is collected.\n\nIt offers themes to match your style, keyboard commands for a smooth writing experience. Available in Spanish and English (more coming soon).\n\nStart writing in Lyra and transform your ideas into words!`;
+const INTRO_EN: string = `Lyra is the perfect space for distraction-free writing. Ideal for those who enjoy focused writing, whether it’s a book, thoughts, or a personal journal. It works offline, keeping your texts secure and private on your device, with no data collection.\n\nWith customizable themes and keyboard shortcuts, it offers a smooth writing experience tailored to your style.\n\nAvailable in Spanish and English, with more languages coming soon.\n\nStart writing with Lyra and bring your ideas to life!`;
 
 export {
   TEXT_ALIGNS,

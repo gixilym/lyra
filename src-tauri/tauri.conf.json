@@ -88,17 +88,6 @@
         "focus": true,
         "visible": true
       }
-    ],
-    "updater": {
-      "active": true,
-      "dialog": true,
-      "pubkey": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCrwpfX90HrK2wR8NPjnrdYCj0esGHFOZQ2BQCxH4wSTb4LlcpHMWUaBoOo27d3yXK2bssuFMmmP3qxtyNRPcLnR8+r9NqS0PQQ3yQdxAG0kwbYiNofJAAv+G2GYKpg4h1ppAd48rjlahzCMgdY1KckkuxoKcrGPaqbdE3oN3qezQIDAQAB",
-      "endpoints": [
-        "https://github.com/gixilym/lyra/releases/latest/download/latest.json"
-      ],
-      "windows": {
-        "installMode": "basicUi"
-      }
-    }
+    ]
   }
 }

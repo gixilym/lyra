@@ -68,8 +68,8 @@ function translations() {
       "En una pequeña aldea rodeada de montañas, vivía un joven llamado Emiliano, conocido por su habilidad para contar historias mágicas. Un día, mientras exploraba un viejo bosque cercano, encontró un antiguo libro cubierto de polvo y musgo. Al abrirlo, descubrió que contenía relatos sobre un misterioso reino perdido que solo se revelaba a aquellos con un corazón puro y una mente abierta a la imaginación."
     ),
     FullScreen: userLanguage("Full screen", "Pantalla completa"),
-    Version: userLanguage("version", "versión"),
-    DevelopedBy: userLanguage("developed by Gixi", "desarrollado por Gixi"),
+    Version: userLanguage("Version", "Versión"),
+    DevelopedBy: userLanguage("Developed by Gixi", "Desarrollado por Gixi"),
     Start: userLanguage("Start", "Iniciar"),
     LocalSaved: userLanguage("local saved", "guardado local"),
     OfflineAccess: userLanguage("offline access", "acceso sin conexión"),

@@ -1,5 +1,5 @@
-![image](https://github.com/gixilym/lyra/assets/104705119/63824e16-63f6-4832-b36a-b5d983ca7834) 
+![image](https://github.com/user-attachments/assets/5a932f37-4945-4ae7-8b50-5547d1efdcd0)
 
-![image](https://github.com/gixilym/lyra/assets/104705119/dfe24714-59d5-4186-8eaa-126bd3777a93)
+![image](https://github.com/user-attachments/assets/00cabf8b-f47d-47f2-ab78-d1a6ccab098c)
 
-![image](https://github.com/gixilym/gixilym/assets/104705119/142dd0b3-faa6-4aee-bd90-9f6accd41dfe)
+![image](https://github.com/user-attachments/assets/3d5c7f36-3f6b-4332-9999-e863e8d0cf90)
