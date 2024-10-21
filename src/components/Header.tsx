@@ -21,6 +21,14 @@ function Header(): Component {
       : "bg-[#151515] border-t-gray-900/90 border-[#383838]",
     [styles, api] = useSpring(() => ({ opacity: 1 }));
 
+  useEffect(() => {
+    api.start({
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+      config: { duration: 200 },
+    });
+  }, [showHeader]);
+
   function closeMenu(id: string): void {
     document.getElementById(id)?.removeAttribute("open");
   }
@@ -43,14 +51,6 @@ function Header(): Component {
     setMenu(prevState => ({ ...prevState, [menuId]: true }));
   }
 
-  useEffect(() => {
-    api.start({
-      from: { opacity: 0 },
-      to: { opacity: 1 },
-      config: { duration: 200 },
-    });
-  }, [showHeader]);
-
   return showHeader ? (
     <>
       <p className="text-transparent">.</p>
@@ -61,7 +61,7 @@ function Header(): Component {
           isSunnyDay
             ? "bg-gray-300 text-black/80 border-[#979797] [&>div>details>summary:hover]:text-black"
             : "bg-[#151515] text-white/70 border-[#252525] [&>div>details>summary:hover]:text-white",
-          "select-none text-sm cursor-default border-b w-full justify-between items-center flex px-4 h-8 fixed top-0 left-0 z-50"
+          "select-none text-sm cursor-default border-b w-full justify-between items-center flex px-4 h-9 fixed top-0 left-0 z-50"
         )}>
         <div className="flex gap-x-4 justify-start items-center">
           <a
@@ -199,7 +199,15 @@ function Header(): Component {
   ) : (
     <>
       <p className="text-transparent">.</p>
-      <header className="fixed top-0 right-0 bg-transparent w-full justify-end items-center flex px-4 h-8 border-b border-transparent">
+      <header className="fixed text-[#5e5e5e] top-0 right-0 bg-transparent w-full justify-end items-center flex px-4 h-9 border-b border-transparent gap-x-4">
+        {pathIs(PAGES.file) && (
+          <ArrowLeft
+            size={18}
+            onClick={() => goTo(PAGES.list)}
+            color={showHeader ? "#fff" : "#5e5e5e"}
+            className="hover:text-white cursor-default"
+          />
+        )}
         <HiddenIcon
           color={isSunnyDay ? "#1f1f1f9d" : "#ffffff29"}
           size={20}
