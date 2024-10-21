@@ -10,10 +10,6 @@ function userLanguage(enText: string, esText: string): string {
 function translations() {
   const dictionary = {
     StartTyping: userLanguage("Start typing...", "Comienza a escribir..."),
-    ResetPreferences: userLanguage(
-      "Reset preferences",
-      "Restablecer preferencias"
-    ),
     Suggestions: userLanguage("Suggestions", "Sugerencias"),
     SuggestionsText: userLanguage(
       "Your suggestions help us improve. If you have ideas or improvements that you would like to see in Lyra soon, feel free to send them.",
@@ -30,7 +26,7 @@ function translations() {
     Centered: userLanguage("Centered", "Centrado"),
     RememberToUseKeyboardShortcuts: userLanguage(
       "Remember to use keyboard shortcuts!",
-      "¡Recuerda usar atajos de teclado!"
+      "¡Recuerda usar comandos de teclado!"
     ),
     LastModified: userLanguage("Last modified", "Última modificación"),
     Archived: userLanguage("Paper Bin", "Papelera"),
@@ -61,12 +57,7 @@ function translations() {
       "Contacta este correo para preguntas sobre lyra"
     ),
     TextOpacity: userLanguage("Text opacity", "Opacidad del texto"),
-    LetterSpacing: userLanguage("Letter spacing", "Espacio entre letras"),
-    TestText: userLanguage("Test Text", "Texto de Prueba"),
-    TestParagraph: userLanguage(
-      "In a small town surrounded by mountains, a young man named Emiliano lived, known for his ability to tell magical stories. One day, while exploring an old nearby forest, he found an old book covered with dust and moss. When he opened it, he discovered that he contained stories about a mysterious lost kingdom that only revealed those with a pure heart and an open mind to imagination.",
-      "En una pequeña aldea rodeada de montañas, vivía un joven llamado Emiliano, conocido por su habilidad para contar historias mágicas. Un día, mientras exploraba un viejo bosque cercano, encontró un antiguo libro cubierto de polvo y musgo. Al abrirlo, descubrió que contenía relatos sobre un misterioso reino perdido que solo se revelaba a aquellos con un corazón puro y una mente abierta a la imaginación."
-    ),
+    LetterSpacing: userLanguage("Letter spacing", "Espaciado entre letras"),
     FullScreen: userLanguage("Full screen", "Pantalla completa"),
     Version: userLanguage("Version", "Versión"),
     DevelopedBy: userLanguage("Developed by Gixi", "Desarrollado por Gixi"),
@@ -117,9 +108,8 @@ function translations() {
     Language: userLanguage("Language", "Idioma"),
     Themes: userLanguage("Themes", "Temas"),
     Support: userLanguage("Support", "Soporte"),
-    ClearNight: userLanguage("Clear night", "Noche clara"),
-    SunnyDay: userLanguage("Sunny day", "Día soleado"),
-    Animations: userLanguage("Animations", "Animaciones"),
+    Night: userLanguage("Night", "Noche"),
+    Day: userLanguage("Day", "Día"),
     Alignment: userLanguage("Alignment", "Alineación"),
     EnterName: userLanguage("Enter name", "Ingresa un nombre"),
     RepeatedItem: userLanguage("Repeated name", "Nombre repetido"),

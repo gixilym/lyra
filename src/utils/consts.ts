@@ -17,7 +17,7 @@ const PAGES: Pages = {
 const THEMES: Themes = {
   clearNigth: "clear-nigth",
   darkNigth: "dark-nigth",
-  sunnyDay: "sunny-day",
+  Day: "sunny-day",
 };
 
 const LANGS: Langs = {
@@ -26,12 +26,12 @@ const LANGS: Langs = {
 };
 
 const TEXT_SIZES: TextSizes = {
-  sm: "text-sm",
-  md: "text-md",
-  lg: "text-lg",
-  xl: "text-xl",
-  xxl: "text-2xl",
-  xxxl: "text-3xl",
+  sm: "15px",
+  md: "16px",
+  lg: "18px",
+  xl: "20px",
+  xxl: "22px",
+  xxxl: "24px",
 };
 
 const TEXT_ALIGNS: AlignsText = {
@@ -90,7 +90,7 @@ interface Pages {
 interface Themes {
   clearNigth: string;
   darkNigth: string;
-  sunnyDay: string;
+  Day: string;
 }
 
 interface Langs {

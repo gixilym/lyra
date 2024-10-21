@@ -14,7 +14,7 @@ function ModifiedFile(): Component {
     lastModified: string = getItem(`${selectedFile.name}-modified`, "");
 
   return (
-    <div className="hidden lg:flex items-center h-[34px] opacity-65 justify-start z-50 sm:text-sm text-xs lowercase  fixed right-36 w-[280px] pointer-events-none">
+    <div className="hidden lg:flex items-center h-[37px] opacity-65 justify-start z-50 sm:text-sm text-xs lowercase  fixed right-36 w-[280px] pointer-events-none">
       {myLastModified() && lastModified && showHeader && (
         <p className="w-full">
           {d.Modified}: {lastModified}

@@ -5,15 +5,11 @@ import type { Component } from "../utils/types";
 
 function NoMatches(): Component {
   const d = translations();
-  const { isSunnyDay } = themes();
+  const { isDay } = themes();
 
   return (
     <p
-      className={twMerge(
-        isSunnyDay ? "text-black/70" : "text-gray-400",
-        "text-lg"
-      )}
-    >
+      className={twMerge(isDay ? "text-black/70" : "text-gray-400", "text-lg")}>
       {d.NothingHere}
     </p>
   );

@@ -9,11 +9,6 @@ function usePreferences(): Preferences {
     return modified;
   }
 
-  function myAnimations(): boolean {
-    const animations: boolean = JSON.parse(getItem("animations", "true"));
-    return animations;
-  }
-
   function myLangLabel(): string {
     const lang: string = getItem("language", LANGS.en);
     return lang == LANGS.en ? "English" : "Español";
@@ -95,7 +90,6 @@ function usePreferences(): Preferences {
 
   return {
     myLastModified,
-    myAnimations,
     myLangLabel,
     myLangValue,
     myFontLabel,
@@ -115,7 +109,6 @@ export default usePreferences;
 
 interface Preferences {
   myLastModified: () => boolean;
-  myAnimations: () => boolean;
   myLangLabel: () => string;
   myLangValue: (defaultValue?: string) => string;
   myFontLabel: () => string;

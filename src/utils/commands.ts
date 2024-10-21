@@ -1,42 +1,16 @@
 import { appWindow } from "@tauri-apps/api/window";
 import type { Dispatch, SetStateAction } from "react";
+import usePreferences from "../hooks/usePreferences";
 import useStorage from "../hooks/useStorage";
+import { PAGES, TEXT_SIZES } from "./consts";
 import translations from "./dictionary";
 import { notification, pathIs } from "./helpers";
 import type { stylesText } from "./types";
-import { PAGES, TEXT_ALIGNS, TEXT_SIZES } from "./consts";
-import usePreferences from "../hooks/usePreferences";
 
 async function toggleFullScreen(): Promise<void> {
   const isFullScreen: boolean = await appWindow.isFullscreen();
   if (isFullScreen) appWindow.setFullscreen(false);
   else appWindow.setFullscreen(true);
-}
-
-function alignText(styles: stylesText, setStyles: fnStyles): void {
-  if (pathIs(PAGES.file)) {
-    const { setItem } = useStorage();
-    const { start, center, end } = TEXT_ALIGNS;
-
-    function alternateText(): string {
-      switch (styles.alignText) {
-        case start:
-          return center;
-
-        case center:
-          return end;
-
-        case end:
-          return start;
-
-        default:
-          return start;
-      }
-    }
-
-    setItem("align-text", alternateText());
-    setStyles({ ...styles, alignText: alternateText() });
-  }
 }
 
 function increaseText(styles: stylesText, setStyles: fnStyles): void {
@@ -124,12 +98,6 @@ function toggleSpellchecker(spellCheck: boolean, setSpellCheck: any): void {
   }
 }
 
-export {
-  alignText,
-  increaseText,
-  reduceText,
-  toggleFullScreen,
-  toggleSpellchecker,
-};
+export { increaseText, reduceText, toggleFullScreen, toggleSpellchecker };
 
 type fnStyles = Dispatch<SetStateAction<stylesText>>;

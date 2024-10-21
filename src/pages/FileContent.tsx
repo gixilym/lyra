@@ -1,7 +1,6 @@
 import listenCommands from "bind-mousetrap-global";
 import commands from "mousetrap";
 import { useEffect, useState } from "react";
-import { twJoin } from "tailwind-merge";
 import MainContainer from "../components/MainContainer";
 import ModifiedFile from "../components/ModifiedFile";
 import WordsFile from "../components/WordsFile";
@@ -11,7 +10,6 @@ import useStorage from "../hooks/useStorage";
 import { configStore } from "../store/configStore";
 import { fileStore } from "../store/fileStore";
 import {
-  alignText,
   increaseText,
   reduceText,
   toggleSpellchecker,
@@ -51,7 +49,6 @@ function FileContent(): Component {
   listen("ctrl+a", () => copyText(content));
   listen("ctrl+b", () => reduceText(styles, setStyles));
   listen("ctrl+n", () => increaseText(styles, setStyles));
-  listen("ctrl+h", () => alignText(styles, setStyles));
 
   function calculateWordCount(text: string): void {
     const spaces: RegExp = /\s+/;
@@ -71,6 +68,10 @@ function FileContent(): Component {
     }
   }
 
+  useEffect(() => {
+    console.log(styles.fontSize);
+  }, [styles.fontSize]);
+
   return (
     <MainContainer>
       <WordsFile wordCounts={wordCounts} />
@@ -82,14 +83,13 @@ function FileContent(): Component {
         autoFocus
         placeholder="..."
         style={{
-          opacity: Number(styles.opacity) / 10,
-          letterSpacing: `${styles.letterSpacing}px`,
+          opacity: String(Number(styles.opacity) / 10),
+          letterSpacing: String(styles.letterSpacing) + "px",
+          fontSize: String(styles.fontSize),
+          // @ts-ignore
+          textAlign: String(styles.alignText),
         }}
-        className={twJoin(
-          styles.fontSize,
-          styles.alignText,
-          "sm:min-w-[600px] w-full min-h-screen py-6 sm:py-20 px-10 lg:px-44 xl:px-64 resize-none border-none focus:ring-0 focus:outline-none bg-transparent placeholder:text-gray-100/50 text-pretty"
-        )}
+        className="text-2xl sm:min-w-[600px] w-full min-h-screen py-6 sm:py-20 px-10 lg:px-44 xl:px-64 resize-none border-none focus:ring-0 focus:outline-none bg-transparent placeholder:text-gray-100/50 text-pretty cursor-default"
       />
     </MainContainer>
   );

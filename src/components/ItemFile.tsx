@@ -12,7 +12,7 @@ import MenuPaperFile from "./MenuPaperFile";
 
 function ItemFile({ fileName }: Props): Component {
   const { goTo } = navigation(),
-    { isSunnyDay } = themes(),
+    { isDay } = themes(),
     { paperIsOpen } = configStore(),
     { readFile } = useFile(),
     { setSelectedFile } = fileStore(),
@@ -31,7 +31,7 @@ function ItemFile({ fileName }: Props): Component {
       onMouseLeave={() => setHover(false)}
       onMouseEnter={() => setHover(true)}
       className={twMerge(
-        isSunnyDay
+        isDay
           ? "border-gray-600/30 bg-gray-300 border-gray-400  text-gray-800"
           : "bg-gray-800/60 hover:bg-gray-800 text-gray-300 border-sky-200/5",
         "w-full max-w-[340px] h-12 rounded-md px-3 hover:cursor-pointer duration-75 flex justify-between items-center bg-gradient-to-b border-2 gap-x-3 relative"

@@ -13,7 +13,7 @@ import type { Component } from "../utils/types";
 
 function MenuPaperFile({ fileName }: Props): Component {
   const d = translations(),
-    { isSunnyDay } = themes(),
+    { isDay } = themes(),
     { setItem } = useStorage(),
     { myPaper } = usePreferences(),
     { deleteFile } = useFile(),
@@ -34,8 +34,8 @@ function MenuPaperFile({ fileName }: Props): Component {
       cancelButtonColor: "#565454",
       confirmButtonText: d.Recover,
       cancelButtonText: d.Cancel,
-      background: isSunnyDay ? "#dedede" : "#202020",
-      color: isSunnyDay ? "#000" : "#fff",
+      background: isDay ? "#dedede" : "#202020",
+      color: isDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
         const updatedPaper: string[] = myPaper().filter(
@@ -58,8 +58,8 @@ function MenuPaperFile({ fileName }: Props): Component {
       confirmButtonColor: "#d33",
       confirmButtonText: d.Delete,
       cancelButtonText: d.Cancel,
-      background: isSunnyDay ? "#dedede" : "#202020",
-      color: isSunnyDay ? "#000" : "#fff",
+      background: isDay ? "#dedede" : "#202020",
+      color: isDay ? "#000" : "#fff",
     }).then(res => {
       if (res.isConfirmed) {
         const updatedPaper: string[] = myPaper().filter(
@@ -81,7 +81,7 @@ function MenuPaperFile({ fileName }: Props): Component {
         onClick={recoveryPaperItem}
         size={23}
         className={twMerge(
-          isSunnyDay
+          isDay
             ? "hover:text-gray-500 text-slate-800"
             : "text-[#6cd3ff] hover:text-[#c3edff]",
           " h-full w-8 py-3"
@@ -91,7 +91,7 @@ function MenuPaperFile({ fileName }: Props): Component {
         onClick={removeItem}
         size={20}
         className={twMerge(
-          isSunnyDay
+          isDay
             ? "hover:text-gray-500 text-slate-800"
             : "text-[#6cd3ff] hover:text-[#c3edff]",
           " h-full w-8 py-3"

@@ -17,7 +17,7 @@ function MenuFile({ fileName }: Props): Component {
     files: string[] = filesArr,
     { renameFile } = useFile(),
     { setItem } = useStorage(),
-    { isSunnyDay } = themes(),
+    { isDay } = themes(),
     [styles] = useSpring(() => ({
       from: { opacity: 0 },
       to: { opacity: 1 },
@@ -36,8 +36,8 @@ function MenuFile({ fileName }: Props): Component {
       cancelButtonText: d.Cancel,
       confirmButtonColor: "#1d74c5",
       cancelButtonColor: "#565454",
-      background: isSunnyDay ? "#dedede" : "#202020",
-      color: isSunnyDay ? "#000" : "#fff",
+      background: isDay ? "#dedede" : "#202020",
+      color: isDay ? "#000" : "#fff",
       customClass: { input: "no-focus-outline" },
     }).then(res => {
       if (res.isConfirmed) {
@@ -66,8 +66,8 @@ function MenuFile({ fileName }: Props): Component {
       cancelButtonColor: "#565454",
       confirmButtonText: d.Confirm,
       cancelButtonText: d.Cancel,
-      background: isSunnyDay ? "#dedede" : "#202020",
-      color: isSunnyDay ? "#000" : "#fff",
+      background: isDay ? "#dedede" : "#202020",
+      color: isDay ? "#000" : "#fff",
       customClass: { input: "no-focus-outline" },
     }).then(res => {
       if (res.isConfirmed) {
@@ -86,7 +86,7 @@ function MenuFile({ fileName }: Props): Component {
       <EditIcon
         onClick={editFileName}
         className={twMerge(
-          isSunnyDay
+          isDay
             ? "hover:text-gray-500 text-slate-800"
             : "text-[#6cd3ff] hover:text-[#c3edff]",
           "h-full w-8 py-3"
@@ -96,7 +96,7 @@ function MenuFile({ fileName }: Props): Component {
       <TrashIcon
         onClick={moveToTrash}
         className={twMerge(
-          isSunnyDay
+          isDay
             ? "hover:text-gray-500 text-slate-800"
             : "text-[#6cd3ff] hover:text-[#c3edff]",
           " h-full w-8 py-3"

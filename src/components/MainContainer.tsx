@@ -16,7 +16,7 @@ listenCommands(commands);
 function MainContainer({ children }: PropsWithChildren): Component {
   const { myFontValue } = usePreferences(),
     { bindGlobal: listen }: any = commands,
-    { isSunnyDay } = themes(),
+    { isDay } = themes(),
     textarea: Textarea = document.querySelector("textarea");
 
   listen("f11", () => toggleFullScreen());
@@ -26,9 +26,7 @@ function MainContainer({ children }: PropsWithChildren): Component {
   return (
     <main
       className={twMerge(
-        isSunnyDay
-          ? "bg-[#e0e0e0] text-gray-800"
-          : "bg-[#1a1a1a] text-gray-200/90",
+        isDay ? "bg-[#e0e0e0] text-gray-800" : "bg-[#1a1a1a] text-gray-200/90",
         pathIs(PAGES.file) ? "gap-0" : "gap-y-10 lg:gap-y-20",
         twJoin(
           myFontValue(),

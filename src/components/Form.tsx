@@ -30,7 +30,7 @@ import type { Component, File } from "../utils/types";
 function Form(): Component {
   const d = translations(),
     { goTo } = navigation(),
-    { isSunnyDay } = themes(),
+    { isDay } = themes(),
     { createFile } = useFile(),
     { paperIsOpen, setPaperIsOpen } = configStore(),
     [fileName, setFileName] = useState<string>(""),
@@ -73,8 +73,8 @@ function Form(): Component {
       cancelButtonColor: "#565454",
       confirmButtonText: d.Add,
       cancelButtonText: d.Cancel,
-      background: isSunnyDay ? "#dedede" : "#202020",
-      color: isSunnyDay ? "#000" : "#fff",
+      background: isDay ? "#dedede" : "#202020",
+      color: isDay ? "#000" : "#fff",
       customClass: { input: "no-focus-outline" },
     }).then((res: SweetAlertResult) => {
       if (res.isConfirmed) {
@@ -109,9 +109,10 @@ function Form(): Component {
       className="flex flex-col justify-center items-center w-full text-slate-400 gap-y-6 max-w-[340px] opacity-80">
       <div className="flex justify-end items-start gap-x-3 w-full">
         <input
+          autoFocus
           type="search"
           className={twMerge(
-            isSunnyDay
+            isDay
               ? "placeholder:text-gray-700 bg-gray-300 text-black border-slate-400"
               : "placeholder:text-sky-200/60 border-sky-400 bg-gray-800 text-sky-100",
             "w-full border h-[42px] rounded-md px-4 outline-0"
@@ -124,7 +125,7 @@ function Form(): Component {
           style={stylesAdd}
           onClick={addFile}
           className={twMerge(
-            isSunnyDay
+            isDay
               ? "bg-gray-300 hover:bg-gray-200 text-slate-800 border border-gray-400"
               : "bg-gray-800 hover:bg-gray-700 text-sky-400 border border-sky-400",
             "flex items-center justify-center gap-x-3 px-3 h-[42px] rounded-md transition-colors"
@@ -135,7 +136,7 @@ function Form(): Component {
           style={stylesToggle}
           onClick={() => toggleOrder(!order)}
           className={twMerge(
-            isSunnyDay
+            isDay
               ? "bg-gray-300 hover:bg-gray-200 text-slate-800 border border-gray-400"
               : "bg-gray-800 hover:bg-gray-700 text-sky-400 border border-sky-400",
             "flex items-center justify-center gap-x-3 px-3 h-[42px] rounded-md transition-colors"
@@ -150,11 +151,11 @@ function Form(): Component {
           style={stylesPaper}
           onClick={setPaperIsOpen}
           className={twMerge(
-            isSunnyDay
+            isDay
               ? "bg-gray-300 hover:bg-gray-200 text-slate-800 border border-gray-400"
               : "bg-gray-800 hover:bg-gray-700 text-sky-400 border border-sky-400",
-            paperIsOpen && isSunnyDay && "bg-gray-400",
-            paperIsOpen && !isSunnyDay && "bg-blue-950",
+            paperIsOpen && isDay && "bg-gray-400",
+            paperIsOpen && !isDay && "bg-blue-950",
             "flex items-center justify-center gap-x-3 border h-[42px] rounded-md transition-colors px-3"
           )}>
           <PaperIcon size={20} strokeWidth={2} />
@@ -163,7 +164,7 @@ function Form(): Component {
       {paperIsOpen && (
         <p
           className={twMerge(
-            isSunnyDay ? "text-slate-900" : "text-slate-300",
+            isDay ? "text-slate-900" : "text-slate-300",
             "w-full text-lg text-center"
           )}>
           {d.Archived}

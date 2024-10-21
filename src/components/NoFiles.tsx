@@ -6,16 +6,15 @@ import type { Component } from "../utils/types";
 
 function NoFiles(): Component {
   const { paperIsOpen } = configStore();
-  const { isSunnyDay } = themes();
+  const { isDay } = themes();
   const d = translations();
 
   return (
     <p
       className={twMerge(
-        isSunnyDay ? "text-black/70" : "text-gray-300/90",
+        isDay ? "text-black/70" : "text-gray-300/90",
         "text-lg"
-      )}
-    >
+      )}>
       {paperIsOpen ? d.NothingHere : d.AddYourFirstAnnotation}
     </p>
   );

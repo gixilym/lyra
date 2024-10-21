@@ -2,7 +2,6 @@ interface Storage {
   getItem: (key: string, defaultValue: string) => string;
   setItem: (key: string, value: string) => void;
   removeItem: (key: string) => void;
-  clearEverything: () => void;
 }
 
 function useStorage(): Storage {
@@ -21,12 +20,7 @@ function useStorage(): Storage {
     return item;
   }
 
-  function clearEverything(): void {
-    const item: void = window.localStorage.clear();
-    return item;
-  }
-
-  return { getItem, setItem, removeItem, clearEverything };
+  return { getItem, setItem, removeItem };
 }
 
 export default useStorage;

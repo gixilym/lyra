@@ -22,13 +22,10 @@ import type { Timer } from "./types";
 const reload = (): void => window.location.reload();
 
 function navigation(): Navigation {
-  const { myAnimations } = usePreferences();
   const navigate: NavigateFunction = useNavigate();
 
   function goTo(path: string): void {
-    if (myAnimations()) {
-      document.startViewTransition(() => flushSync(() => navigate(path)));
-    } else navigate(path);
+    document.startViewTransition(() => flushSync(() => navigate(path)));
   }
 
   return { goTo };
@@ -66,9 +63,9 @@ function nameIsValid(name: string): boolean {
 
 function themes(): Themes {
   const { myTheme } = usePreferences(),
-    isSunnyDay: boolean = myTheme() == THEMES.sunnyDay,
+    isDay: boolean = myTheme() == THEMES.Day,
     isClearNigth: boolean = myTheme() == THEMES.clearNigth;
-  return { isSunnyDay, isClearNigth };
+  return { isDay, isClearNigth };
 }
 
 async function getSystemLang(): Promise<string> {
@@ -125,35 +122,35 @@ function getDate(): string {
 }
 
 function stylesSelect(): any {
-  const { isSunnyDay } = themes();
+  const { isDay } = themes();
   return {
     placeholder: (styles: any) => ({
       ...styles,
-      color: isSunnyDay ? "#000" : "#d8d8d8",
+      color: isDay ? "#000" : "#d8d8d8",
     }),
     singleValue: (styles: any) => ({
       ...styles,
-      color: isSunnyDay ? "#000" : "#d8d8d8",
+      color: isDay ? "#000" : "#d8d8d8",
     }),
     control: (styles: any) => ({
       ...styles,
-      backgroundColor: isSunnyDay ? "#c0c0c0" : "#2b2b2b",
-      border: isSunnyDay ? "1px solid #2b2b2b" : "1px solid #c0c0c0",
-      color: isSunnyDay ? "#000" : "#d8d8d8",
+      backgroundColor: isDay ? "#c0c0c0" : "#2b2b2b",
+      border: isDay ? "1px solid #2b2b2b" : "1px solid #c0c0c0",
+      color: isDay ? "#000" : "#d8d8d8",
       boxShadow: "0",
       width: "160px",
     }),
     option: (styles: any) => ({
       ...styles,
-      ":active": { backgroundColor: isSunnyDay ? "#b0b0b0" : "#2b2b2b" },
-      ":hover": { backgroundColor: isSunnyDay ? "#b0b0b0" : "#3e3e3e" },
-      backgroundColor: isSunnyDay ? "#c0c0c0" : "#2b2b2b",
+      ":active": { backgroundColor: isDay ? "#b0b0b0" : "#2b2b2b" },
+      ":hover": { backgroundColor: isDay ? "#b0b0b0" : "#3e3e3e" },
+      backgroundColor: isDay ? "#c0c0c0" : "#2b2b2b",
       border: 0,
-      color: isSunnyDay ? "#000" : "#e7e7e7",
+      color: isDay ? "#000" : "#e7e7e7",
     }),
     menu: (styles: any) => ({
       ...styles,
-      backgroundColor: isSunnyDay ? "#c0c0c0" : "#2b2b2b",
+      backgroundColor: isDay ? "#c0c0c0" : "#2b2b2b",
       marginTop: 2,
     }),
   };
@@ -180,13 +177,14 @@ const normalize = (text: string): string =>
 const len = (val: string | any[]): number => val.length;
 
 export {
-  len,
   copyText,
   featherAnimation,
   getDate,
   getSystemLang,
+  len,
   nameIsValid,
   navigation,
+  normalize,
   notification,
   pathIs,
   reload,
@@ -194,11 +192,10 @@ export {
   themes,
   verifyMainFolder,
   verifySystemLang,
-  normalize,
 };
 
 interface Themes {
-  isSunnyDay: boolean;
+  isDay: boolean;
   isClearNigth: boolean;
 }
 

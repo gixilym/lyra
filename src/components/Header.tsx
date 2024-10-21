@@ -11,15 +11,15 @@ import type { Component } from "../utils/types";
 
 function Header(): Component {
   const d = translations(),
-    { isSunnyDay } = themes(),
+    { isDay } = themes(),
     { showHeader, setShowHeader } = configStore(),
     { setItem } = useStorage(),
     { goTo } = navigation(),
     [menu, setMenu] = useState<Menu>(initMenu),
-    menuStyles: string = isSunnyDay
+    menuStyles: string = isDay
       ? "bg-gray-300 border-t-gray-300/90 border-[#979797]"
       : "bg-[#151515] border-t-gray-900/90 border-[#383838]",
-    [styles, api] = useSpring(() => ({ opacity: 1 }));
+    [styles, api] = useSpring(() => ({ opacity: 0 }));
 
   useEffect(() => {
     api.start({
@@ -58,7 +58,7 @@ function Header(): Component {
         style={styles}
         onMouseLeave={closeAllMenus}
         className={twMerge(
-          isSunnyDay
+          isDay
             ? "bg-gray-300 text-black/80 border-[#979797] [&>div>details>summary:hover]:text-black"
             : "bg-[#151515] text-white/70 border-[#252525] [&>div>details>summary:hover]:text-white",
           "select-none text-sm cursor-default border-b w-full justify-between items-center flex px-4 h-9 fixed top-0 left-0 z-50"
@@ -67,7 +67,7 @@ function Header(): Component {
           <a
             href={PAGES.list}
             className={twMerge(
-              isSunnyDay ? "hover:text-black" : "hover:text-white",
+              isDay ? "hover:text-black" : "hover:text-white",
               "cursor-default"
             )}>
             {d.List}
@@ -75,7 +75,7 @@ function Header(): Component {
           <a
             href={PAGES.preferences}
             className={twMerge(
-              isSunnyDay ? "hover:text-black" : "hover:text-white",
+              isDay ? "hover:text-black" : "hover:text-white",
               "cursor-default"
             )}>
             {d.Preferences}
@@ -113,10 +113,6 @@ function Header(): Component {
                   <kbd> CTRL + N</kbd>
                 </div>
                 <div className="cursor-default w-full flex justify-between items-center gap-x-4">
-                  <p>{d.AlternateText}</p>
-                  <kbd> CTRL + H</kbd>
-                </div>
-                <div className="cursor-default w-full flex justify-between items-center gap-x-4">
                   <p>{d.CopyText}</p>
                   <kbd> CTRL + A</kbd>
                 </div>
@@ -136,18 +132,18 @@ function Header(): Component {
                 <p
                   onClick={() => changeTheme(THEMES.clearNigth)}
                   className={twMerge(
-                    isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
+                    isDay ? "hover:text-gray-500" : "hover:text-white",
                     "cursor-default w-full"
                   )}>
-                  {d.ClearNight}
+                  {d.Night}
                 </p>
                 <p
-                  onClick={() => changeTheme(THEMES.sunnyDay)}
+                  onClick={() => changeTheme(THEMES.Day)}
                   className={twMerge(
-                    isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
+                    isDay ? "hover:text-gray-500" : "hover:text-white",
                     "cursor-default w-full"
                   )}>
-                  {d.SunnyDay}
+                  {d.Day}
                 </p>
               </div>
             )}
@@ -165,7 +161,7 @@ function Header(): Component {
                 <p
                   onClick={() => goTo(PAGES.presentation)}
                   className={twMerge(
-                    isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
+                    isDay ? "hover:text-gray-500" : "hover:text-white",
                     "cursor-default w-full"
                   )}>
                   {d.About}
@@ -173,7 +169,7 @@ function Header(): Component {
                 <p
                   onClick={() => goTo(PAGES.support)}
                   className={twMerge(
-                    isSunnyDay ? "hover:text-gray-500" : "hover:text-white",
+                    isDay ? "hover:text-gray-500" : "hover:text-white",
                     "cursor-default w-full"
                   )}>
                   {d.Support}
@@ -190,8 +186,8 @@ function Header(): Component {
           <ShowIcon
             size={20}
             onClick={() => setShowHeader()}
-            color={isSunnyDay ? "#1f1f1f9d" : "#ffffff9d"}
-            className="cursor-pointer"
+            color={isDay ? "#1f1f1f9d" : "#ffffff9d"}
+            className="cursor-default"
           />
         </div>
       </animated.header>
@@ -199,22 +195,24 @@ function Header(): Component {
   ) : (
     <>
       <p className="text-transparent">.</p>
-      <header className="fixed text-[#5e5e5e] top-0 right-0 bg-transparent w-full justify-end items-center flex px-4 h-9 border-b border-transparent gap-x-4">
+      <animated.header
+        style={styles}
+        className="fixed text-[#5e5e5e] top-0 right-0 bg-transparent w-full justify-end items-center flex px-4 h-9 border-b border-transparent gap-x-4 z-50">
         {pathIs(PAGES.file) && (
           <ArrowLeft
             size={18}
             onClick={() => goTo(PAGES.list)}
             color={showHeader ? "#fff" : "#5e5e5e"}
-            className="hover:text-white cursor-default"
+            className="cursor-default"
           />
         )}
         <HiddenIcon
-          color={isSunnyDay ? "#1f1f1f9d" : "#ffffff29"}
+          color={isDay ? "#1f1f1f9d" : "#ffffff29"}
           size={20}
           onClick={() => setShowHeader()}
-          className="cursor-pointer"
+          className="cursor-default"
         />
-      </header>
+      </animated.header>
     </>
   );
 }

@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import usePreferences from "../hooks/usePreferences";
 import { len } from "../utils/helpers";
 import type { Component, Timer } from "../utils/types";
 
 function TypingAnimation(props: Props): Component {
   const { text, duration = 90, className } = props,
-    { myAnimations } = usePreferences(),
     [displayedText, setDisplayedText] = useState<string>(""),
     [index, setIndex] = useState<number>(0),
     [opacity, setOpacity] = useState<number>(0);
@@ -26,18 +24,16 @@ function TypingAnimation(props: Props): Component {
     return () => clearTimeout(fadeEffect);
   }, []);
 
-  if (myAnimations()) {
-    return (
-      <p
-        style={{
-          opacity: opacity,
-          transition: "opacity 0.4s ease-in-out",
-        }}
-        className={className}>
-        &nbsp;{displayedText || text}&nbsp;
-      </p>
-    );
-  } else return <p className={className}>&nbsp;{text}&nbsp;</p>;
+  return (
+    <p
+      style={{
+        opacity: opacity,
+        transition: "opacity 0.4s ease-in-out",
+      }}
+      className={className}>
+      &nbsp;{displayedText || text}&nbsp;
+    </p>
+  );
 }
 
 export default TypingAnimation;

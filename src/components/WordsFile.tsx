@@ -17,9 +17,8 @@ function WordsFile({ wordCounts }: { wordCounts: number }): Component {
       className={twMerge(
         showCount ? "opacity-65" : "opacity-0",
         pathIs(PAGES.preferences) ? "justify-start" : "justify-center",
-        "flex items-center gap-x-2 z-50 sm:text-sm text-xs w-[200px] h-[34px] lowercase fixed inset-0 left-96 md:left-0 md:mx-auto pointer-events-none"
-      )}
-    >
+        "flex items-center gap-x-2 z-50 sm:text-sm text-xs w-[200px] h-[37px] lowercase fixed inset-0 left-[370px] md:left-0 md:mx-auto pointer-events-none"
+      )}>
       {myWordCount() && <p>{wordCounts + " " + d.Words}</p>}
     </div>
   );

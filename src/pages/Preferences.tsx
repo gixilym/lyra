@@ -1,20 +1,17 @@
 import { animated, useSpring } from "@react-spring/web";
 import {
   AlignLeft as AlignIcon,
-  Sparkles as AnimationsIcon,
   Calendar as CalendarIcon,
   Quote as CountIcon,
   CaseSensitive as FontIcon,
   Languages as LanguageIcon,
   Lightbulb as OpacityIcon,
-  RotateCcw as ResetIcon,
   Space as SpacingIcon,
 } from "lucide-react";
 import { useState } from "react";
 import Select from "react-select";
-import { twJoin, twMerge } from "tailwind-merge";
+import { twMerge } from "tailwind-merge";
 import MainContainer from "../components/MainContainer";
-import WordsFile from "../components/WordsFile";
 import usePreferences from "../hooks/usePreferences";
 import useStorage from "../hooks/useStorage";
 import { LANGS } from "../utils/consts";
@@ -41,20 +38,17 @@ const d = translations(),
   ] as const;
 
 function Preferences(): Component {
-  const { isSunnyDay } = themes(),
+  const { isDay } = themes(),
     {
       myLastModified,
-      myAnimations,
       myLangLabel,
-      myLangValue,
       myFontLabel,
       myAlign,
       myWordCount,
       mySpacing,
       myOpacity,
-      myPaper,
     } = usePreferences(),
-    { setItem, clearEverything } = useStorage(),
+    { setItem } = useStorage(),
     [opacity, setOpacity] = useState<number>(myOpacity()),
     [spacing, setSpacing] = useState<number>(mySpacing()),
     [styles] = useSpring(() => ({
@@ -106,30 +100,16 @@ function Preferences(): Component {
     reload();
   }
 
-  function resetPreferences(): void {
-    const paper: string = String(myPaper());
-    clearEverything();
-    setItem("language", myLangValue());
-    setItem("paper", paper);
-    reload();
-  }
-
   function changeAlign(val: string): void {
     setItem("align-text", val);
-    reload();
-  }
-
-  function toggleAnimations(): void {
-    setItem("animations", String(!myAnimations()));
-    reload();
   }
 
   return (
     <MainContainer>
       <animated.div
         style={styles}
-        className="flex-col lg:flex-row mb-14 flex justify-center items-center overflow-x-hidden lg:items-start w-6/6 lg:px-10 lg:gap-x-6 gap-y-20">
-        <div className="w-full px-6 md:px-0 lg:w-3/6 lg:max-w-[420px] flex flex-col justify-center items-center gap-y-14">
+        className="flex-col lg:flex-row mb-14 flex justify-center items-center overflow-x-hidden w-full px-10 gap-x-6 gap-y-20">
+        <div className="w-full px-6 md:px-0 lg:w-3/6 lg:max-w-[470px] flex flex-col justify-center items-center gap-y-14">
           <div className=" flex justify-between items-center w-full">
             <div className="flex justify-center items-center gap-x-4">
               <LanguageIcon size={30} />
@@ -162,30 +142,13 @@ function Preferences(): Component {
 
           <div className="flex justify-between items-center w-full">
             <div className="flex justify-center items-center gap-x-5">
-              <AnimationsIcon size={25} />
-              <p className="text-md">{d.Animations}</p>
-            </div>
-            <button
-              onClick={toggleAnimations}
-              className={twMerge(
-                isSunnyDay
-                  ? "bg-[#c0c0c0] text-black border-[#2b2b2b]"
-                  : "bg-[#2b2b2b] text-[#d8d8d8] border-[#c0c0c0]",
-                "cursor-pointer w-[140px] md:w-[160px] justify-center items-center flex rounded-md border sm:text-lg text-sm h-10"
-              )}>
-              {myAnimations() ? d.Enabled : d.Disabled}
-            </button>
-          </div>
-
-          <div className="flex justify-between items-center w-full">
-            <div className="flex justify-center items-center gap-x-5">
               <CountIcon size={25} />
               <p className="text-md">{d.WordCount}</p>
             </div>
             <button
               onClick={changeWordCount}
               className={twMerge(
-                isSunnyDay
+                isDay
                   ? "bg-[#c0c0c0] text-black border-[#2b2b2b]"
                   : "bg-[#2b2b2b] text-[#d8d8d8] border-[#c0c0c0]",
                 "cursor-pointer w-[140px] md:w-[160px] justify-center items-center flex rounded-md border sm:text-lg text-sm h-10"
@@ -202,7 +165,7 @@ function Preferences(): Component {
             <button
               onClick={changeLastModified}
               className={twMerge(
-                isSunnyDay
+                isDay
                   ? "bg-[#c0c0c0] text-black border-[#2b2b2b]"
                   : "bg-[#2b2b2b] text-[#d8d8d8] border-[#c0c0c0]",
                 "cursor-pointer w-[140px] sm:w-[160px] justify-center items-center flex rounded-md sm:text-lg text-sm h-10 border"
@@ -218,9 +181,7 @@ function Preferences(): Component {
             </div>
             <div
               className={twMerge(
-                isSunnyDay
-                  ? "border-[#2b2b2b]"
-                  : "border-[#c0c0c0] bg-[#2b2b2b]",
+                isDay ? "border-[#2b2b2b]" : "border-[#c0c0c0] bg-[#2b2b2b]",
                 "flex flex-col justify-center py-0.5 items-center border w-[140px] sm:w-[160px] rounded-md h-10 "
               )}>
               <input
@@ -243,7 +204,10 @@ function Preferences(): Component {
               isSearchable={false}
               options={alignsOptions}
               placeholder={getAlignLabel()}
-              onChange={(e: any) => changeAlign(e.value)}
+              onChange={(e: any) => {
+                console.log(e.value);
+                changeAlign(e.value);
+              }}
               styles={stylesSelect()}
             />
           </div>
@@ -255,9 +219,7 @@ function Preferences(): Component {
             </div>
             <div
               className={twMerge(
-                isSunnyDay
-                  ? "border-[#2b2b2b]"
-                  : "border-[#c0c0c0] bg-[#2b2b2b]",
+                isDay ? "border-[#2b2b2b]" : "border-[#c0c0c0] bg-[#2b2b2b]",
                 "flex flex-col justify-center py-0.5 items-center border w-[140px] sm:w-[160px] rounded-md h-10"
               )}>
               <input
@@ -269,44 +231,6 @@ function Preferences(): Component {
                 onChange={e => changeSpacing(Number(e.target.value))}
               />
             </div>
-          </div>
-
-          <div
-            onClick={resetPreferences}
-            className="flex items-start justify-start gap-x-4 w-full bg-transparent cursor-pointer opacity-65 hover:opacity-100 duration-75">
-            <ResetIcon size={23} />
-            <p className="text-md lowercase">{d.ResetPreferences}</p>
-          </div>
-        </div>
-        <div className="w-full lg:w-3/6 flex flex-col justify-start gap-y-4 items-start">
-          <p className="text-start w-full text-pretty pl-4">
-            {d.RememberToUseKeyboardShortcuts} -&gt; <i>{d.Commands}</i>.
-          </p>
-          <div className="w-full flex flex-col justify-start gap-y-4 items-start px-4 bg-transparent pt-2 pb-4  h-full max-h-[515px] overflow-hidden">
-            <WordsFile
-              wordCounts={myLangLabel() == langsOptions[1].label ? 65 : 68}
-            />
-            <p
-              className={twJoin(myAlign(), "text-lg font-semibold w-full")}
-              style={{
-                letterSpacing: spacing + "px",
-                opacity: opacity ? opacity / 10 : 10,
-              }}>
-              {d.TestText}
-            </p>
-
-            <textarea
-              readOnly
-              value={d.TestParagraph}
-              className={twJoin(
-                myAlign(),
-                "text-lg w-full bg-transparent outline-0 resize-none min-h-[320px] max-h-[400px] overflow-hidden"
-              )}
-              style={{
-                letterSpacing: spacing + "px",
-                opacity: opacity ? opacity / 10 : 10,
-              }}
-            />
           </div>
         </div>
       </animated.div>

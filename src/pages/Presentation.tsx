@@ -16,7 +16,7 @@ import type { Component } from "../utils/types";
 
 function Presentation(): Component {
   const { goTo } = navigation();
-  const { isSunnyDay } = themes();
+  const { isDay } = themes();
   const d = translations();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function Presentation(): Component {
         <div className="w-full flex justify-start items-end">
           <h1
             className={twMerge(
-              isSunnyDay ? "text-black/90" : "text-gray-200 ",
+              isDay ? "text-black/90" : "text-gray-200 ",
               "md:text-7xl text-5xl tracking-tight"
             )}>
             <span className="text-indigo-500">L</span>y
@@ -42,7 +42,7 @@ function Presentation(): Component {
           <TypingAnimation
             text={d.FocusedWriting}
             className={twMerge(
-              isSunnyDay ? "text-black/90" : "text-gray-200",
+              isDay ? "text-black/90" : "text-gray-200",
               "md:text-3xl text-lg pb-5"
             )}
           />
@@ -51,7 +51,7 @@ function Presentation(): Component {
 
         <ol
           className={twMerge(
-            isSunnyDay ? "text-black/90" : "text-gray-200",
+            isDay ? "text-black/90" : "text-gray-200",
             "md:text-lg text-md w-full flex justify-start items-center sm:gap-x-3 gap-x-1 [&>span]:text-indigo-500 [&>span]:font-semibold [&>span]:text-2xl"
           )}>
           <li>{d.MinimalDesing}</li>
@@ -71,7 +71,7 @@ function Presentation(): Component {
 
         <div
           className={twMerge(
-            isSunnyDay ? "text-black/90" : "text-gray-400",
+            isDay ? "text-black/90" : "text-gray-400",
             "flex justify-start gap-x-10 items-center w-full md:text-lg text-md"
           )}>
           <a

@@ -6,7 +6,7 @@ import { copyText, themes } from "../utils/helpers";
 import type { Component } from "../utils/types";
 
 function Support(): Component {
-  const { isSunnyDay } = themes();
+  const { isDay } = themes();
   const d = translations();
 
   return (
@@ -18,10 +18,9 @@ function Support(): Component {
           </p>
           <p
             className={twMerge(
-              isSunnyDay ? "text-black/90" : "text-gray-200",
+              isDay ? "text-black/90" : "text-gray-200",
               "text-md"
-            )}
-          >
+            )}>
             {d.SuggestionsText}
           </p>
         </div>
@@ -31,10 +30,9 @@ function Support(): Component {
           </p>
           <p
             className={twMerge(
-              isSunnyDay ? "text-black/90" : "text-gray-200",
+              isDay ? "text-black/90" : "text-gray-200",
               "text-md"
-            )}
-          >
+            )}>
             {d.ErrorsText}
           </p>
         </div>
@@ -42,16 +40,15 @@ function Support(): Component {
       <div className="px-8 md:px-0 flex gap-x-4 w-full max-w-[700px] items-center justify-end mb-14 sm:mb-0">
         <address
           className={twMerge(
-            isSunnyDay ? "text-blue-800" : "text-blue-300",
+            isDay ? "text-blue-800" : "text-blue-300",
             "sm:text-xl text-lg underline font-sara tracking-wider"
-          )}
-        >
+          )}>
           gixi.tsx@gmail.com
         </address>
         <CopyIcon
           onClick={() => copyText("gixi.tsx@gmail.com")}
           size={30}
-          color={isSunnyDay ? "#222222" : "#c0c0c0"}
+          color={isDay ? "#222222" : "#c0c0c0"}
           className="hover:scale-125 cursor-pointer duration-100"
         />
       </div>
